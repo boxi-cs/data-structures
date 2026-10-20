@@ -1,0 +1,722 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:05.810
+Here is a list of one million names
+
+2
+00:00:05.810 --> 00:00:07.180
+stored in a computer.
+
+3
+00:00:07.530 --> 00:00:09.258
+You ask for the five hundred
+
+4
+00:00:09.320 --> 00:00:10.300
+thousandth name.
+
+5
+00:00:10.300 --> 00:00:12.370
+It comes back instantly.
+
+6
+00:00:12.720 --> 00:00:14.713
+Did the computer count through five
+
+7
+00:00:14.770 --> 00:00:16.930
+hundred thousand names to find it?
+
+8
+00:00:16.930 --> 00:00:18.130
+If it had
+
+9
+00:00:18.130 --> 00:00:21.520
+a list this long would be painfully slow.
+
+10
+00:00:21.870 --> 00:00:24.230
+So how does it jump straight there?
+
+11
+00:00:24.810 --> 00:00:26.401
+The answer is in how a list
+
+12
+00:00:26.460 --> 00:00:27.780
+is laid out in memory.
+
+13
+00:00:27.780 --> 00:00:28.930
+That's the array.
+
+14
+00:00:29.280 --> 00:00:30.950
+In this video we'll see what
+
+15
+00:00:30.990 --> 00:00:32.310
+memory looks like
+
+16
+00:00:32.310 --> 00:00:34.890
+the one formula that makes jumping possible
+
+17
+00:00:34.890 --> 00:00:37.320
+and what that layout makes slow.
+
+18
+00:00:37.900 --> 00:00:40.910
+Memory is a very long row of boxes.
+
+19
+00:00:40.910 --> 00:00:42.950
+Each box holds one byte
+
+20
+00:00:42.950 --> 00:00:45.460
+and each has a number, its address.
+
+21
+00:00:45.810 --> 00:00:47.620
+To keep the pictures simple
+
+22
+00:00:47.620 --> 00:00:49.920
+we'll say an item takes four bytes
+
+23
+00:00:49.920 --> 00:00:52.450
+so it fills four boxes in a row.
+
+24
+00:00:52.800 --> 00:00:55.970
+An integer, a letter, a small record
+
+25
+00:00:55.970 --> 00:00:57.190
+whatever you store
+
+26
+00:00:57.190 --> 00:01:00.600
+it sits in boxes with consecutive addresses.
+
+27
+00:01:01.180 --> 00:01:02.706
+An array is the simplest
+
+28
+00:01:02.770 --> 00:01:04.430
+way to use that row.
+
+29
+00:01:04.430 --> 00:01:06.550
+We reserve one block of boxes
+
+30
+00:01:06.550 --> 00:01:09.030
+and put the items in it side by side
+
+31
+00:01:09.030 --> 00:01:10.020
+in order.
+
+32
+00:01:10.370 --> 00:01:12.481
+The first item starts at the address
+
+33
+00:01:12.540 --> 00:01:13.800
+where the block begins.
+
+34
+00:01:13.800 --> 00:01:16.040
+We call that the base address.
+
+35
+00:01:16.040 --> 00:01:18.770
+Say it is one thousand.
+
+36
+00:01:19.120 --> 00:01:22.190
+The next item starts four boxes later
+
+37
+00:01:22.190 --> 00:01:23.430
+at one thousand four.
+
+38
+00:01:23.430 --> 00:01:26.040
+The one after, at one thousand eight.
+
+39
+00:01:26.620 --> 00:01:28.270
+Do you see the pattern?
+
+40
+00:01:28.270 --> 00:01:31.650
+Item number i starts at the base address
+
+41
+00:01:31.650 --> 00:01:34.580
+plus i times the item size.
+
+42
+00:01:34.930 --> 00:01:38.400
+Item five hundred thousand: one thousand
+
+43
+00:01:38.400 --> 00:01:40.960
+plus four times five hundred thousand.
+
+44
+00:01:40.960 --> 00:01:43.690
+That is two million, one thousand.
+
+45
+00:01:44.040 --> 00:01:47.099
+That's one multiplication and one addition.
+
+46
+00:01:47.170 --> 00:01:49.942
+It takes exactly the same effort for item
+
+47
+00:01:50.010 --> 00:01:53.370
+five as for item five hundred thousand
+
+48
+00:01:53.370 --> 00:01:54.920
+however long the array is.
+
+49
+00:01:55.270 --> 00:01:57.432
+So reading or writing an item by
+
+50
+00:01:57.500 --> 00:02:01.470
+its index takes constant time, big-O of one.
+
+51
+00:02:02.050 --> 00:02:03.120
+There's a catch.
+
+52
+00:02:03.120 --> 00:02:05.160
+The block is reserved in advance
+
+53
+00:02:05.220 --> 00:02:07.640
+and the memory just after it may already
+
+54
+00:02:07.700 --> 00:02:09.090
+belong to something else.
+
+55
+00:02:09.440 --> 00:02:11.810
+So an array has a capacity
+
+56
+00:02:11.810 --> 00:02:13.550
+the number of boxes reserved
+
+57
+00:02:13.550 --> 00:02:15.680
+and that number is fixed.
+
+58
+00:02:16.030 --> 00:02:18.100
+We also keep a size
+
+59
+00:02:18.100 --> 00:02:21.260
+how many of those slots hold real items.
+
+60
+00:02:21.260 --> 00:02:23.320
+Here the capacity is eight
+
+61
+00:02:23.320 --> 00:02:25.390
+and the size is five.
+
+62
+00:02:25.970 --> 00:02:27.911
+What if we insert a new item
+
+63
+00:02:27.980 --> 00:02:29.970
+X at position two?
+
+64
+00:02:30.320 --> 00:02:32.830
+The items must stay side by side
+
+65
+00:02:32.830 --> 00:02:33.730
+with no gaps.
+
+66
+00:02:33.730 --> 00:02:36.559
+So C, D and E all have to move
+
+67
+00:02:36.650 --> 00:02:38.800
+one slot to the right, to make room.
+
+68
+00:02:39.150 --> 00:02:41.260
+We move the last one first.
+
+69
+00:02:41.260 --> 00:02:45.350
+If we moved C first, we would overwrite D.
+
+70
+00:02:45.700 --> 00:02:48.790
+E moves, then D, then C.
+
+71
+00:02:48.790 --> 00:02:52.140
+Now slot two is free, and X goes in.
+
+72
+00:02:52.490 --> 00:02:54.020
+Three items moved.
+
+73
+00:02:54.020 --> 00:02:56.680
+Insert at the front and every item moves.
+
+74
+00:02:56.680 --> 00:02:59.060
+Insert at the end and none do.
+
+75
+00:02:59.060 --> 00:02:59.960
+In general
+
+76
+00:02:59.960 --> 00:03:02.120
+the number of items that move is the size
+
+77
+00:03:02.120 --> 00:03:03.650
+minus the position.
+
+78
+00:03:04.230 --> 00:03:06.700
+Removing is the mirror image.
+
+79
+00:03:06.700 --> 00:03:08.720
+Remove the item at position zero
+
+80
+00:03:08.720 --> 00:03:11.550
+and the hole it leaves must be closed.
+
+81
+00:03:11.900 --> 00:03:13.970
+Every item after it slides
+
+82
+00:03:14.050 --> 00:03:15.770
+one slot to the left
+
+83
+00:03:15.770 --> 00:03:17.110
+starting with the first one
+
+84
+00:03:17.110 --> 00:03:19.300
+until the gap is at the end.
+
+85
+00:03:19.650 --> 00:03:21.780
+Again: cheap at the end
+
+86
+00:03:21.780 --> 00:03:23.530
+expensive at the front.
+
+87
+00:03:24.110 --> 00:03:25.910
+Let's put it in a table.
+
+88
+00:03:26.260 --> 00:03:29.970
+Reading or writing by index: constant time.
+
+89
+00:03:29.970 --> 00:03:31.740
+This is what arrays are for.
+
+90
+00:03:32.090 --> 00:03:33.760
+Inserting or removing in the
+
+91
+00:03:33.820 --> 00:03:35.047
+middle or at the front
+
+92
+00:03:35.100 --> 00:03:36.883
+time proportional to the number
+
+93
+00:03:36.940 --> 00:03:39.650
+of items that move, so up to n.
+
+94
+00:03:40.000 --> 00:03:42.550
+And the capacity is fixed
+
+95
+00:03:42.550 --> 00:03:45.270
+so what happens when the array is full?
+
+96
+00:03:45.270 --> 00:03:47.200
+That is the next video.
+
+97
+00:03:47.780 --> 00:03:48.953
+To sum up.
+
+98
+00:03:49.070 --> 00:03:50.597
+An array keeps its items side
+
+99
+00:03:50.650 --> 00:03:52.216
+by side in one block
+
+100
+00:03:52.290 --> 00:03:54.676
+so item i is at the base address
+
+101
+00:03:54.750 --> 00:03:57.700
+plus i times the item size.
+
+102
+00:03:58.050 --> 00:04:00.930
+That makes access by index constant time
+
+103
+00:04:01.000 --> 00:04:03.524
+and makes inserting or removing in the middle
+
+104
+00:04:03.580 --> 00:04:06.250
+cost a shift of everything after it.
+
+105
+00:04:06.600 --> 00:04:09.149
+Next, we'll put it in code and measure how
+
+106
+00:04:09.210 --> 00:04:11.280
+much those shifts really cost.
+
+107
+00:04:11.907 --> 00:04:14.257
+Now let's build this array in Python
+
+108
+00:04:14.257 --> 00:04:16.867
+and look at what its insert really costs.
+
+109
+00:04:17.447 --> 00:04:19.257
+Here is our array.
+
+110
+00:04:19.257 --> 00:04:21.691
+In Python, we can reserve a block of
+
+111
+00:04:21.757 --> 00:04:23.417
+eight slots like this
+
+112
+00:04:23.417 --> 00:04:26.367
+a list with eight None values.
+
+113
+00:04:26.717 --> 00:04:28.987
+We keep two numbers: the capacity
+
+114
+00:04:28.987 --> 00:04:30.727
+which is the length of that list
+
+115
+00:04:30.727 --> 00:04:32.167
+and the size
+
+116
+00:04:32.167 --> 00:04:34.147
+how many slots are really in use.
+
+117
+00:04:34.147 --> 00:04:36.237
+Right now it is zero.
+
+118
+00:04:36.587 --> 00:04:38.457
+One thing to know about Python.
+
+119
+00:04:38.457 --> 00:04:41.617
+A list does not hold the items themselves.
+
+120
+00:04:41.617 --> 00:04:43.512
+Each slot holds a reference
+
+121
+00:04:43.577 --> 00:04:45.377
+a small address that points to
+
+122
+00:04:45.437 --> 00:04:46.757
+the item somewhere else.
+
+123
+00:04:46.757 --> 00:04:48.597
+The slots are side by side
+
+124
+00:04:48.597 --> 00:04:50.777
+so the address formula still works
+
+125
+00:04:50.777 --> 00:04:52.787
+but it works on the references.
+
+126
+00:04:53.367 --> 00:04:55.037
+Here is insert.
+
+127
+00:04:55.037 --> 00:04:56.477
+First, two checks
+
+128
+00:04:56.477 --> 00:04:58.060
+the array must not be full
+
+129
+00:04:58.117 --> 00:04:59.915
+and the index must be between
+
+130
+00:04:59.977 --> 00:05:01.567
+zero and the size.
+
+131
+00:05:01.917 --> 00:05:03.387
+Then the loop.
+
+132
+00:05:03.387 --> 00:05:06.087
+It starts at the first free slot
+
+133
+00:05:06.087 --> 00:05:09.443
+and walks backwards, down to the index.
+
+134
+00:05:09.527 --> 00:05:12.390
+Each step copies the item on its left
+
+135
+00:05:12.467 --> 00:05:15.027
+into the slot on its right.
+
+136
+00:05:15.027 --> 00:05:18.334
+That is the shift, and it runs from the end
+
+137
+00:05:18.407 --> 00:05:20.330
+so nothing is overwritten
+
+138
+00:05:20.407 --> 00:05:21.917
+before it has moved.
+
+139
+00:05:22.267 --> 00:05:25.097
+When the loop is done, slot index is free
+
+140
+00:05:25.097 --> 00:05:27.077
+so we write the new value there.
+
+141
+00:05:27.077 --> 00:05:28.787
+And the size goes up by one.
+
+142
+00:05:29.367 --> 00:05:30.837
+Remove mirrors it.
+
+143
+00:05:30.837 --> 00:05:32.699
+We keep the value to return it.
+
+144
+00:05:32.757 --> 00:05:35.041
+Then the loop copies each item
+
+145
+00:05:35.117 --> 00:05:36.457
+one slot to the left
+
+146
+00:05:36.457 --> 00:05:38.527
+starting from the removed index.
+
+147
+00:05:38.877 --> 00:05:40.067
+At the end
+
+148
+00:05:40.067 --> 00:05:42.487
+the last used slot is set back to None
+
+149
+00:05:42.487 --> 00:05:44.477
+and the size goes down by one.
+
+150
+00:05:45.057 --> 00:05:46.125
+Let's run it.
+
+151
+00:05:46.207 --> 00:05:48.198
+We start with five letters in
+
+152
+00:05:48.267 --> 00:05:50.167
+an array of capacity eight.
+
+153
+00:05:50.167 --> 00:05:52.217
+The empty slots show None.
+
+154
+00:05:52.567 --> 00:05:55.777
+Insert X at position two.
+
+155
+00:05:55.777 --> 00:05:58.437
+C, D and E have moved right by one
+
+156
+00:05:58.437 --> 00:05:59.807
+and the size is six.
+
+157
+00:06:00.157 --> 00:06:03.367
+Remove position zero: A comes out
+
+158
+00:06:03.367 --> 00:06:04.847
+everything slides left
+
+159
+00:06:04.847 --> 00:06:06.397
+and the size is five again.
+
+160
+00:06:06.977 --> 00:06:08.445
+Now the stopwatch.
+
+161
+00:06:08.527 --> 00:06:10.526
+Here we insert at the front of an
+
+162
+00:06:10.587 --> 00:06:13.311
+array of two thousand items and take
+
+163
+00:06:13.387 --> 00:06:15.457
+the time of one insert.
+
+164
+00:06:15.807 --> 00:06:17.917
+About forty-four microseconds.
+
+165
+00:06:17.917 --> 00:06:19.897
+At sixteen thousand items
+
+166
+00:06:19.897 --> 00:06:21.057
+eight times as many
+
+167
+00:06:21.057 --> 00:06:23.837
+it is about four hundred.
+
+168
+00:06:23.837 --> 00:06:26.737
+Eight times the items, nine times the time
+
+169
+00:06:26.737 --> 00:06:28.277
+roughly proportional
+
+170
+00:06:28.277 --> 00:06:30.127
+just as the count of shifts predicts.
+
+171
+00:06:30.477 --> 00:06:31.687
+In the middle
+
+172
+00:06:31.687 --> 00:06:33.647
+only half the items have to move
+
+173
+00:06:33.647 --> 00:06:35.547
+so it takes about half as long
+
+174
+00:06:35.547 --> 00:06:38.437
+but the time still grows with n.
+
+175
+00:06:39.017 --> 00:06:42.467
+So in Python: items sit side by side
+
+176
+00:06:42.467 --> 00:06:44.453
+indexing is constant time
+
+177
+00:06:44.527 --> 00:06:47.060
+and every insert at the front pays for
+
+178
+00:06:47.127 --> 00:06:49.377
+a shift of everything after it.
+
+179
+00:06:49.727 --> 00:06:50.477
+Next time
+
+180
+00:06:50.477 --> 00:06:52.407
+we'll deal with the fixed capacity.
+

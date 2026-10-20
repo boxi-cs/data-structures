@@ -1,0 +1,890 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:04.590
+A heap gives us its smallest
+
+2
+00:00:04.650 --> 00:00:07.070
+entry in about log n steps.
+
+3
+00:00:07.070 --> 00:00:09.230
+So here is an idea for sorting
+
+4
+00:00:09.230 --> 00:00:10.690
+put everything into a heap
+
+5
+00:00:10.690 --> 00:00:12.810
+and take the entries out one by one.
+
+6
+00:00:12.810 --> 00:00:14.380
+They come out in order.
+
+7
+00:00:14.730 --> 00:00:15.780
+That works.
+
+8
+00:00:15.780 --> 00:00:17.880
+But it needs another structure
+
+9
+00:00:17.880 --> 00:00:19.380
+and extra memory.
+
+10
+00:00:19.380 --> 00:00:22.530
+Can we do it inside the array we were given?
+
+11
+00:00:22.880 --> 00:00:23.970
+We can.
+
+12
+00:00:23.970 --> 00:00:25.509
+That is heap sort.
+
+13
+00:00:25.590 --> 00:00:27.345
+And it has a guarantee that
+
+14
+00:00:27.410 --> 00:00:29.080
+quicksort does not have.
+
+15
+00:00:29.660 --> 00:00:32.370
+In this video we'll see how heap sort works
+
+16
+00:00:32.370 --> 00:00:33.583
+what it costs
+
+17
+00:00:33.670 --> 00:00:35.142
+and how it compares with merge
+
+18
+00:00:35.190 --> 00:00:36.580
+sort and quicksort.
+
+19
+00:00:37.160 --> 00:00:39.290
+Heap sort has two phases.
+
+20
+00:00:39.290 --> 00:00:42.070
+Phase one: turn the array into a heap
+
+21
+00:00:42.070 --> 00:00:44.960
+using the bottom-up method from last time.
+
+22
+00:00:45.310 --> 00:00:47.692
+This time it is a max-heap
+
+23
+00:00:47.780 --> 00:00:49.475
+every entry is larger than
+
+24
+00:00:49.540 --> 00:00:51.260
+or equal to its children
+
+25
+00:00:51.260 --> 00:00:53.870
+so the largest entry is at the root.
+
+26
+00:00:54.220 --> 00:00:57.094
+Phase two: swap the root with the last
+
+27
+00:00:57.170 --> 00:00:58.290
+entry of the heap.
+
+28
+00:00:58.290 --> 00:01:00.710
+The largest entry is now where it belongs
+
+29
+00:01:00.710 --> 00:01:02.420
+at the very end of the array.
+
+30
+00:01:02.770 --> 00:01:04.653
+Then shrink the heap by one
+
+31
+00:01:04.720 --> 00:01:06.649
+so the array's last cell is
+
+32
+00:01:06.720 --> 00:01:07.980
+no longer part of it.
+
+33
+00:01:07.980 --> 00:01:11.610
+The new root may be too small, so sink it.
+
+34
+00:01:11.960 --> 00:01:13.050
+Repeat.
+
+35
+00:01:13.050 --> 00:01:16.150
+Each round fixes one more cell at the back
+
+36
+00:01:16.150 --> 00:01:18.270
+and the heap in front gets shorter
+
+37
+00:01:18.270 --> 00:01:19.960
+until nothing is left.
+
+38
+00:01:22.160 --> 00:01:25.573
+Why a max-heap, and not a min-heap?
+
+39
+00:01:25.670 --> 00:01:27.116
+Because we want the largest
+
+40
+00:01:27.170 --> 00:01:28.646
+entry to go to the end.
+
+41
+00:01:28.710 --> 00:01:30.188
+A min-heap would put the
+
+42
+00:01:30.250 --> 00:01:32.770
+smallest at the front, where the heap lives
+
+43
+00:01:32.770 --> 00:01:34.640
+and we would have to move everything.
+
+44
+00:01:34.990 --> 00:01:37.554
+And notice that no new array is needed.
+
+45
+00:01:37.620 --> 00:01:40.093
+The array holds the heap in front and
+
+46
+00:01:40.160 --> 00:01:41.700
+the sorted entries behind it.
+
+47
+00:01:41.700 --> 00:01:43.990
+The two share the same cells.
+
+48
+00:01:44.570 --> 00:01:50.480
+Our entries: twenty, sixteen, nine, twelve
+
+49
+00:01:50.480 --> 00:01:56.890
+five, eight, three, fourteen, six, eleven.
+
+50
+00:01:57.240 --> 00:02:01.570
+Phase one gives this max-heap: twenty
+
+51
+00:02:01.570 --> 00:02:08.850
+sixteen, nine, fourteen, eleven, eight
+
+52
+00:02:08.850 --> 00:02:13.150
+three, twelve, six, five.
+
+53
+00:02:13.150 --> 00:02:17.040
+It took nine comparisons and two swaps.
+
+54
+00:02:17.390 --> 00:02:19.040
+Round one.
+
+55
+00:02:19.040 --> 00:02:22.380
+Swap twenty with the last entry, five.
+
+56
+00:02:22.380 --> 00:02:23.640
+twenty is in place.
+
+57
+00:02:23.640 --> 00:02:27.060
+Now sink five: it swaps with sixteen
+
+58
+00:02:27.060 --> 00:02:29.320
+then with fourteen, then with twelve.
+
+59
+00:02:29.320 --> 00:02:31.080
+That is six more comparisons
+
+60
+00:02:31.080 --> 00:02:33.830
+and four more swaps counting the first one.
+
+61
+00:02:34.180 --> 00:02:36.478
+Round two puts sixteen at
+
+62
+00:02:36.570 --> 00:02:37.470
+the end of the heap
+
+63
+00:02:37.470 --> 00:02:39.750
+and round three puts fourteen.
+
+64
+00:02:39.750 --> 00:02:42.590
+Each round costs a few comparisons
+
+65
+00:02:42.590 --> 00:02:43.930
+fewer and fewer
+
+66
+00:02:43.930 --> 00:02:45.700
+because the heap is shrinking.
+
+67
+00:02:46.050 --> 00:02:49.800
+At the end the array is sorted: three, five
+
+68
+00:02:49.800 --> 00:02:54.200
+six, eight, nine, eleven, twelve, fourteen
+
+69
+00:02:54.200 --> 00:02:55.503
+sixteen, twenty.
+
+70
+00:02:55.580 --> 00:02:57.740
+thirty-five comparisons and
+
+71
+00:02:57.820 --> 00:02:59.370
+twenty-three swaps in all.
+
+72
+00:02:59.980 --> 00:03:01.050
+The cost.
+
+73
+00:03:01.050 --> 00:03:02.650
+Phase one is linear
+
+74
+00:03:02.650 --> 00:03:05.420
+at most two comparisons per entry.
+
+75
+00:03:05.770 --> 00:03:08.694
+Phase two does n minus one rounds.
+
+76
+00:03:08.780 --> 00:03:11.032
+Each round sinks an entry through
+
+77
+00:03:11.100 --> 00:03:13.360
+at most log n levels
+
+78
+00:03:13.360 --> 00:03:15.560
+with two comparisons per level.
+
+79
+00:03:15.560 --> 00:03:19.650
+So at most about two n log n comparisons.
+
+80
+00:03:20.000 --> 00:03:23.750
+That is O of n log n, in the worst case
+
+81
+00:03:23.750 --> 00:03:25.010
+whatever the input.
+
+82
+00:03:25.010 --> 00:03:26.830
+No bad inputs.
+
+83
+00:03:26.830 --> 00:03:29.120
+Quicksort cannot promise that.
+
+84
+00:03:29.470 --> 00:03:30.999
+And the extra memory is a
+
+85
+00:03:31.060 --> 00:03:32.680
+handful of variables.
+
+86
+00:03:32.680 --> 00:03:35.750
+Merge sort needs a second array of size n.
+
+87
+00:03:36.330 --> 00:03:37.273
+Let's compare
+
+88
+00:03:37.340 --> 00:03:39.961
+by counting comparisons on random
+
+89
+00:03:40.040 --> 00:03:42.130
+input of four thousand entries.
+
+90
+00:03:42.480 --> 00:03:46.130
+Merge sort needs about forty-three thousand.
+
+91
+00:03:46.130 --> 00:03:48.950
+Quicksort, with the last entry as pivot
+
+92
+00:03:48.950 --> 00:03:50.870
+about fifty-five thousand.
+
+93
+00:03:50.870 --> 00:03:53.440
+Heap sort, about eighty-three thousand.
+
+94
+00:03:53.790 --> 00:03:56.596
+The number n log n is about
+
+95
+00:03:56.700 --> 00:03:58.017
+forty-eight thousand.
+
+96
+00:03:58.080 --> 00:03:59.731
+Heap sort pays about one
+
+97
+00:03:59.800 --> 00:04:01.736
+point seven times that
+
+98
+00:04:01.820 --> 00:04:03.391
+almost twice as many comparisons
+
+99
+00:04:03.440 --> 00:04:04.790
+as merge sort.
+
+100
+00:04:05.140 --> 00:04:06.130
+Why?
+
+101
+00:04:06.130 --> 00:04:08.370
+Each time we sink an entry
+
+102
+00:04:08.370 --> 00:04:10.410
+it came from the bottom of the heap
+
+103
+00:04:10.410 --> 00:04:12.850
+so it usually goes all the way back down.
+
+104
+00:04:12.850 --> 00:04:15.250
+We pay two comparisons per level
+
+105
+00:04:15.250 --> 00:04:16.700
+almost every time.
+
+106
+00:04:17.050 --> 00:04:19.426
+There is a second cost we cannot
+
+107
+00:04:19.500 --> 00:04:21.040
+see in these counts.
+
+108
+00:04:21.040 --> 00:04:23.140
+Heap sort jumps around the array
+
+109
+00:04:23.140 --> 00:04:26.088
+from index j to two j plus one.
+
+110
+00:04:26.180 --> 00:04:28.055
+Merge sort and quicksort walk
+
+111
+00:04:28.120 --> 00:04:29.800
+through memory in order
+
+112
+00:04:29.800 --> 00:04:31.220
+which computers like.
+
+113
+00:04:31.220 --> 00:04:34.290
+In practice, heap sort is typically slower.
+
+114
+00:04:34.870 --> 00:04:36.420
+Pause and predict.
+
+115
+00:04:36.420 --> 00:04:39.840
+We sort three pairs by their first item
+
+116
+00:04:39.840 --> 00:04:42.180
+two with label a, two with label b
+
+117
+00:04:42.180 --> 00:04:44.510
+and one with label c.
+
+118
+00:04:44.860 --> 00:04:47.689
+The two entries with key two should
+
+119
+00:04:47.770 --> 00:04:50.670
+stay in their original order, a before b.
+
+120
+00:04:50.670 --> 00:04:52.580
+Does heap sort keep it?
+
+121
+00:04:52.930 --> 00:04:53.740
+No.
+
+122
+00:04:53.740 --> 00:04:57.000
+Heap sort returns one c, two b, two a.
+
+123
+00:04:57.000 --> 00:04:59.460
+The two equal keys swapped places.
+
+124
+00:04:59.460 --> 00:05:02.760
+A stable sort would give one c, two a
+
+125
+00:05:02.760 --> 00:05:03.810
+two b.
+
+126
+00:05:04.160 --> 00:05:06.474
+Heap sort is not stable.
+
+127
+00:05:06.570 --> 00:05:08.459
+Swapping the root with the last entry
+
+128
+00:05:08.510 --> 00:05:10.950
+moves entries across the array
+
+129
+00:05:10.950 --> 00:05:12.560
+without regard to equal keys.
+
+130
+00:05:13.140 --> 00:05:14.390
+To sum up.
+
+131
+00:05:14.390 --> 00:05:17.878
+Heap sort builds a max-heap in place
+
+132
+00:05:17.970 --> 00:05:20.817
+then repeatedly moves the largest entry
+
+133
+00:05:20.890 --> 00:05:23.420
+to the end and shrinks the heap.
+
+134
+00:05:23.770 --> 00:05:26.940
+It guarantees n log n, in place
+
+135
+00:05:26.940 --> 00:05:28.241
+but it is not stable
+
+136
+00:05:28.300 --> 00:05:30.504
+and it is usually slower than quicksort
+
+137
+00:05:30.560 --> 00:05:32.170
+or merge sort in practice.
+
+138
+00:05:32.520 --> 00:05:35.630
+Some library sorts use it as a safety net.
+
+139
+00:05:35.630 --> 00:05:37.090
+They start with quicksort
+
+140
+00:05:37.090 --> 00:05:39.678
+and if the recursion goes too deep
+
+141
+00:05:39.750 --> 00:05:41.132
+they switch to heap sort
+
+142
+00:05:41.190 --> 00:05:42.800
+to keep the guarantee.
+
+143
+00:05:43.150 --> 00:05:44.827
+Next time: graphs
+
+144
+00:05:44.920 --> 00:05:46.743
+where a priority queue will pick
+
+145
+00:05:46.800 --> 00:05:48.590
+the next place to explore.
+
+146
+00:05:49.217 --> 00:05:52.667
+Let's write heap sort in Java, in place
+
+147
+00:05:52.667 --> 00:05:54.297
+on an int array.
+
+148
+00:05:54.877 --> 00:05:58.607
+The core is down-heap for a max-heap
+
+149
+00:05:58.607 --> 00:05:59.927
+inside an array.
+
+150
+00:05:59.927 --> 00:06:03.367
+The parameter n is the size of the heap
+
+151
+00:06:03.367 --> 00:06:04.561
+not of the array.
+
+152
+00:06:04.627 --> 00:06:06.380
+Cells at index n and above
+
+153
+00:06:06.447 --> 00:06:07.927
+are the sorted part
+
+154
+00:06:07.927 --> 00:06:10.037
+and down-heap never looks at them.
+
+155
+00:06:10.387 --> 00:06:12.265
+It picks the larger child
+
+156
+00:06:12.337 --> 00:06:14.321
+stops if that child is not
+
+157
+00:06:14.397 --> 00:06:15.737
+larger than the entry
+
+158
+00:06:15.737 --> 00:06:18.547
+and otherwise swaps and moves down.
+
+159
+00:06:18.897 --> 00:06:20.637
+The counts array collects
+
+160
+00:06:20.707 --> 00:06:23.097
+comparisons and swaps, so we can measure.
+
+161
+00:06:23.677 --> 00:06:26.647
+Build max-heap is the bottom-up loop
+
+162
+00:06:26.727 --> 00:06:28.173
+from the parent of the last
+
+163
+00:06:28.227 --> 00:06:31.807
+index down to zero, down-heap each node
+
+164
+00:06:31.807 --> 00:06:34.397
+with n equal to the whole array.
+
+165
+00:06:34.977 --> 00:06:36.607
+Heap sort builds the heap
+
+166
+00:06:36.667 --> 00:06:38.234
+and then runs a loop from the
+
+167
+00:06:38.287 --> 00:06:40.319
+last index down to one.
+
+168
+00:06:40.407 --> 00:06:42.119
+Each round swaps the root
+
+169
+00:06:42.187 --> 00:06:43.787
+with the cell at end
+
+170
+00:06:43.787 --> 00:06:45.627
+and then sinks the new root
+
+171
+00:06:45.627 --> 00:06:48.497
+in a heap that now ends just before end.
+
+172
+00:06:48.847 --> 00:06:51.486
+The array is sorted in place.
+
+173
+00:06:51.577 --> 00:06:53.259
+The method returns the number
+
+174
+00:06:53.317 --> 00:06:55.167
+of comparisons and swaps.
+
+175
+00:06:55.747 --> 00:06:57.397
+Here is the real run.
+
+176
+00:06:57.397 --> 00:07:01.957
+After building: twenty, sixteen, nine
+
+177
+00:07:01.957 --> 00:07:07.197
+fourteen, eleven, eight, three, twelve, six
+
+178
+00:07:07.197 --> 00:07:08.117
+five.
+
+179
+00:07:08.117 --> 00:07:10.947
+nine comparisons and two swaps.
+
+180
+00:07:11.297 --> 00:07:13.807
+Round one puts twenty at the end
+
+181
+00:07:13.807 --> 00:07:15.847
+six comparisons and four swaps.
+
+182
+00:07:15.847 --> 00:07:18.947
+Round two puts sixteen at the end
+
+183
+00:07:18.947 --> 00:07:21.177
+five comparisons and three swaps.
+
+184
+00:07:21.527 --> 00:07:24.130
+In the end, thirty-five comparisons and
+
+185
+00:07:24.197 --> 00:07:27.487
+twenty-three swaps, and the array is sorted.
+
+186
+00:07:28.067 --> 00:07:29.737
+Now let's compare with merge
+
+187
+00:07:29.797 --> 00:07:30.937
+sort and quicksort
+
+188
+00:07:30.937 --> 00:07:32.697
+on the same random arrays.
+
+189
+00:07:32.697 --> 00:07:34.817
+For four thousand entries
+
+190
+00:07:34.817 --> 00:07:37.937
+heap sort eighty-three thousand comparisons
+
+191
+00:07:37.937 --> 00:07:40.417
+merge sort about forty-three thousand
+
+192
+00:07:40.417 --> 00:07:42.787
+quicksort about fifty-four thousand.
+
+193
+00:07:43.137 --> 00:07:45.638
+Heap sort is about one point
+
+194
+00:07:45.727 --> 00:07:47.687
+seven times n log n.
+
+195
+00:07:47.687 --> 00:07:50.817
+Still n log n, with a bigger constant.
+
+196
+00:07:51.397 --> 00:07:53.576
+Heap sort is not stable.
+
+197
+00:07:53.667 --> 00:07:55.502
+We sort three records by key
+
+198
+00:07:55.567 --> 00:07:58.207
+with a generic version, taking a comparator.
+
+199
+00:07:58.207 --> 00:08:03.117
+The result: key one c, key two b, key two a.
+
+200
+00:08:03.467 --> 00:08:06.297
+Arrays dot sort on objects is stable
+
+201
+00:08:06.297 --> 00:08:10.387
+and gives key one c, key two a, key two b.
+
+202
+00:08:10.967 --> 00:08:14.248
+In practice you call Arrays dot sort.
+
+203
+00:08:14.337 --> 00:08:16.587
+For objects it is a stable merge
+
+204
+00:08:16.657 --> 00:08:18.337
+sort called Tim sort.
+
+205
+00:08:18.337 --> 00:08:21.237
+For arrays of primitives like int
+
+206
+00:08:21.237 --> 00:08:22.957
+it is a quicksort variant
+
+207
+00:08:22.957 --> 00:08:24.727
+where stability does not matter.
+
+208
+00:08:25.077 --> 00:08:27.305
+And Priority Queue is there when you
+
+209
+00:08:27.367 --> 00:08:29.567
+only need the smallest entries
+
+210
+00:08:29.567 --> 00:08:31.407
+or a running minimum
+
+211
+00:08:31.407 --> 00:08:32.917
+without sorting everything.
+
+212
+00:08:33.497 --> 00:08:35.547
+Two common mistakes.
+
+213
+00:08:35.547 --> 00:08:38.119
+One: building a min-heap and expecting
+
+214
+00:08:38.187 --> 00:08:40.387
+it to sort in place, ascending.
+
+215
+00:08:40.387 --> 00:08:41.947
+It would sort descending
+
+216
+00:08:41.947 --> 00:08:43.537
+or need a second array.
+
+217
+00:08:43.887 --> 00:08:46.937
+Two: sinking with the wrong size.
+
+218
+00:08:46.937 --> 00:08:49.617
+After the swap, the heap's size is end
+
+219
+00:08:49.617 --> 00:08:51.007
+not end plus one.
+
+220
+00:08:51.587 --> 00:08:55.797
+So in Java: max-heap, bottom-up build
+
+221
+00:08:55.797 --> 00:08:58.137
+swap and sink with a shrinking size.
+
+222
+00:08:58.137 --> 00:09:01.227
+And for real work, call Arrays dot sort.
+

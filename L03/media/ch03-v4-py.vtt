@@ -1,0 +1,678 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:04.158
+Look at these two lines.
+
+2
+00:00:04.210 --> 00:00:06.020
+Both have one pair of round brackets
+
+3
+00:00:06.070 --> 00:00:07.710
+and one pair of square brackets.
+
+4
+00:00:07.710 --> 00:00:09.270
+The first is fine.
+
+5
+00:00:09.270 --> 00:00:11.860
+The second is a syntax error.
+
+6
+00:00:12.210 --> 00:00:14.545
+Every compiler and every editor
+
+7
+00:00:14.620 --> 00:00:16.480
+has to tell them apart.
+
+8
+00:00:16.480 --> 00:00:19.210
+What is the simplest procedure that does it?
+
+9
+00:00:19.790 --> 00:00:22.092
+Two classic uses of the structures
+
+10
+00:00:22.160 --> 00:00:23.310
+from this chapter.
+
+11
+00:00:23.660 --> 00:00:26.610
+First, matching brackets with a stack.
+
+12
+00:00:26.610 --> 00:00:28.928
+Then, visiting a network level
+
+13
+00:00:28.990 --> 00:00:30.190
+by level with a queue
+
+14
+00:00:30.190 --> 00:00:32.340
+which is a preview of Chapter nine.
+
+15
+00:00:32.920 --> 00:00:35.160
+A first idea is to count.
+
+16
+00:00:35.250 --> 00:00:37.152
+Does every opening bracket have a
+
+17
+00:00:37.210 --> 00:00:39.320
+closing bracket of its own kind?
+
+18
+00:00:39.670 --> 00:00:42.240
+The wrong line passes that test
+
+19
+00:00:42.240 --> 00:00:44.900
+one round pair, one square pair.
+
+20
+00:00:44.900 --> 00:00:47.140
+But the brackets cross each other
+
+21
+00:00:47.140 --> 00:00:49.000
+and that is not allowed.
+
+22
+00:00:49.000 --> 00:00:52.910
+Brackets must nest, like boxes inside boxes.
+
+23
+00:00:53.260 --> 00:00:54.285
+The rule is
+
+24
+00:00:54.370 --> 00:00:56.447
+the bracket you close must be the
+
+25
+00:00:56.510 --> 00:00:58.650
+one you opened most recently.
+
+26
+00:00:58.650 --> 00:00:59.750
+Most recent.
+
+27
+00:00:59.750 --> 00:01:01.100
+That should ring a bell.
+
+28
+00:01:01.680 --> 00:01:03.770
+Read the text from left to right.
+
+29
+00:01:03.770 --> 00:01:05.770
+When you see an opening bracket
+
+30
+00:01:05.770 --> 00:01:07.410
+push it on a stack.
+
+31
+00:01:07.410 --> 00:01:09.470
+When you see a closing bracket
+
+32
+00:01:09.470 --> 00:01:10.290
+pop the stack
+
+33
+00:01:10.290 --> 00:01:12.290
+and check that the two are a pair.
+
+34
+00:01:12.290 --> 00:01:14.120
+Other characters are ignored.
+
+35
+00:01:14.470 --> 00:01:16.800
+Here, the square bracket is pushed
+
+36
+00:01:16.800 --> 00:01:18.035
+then the round one.
+
+37
+00:01:18.100 --> 00:01:19.869
+The round closing bracket
+
+38
+00:01:19.940 --> 00:01:22.420
+pops the round opener: a match.
+
+39
+00:01:22.500 --> 00:01:23.925
+The square closing bracket
+
+40
+00:01:23.980 --> 00:01:26.310
+pops the square opener: a match.
+
+41
+00:01:26.660 --> 00:01:29.450
+At the end the stack must be empty.
+
+42
+00:01:29.450 --> 00:01:30.770
+If something is left
+
+43
+00:01:30.770 --> 00:01:33.140
+there is an opener that was never closed.
+
+44
+00:01:33.720 --> 00:01:35.730
+There are three ways to fail.
+
+45
+00:01:35.730 --> 00:01:38.657
+In the first, the closing round bracket
+
+46
+00:01:38.730 --> 00:01:40.390
+pops a square opener
+
+47
+00:01:40.390 --> 00:01:41.910
+which is not its partner.
+
+48
+00:01:41.910 --> 00:01:43.640
+That is a mismatch.
+
+49
+00:01:43.990 --> 00:01:45.045
+In the second
+
+50
+00:01:45.120 --> 00:01:47.501
+the text ends while one opener
+
+51
+00:01:47.580 --> 00:01:48.940
+is still on the stack.
+
+52
+00:01:48.940 --> 00:01:50.110
+Not closed.
+
+53
+00:01:50.460 --> 00:01:53.219
+In the third, a closing bracket arrives
+
+54
+00:01:53.290 --> 00:01:54.750
+and the stack is empty.
+
+55
+00:01:54.750 --> 00:01:57.270
+There was nothing to match.
+
+56
+00:01:57.270 --> 00:02:00.020
+All three are caught by the same loop.
+
+57
+00:02:00.600 --> 00:02:02.130
+Now a different problem.
+
+58
+00:02:02.130 --> 00:02:03.850
+Here is a small network.
+
+59
+00:02:03.850 --> 00:02:07.590
+From A you can go directly to B and to C.
+
+60
+00:02:07.590 --> 00:02:10.050
+From B you reach D and E
+
+61
+00:02:10.050 --> 00:02:12.560
+and from C you reach F.
+
+62
+00:02:12.910 --> 00:02:15.900
+We want to visit every node, nearest first
+
+63
+00:02:15.900 --> 00:02:19.140
+first A, then everything one step away
+
+64
+00:02:19.140 --> 00:02:22.000
+then everything two steps away, and so on.
+
+65
+00:02:22.000 --> 00:02:24.260
+That is called level order
+
+66
+00:02:24.260 --> 00:02:26.230
+or breadth-first search.
+
+67
+00:02:26.810 --> 00:02:28.840
+Put A in a queue.
+
+68
+00:02:28.840 --> 00:02:30.140
+Now repeat
+
+69
+00:02:30.140 --> 00:02:32.880
+take the front node out of the queue
+
+70
+00:02:32.880 --> 00:02:33.716
+visit it
+
+71
+00:02:33.800 --> 00:02:36.041
+and put each of its neighbours that we
+
+72
+00:02:36.100 --> 00:02:38.570
+haven't seen before at the back.
+
+73
+00:02:38.920 --> 00:02:42.010
+Visit A: B and C join the queue.
+
+74
+00:02:42.010 --> 00:02:45.890
+Visit B: D and E join, behind C.
+
+75
+00:02:45.890 --> 00:02:48.440
+Visit C: F joins.
+
+76
+00:02:48.790 --> 00:02:52.060
+Visit D, E, F.
+
+77
+00:02:52.060 --> 00:02:53.840
+F is also a neighbour of E
+
+78
+00:02:53.840 --> 00:02:55.340
+but we have already seen it
+
+79
+00:02:55.340 --> 00:02:57.260
+so it doesn't join the queue a second time.
+
+80
+00:02:57.260 --> 00:02:59.190
+That is what the seen set is for.
+
+81
+00:02:59.540 --> 00:03:05.322
+The visiting order is A, B, C, D, E, F
+
+82
+00:03:05.470 --> 00:03:07.685
+all the nodes one step away before
+
+83
+00:03:07.750 --> 00:03:09.940
+any node two steps away.
+
+84
+00:03:10.520 --> 00:03:13.070
+Why does a queue give the right order?
+
+85
+00:03:13.070 --> 00:03:15.930
+Because it is first in, first out.
+
+86
+00:03:15.930 --> 00:03:18.710
+Nodes found earlier are explored earlier
+
+87
+00:03:18.710 --> 00:03:21.240
+and nodes found earlier are nearer.
+
+88
+00:03:21.590 --> 00:03:23.374
+Swap the queue for a stack
+
+89
+00:03:23.440 --> 00:03:25.577
+and the same loop dives deep along
+
+90
+00:03:25.640 --> 00:03:27.700
+one path before coming back.
+
+91
+00:03:27.700 --> 00:03:29.480
+That's depth-first search.
+
+92
+00:03:29.480 --> 00:03:31.310
+We'll compare the two in Chapter nine.
+
+93
+00:03:31.890 --> 00:03:33.580
+That's the end of Chapter three.
+
+94
+00:03:33.580 --> 00:03:36.920
+A stack gives back the most recent item.
+
+95
+00:03:36.920 --> 00:03:39.720
+A queue gives back the oldest.
+
+96
+00:03:39.720 --> 00:03:42.490
+A double-ended queue gives you both ends.
+
+97
+00:03:42.840 --> 00:03:45.268
+In practice, you choose by asking which
+
+98
+00:03:45.330 --> 00:03:47.090
+item you want next.
+
+99
+00:03:47.090 --> 00:03:49.190
+Most recent: stack.
+
+100
+00:03:49.190 --> 00:03:50.990
+Oldest: queue.
+
+101
+00:03:50.990 --> 00:03:53.840
+Either end: a double-ended queue.
+
+102
+00:03:54.190 --> 00:03:56.740
+In the next chapter we'll see recursion
+
+103
+00:03:56.740 --> 00:03:59.670
+which uses a stack you never had to write.
+
+104
+00:04:00.297 --> 00:04:02.617
+Both applications, in Python.
+
+105
+00:04:03.197 --> 00:04:05.060
+Here is the bracket checker.
+
+106
+00:04:05.127 --> 00:04:07.105
+It uses the array stack we built
+
+107
+00:04:07.167 --> 00:04:08.857
+earlier in this chapter.
+
+108
+00:04:08.927 --> 00:04:10.605
+Openers and closers are two
+
+109
+00:04:10.667 --> 00:04:12.167
+strings in the same order
+
+110
+00:04:12.167 --> 00:04:15.317
+so the index of a bracket tells us its kind.
+
+111
+00:04:15.667 --> 00:04:17.757
+For an opener, we push.
+
+112
+00:04:17.757 --> 00:04:18.857
+For a closer
+
+113
+00:04:18.857 --> 00:04:21.417
+we first check that the stack isn't empty
+
+114
+00:04:21.417 --> 00:04:23.575
+and then pop and compare the kinds
+
+115
+00:04:23.637 --> 00:04:26.204
+the index in closers must equal the
+
+116
+00:04:26.277 --> 00:04:27.937
+index of the popped opener.
+
+117
+00:04:27.937 --> 00:04:30.867
+At the end, the stack must be empty.
+
+118
+00:04:31.447 --> 00:04:33.677
+Running it: the first expression
+
+119
+00:04:33.677 --> 00:04:36.397
+with properly nested brackets, returns True.
+
+120
+00:04:36.397 --> 00:04:39.237
+The crossed brackets return False.
+
+121
+00:04:39.237 --> 00:04:41.897
+The unclosed one, with an extra opener
+
+122
+00:04:41.897 --> 00:04:42.657
+returns False.
+
+123
+00:04:42.657 --> 00:04:45.447
+And the extra closer returns False.
+
+124
+00:04:46.027 --> 00:04:47.777
+Now level order.
+
+125
+00:04:47.777 --> 00:04:49.513
+The graph is a dictionary
+
+126
+00:04:49.577 --> 00:04:51.712
+each key is a node and each value
+
+127
+00:04:51.777 --> 00:04:53.257
+is the list of its neighbours.
+
+128
+00:04:53.257 --> 00:04:54.857
+We use our array queue
+
+129
+00:04:54.857 --> 00:04:56.637
+and a set called seen
+
+130
+00:04:56.637 --> 00:04:58.787
+which starts with the start node.
+
+131
+00:04:59.137 --> 00:05:00.647
+Each time through the loop
+
+132
+00:05:00.647 --> 00:05:02.367
+we dequeue a node
+
+133
+00:05:02.367 --> 00:05:04.223
+append it to the order list
+
+134
+00:05:04.287 --> 00:05:06.061
+and enqueue every neighbour
+
+135
+00:05:06.127 --> 00:05:08.107
+that isn't in seen.
+
+136
+00:05:08.107 --> 00:05:10.547
+We add it to seen at that moment
+
+137
+00:05:10.547 --> 00:05:11.967
+when it is enqueued
+
+138
+00:05:11.967 --> 00:05:13.852
+not when it is dequeued.
+
+139
+00:05:13.927 --> 00:05:15.389
+That is what stops a node
+
+140
+00:05:15.447 --> 00:05:16.977
+from being queued twice.
+
+141
+00:05:17.557 --> 00:05:20.977
+The result is A, B, C, D, E, F.
+
+142
+00:05:21.087 --> 00:05:22.728
+This second block prints the
+
+143
+00:05:22.787 --> 00:05:25.267
+queue after each visit: after A
+
+144
+00:05:25.267 --> 00:05:27.007
+the queue holds B and C.
+
+145
+00:05:27.007 --> 00:05:30.227
+After B, it holds C, D and E.
+
+146
+00:05:30.227 --> 00:05:33.637
+After C, D, E and F.
+
+147
+00:05:33.987 --> 00:05:36.037
+And by the time we visit E
+
+148
+00:05:36.037 --> 00:05:38.297
+the node F is already waiting
+
+149
+00:05:38.297 --> 00:05:40.347
+so it is never added again.
+
+150
+00:05:40.927 --> 00:05:42.362
+How fast are these?
+
+151
+00:05:42.437 --> 00:05:44.014
+The bracket checker looks
+
+152
+00:05:44.077 --> 00:05:45.637
+at each character once
+
+153
+00:05:45.637 --> 00:05:48.334
+and does a constant amount of work for it
+
+154
+00:05:48.397 --> 00:05:50.214
+so it takes time proportional
+
+155
+00:05:50.277 --> 00:05:52.447
+to the length of the text.
+
+156
+00:05:52.797 --> 00:05:55.369
+Level order enqueues and dequeues
+
+157
+00:05:55.447 --> 00:05:56.667
+each node once
+
+158
+00:05:56.667 --> 00:05:58.539
+and looks at each neighbour list once.
+
+159
+00:05:58.587 --> 00:06:01.128
+So it takes time proportional to the number
+
+160
+00:06:01.187 --> 00:06:03.538
+of nodes plus the number of edges.
+
+161
+00:06:03.607 --> 00:06:05.075
+We'll use exactly that count
+
+162
+00:06:05.127 --> 00:06:06.437
+again in Chapter nine.
+
+163
+00:06:07.017 --> 00:06:09.537
+In real code you would use a list as
+
+164
+00:06:09.607 --> 00:06:11.626
+the stack in the bracket checker
+
+165
+00:06:11.687 --> 00:06:13.739
+and a collections dot deque as
+
+166
+00:06:13.807 --> 00:06:16.527
+the queue in the search: append to enqueue
+
+167
+00:06:16.527 --> 00:06:18.617
+popleft to dequeue.
+
+168
+00:06:19.197 --> 00:06:20.667
+That's Chapter three.
+
+169
+00:06:20.667 --> 00:06:22.717
+Next, recursion.
+

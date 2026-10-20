@@ -1,0 +1,806 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:03.930
+A phone book.
+
+2
+00:00:03.930 --> 00:00:07.095
+Given a name, a hash map finds the number
+
+3
+00:00:07.170 --> 00:00:09.020
+almost instantly.
+
+4
+00:00:09.370 --> 00:00:11.139
+But ask a different question.
+
+5
+00:00:11.200 --> 00:00:12.991
+Who is the last person who
+
+6
+00:00:13.060 --> 00:00:14.860
+comes before Morgan?
+
+7
+00:00:14.860 --> 00:00:19.410
+Or: list everyone from M to P, in order.
+
+8
+00:00:19.760 --> 00:00:22.530
+A hash map has no idea of order.
+
+9
+00:00:22.530 --> 00:00:23.650
+To answer
+
+10
+00:00:23.650 --> 00:00:25.870
+it would have to look at every entry.
+
+11
+00:00:25.870 --> 00:00:29.120
+We need a map that keeps its keys sorted.
+
+12
+00:00:29.700 --> 00:00:31.900
+This is the sorted map.
+
+13
+00:00:32.250 --> 00:00:34.420
+We'll see the operations it offers
+
+14
+00:00:34.420 --> 00:00:36.620
+how a balanced tree answers them
+
+15
+00:00:36.620 --> 00:00:39.930
+and why a sorted list is not a substitute.
+
+16
+00:00:40.510 --> 00:00:43.520
+Besides get, put, and remove
+
+17
+00:00:43.520 --> 00:00:46.020
+a sorted map has first and last
+
+18
+00:00:46.020 --> 00:00:47.990
+the smallest and biggest keys.
+
+19
+00:00:48.340 --> 00:00:51.500
+floor of a key is the entry with the greatest
+
+20
+00:00:51.570 --> 00:00:54.447
+key that is at most the key.
+
+21
+00:00:54.550 --> 00:00:56.791
+ceiling is the entry with the smallest
+
+22
+00:00:56.850 --> 00:00:59.100
+key that is at least the key.
+
+23
+00:00:59.450 --> 00:01:01.440
+And a range query
+
+24
+00:01:01.440 --> 00:01:03.940
+all entries with keys from low
+
+25
+00:01:03.940 --> 00:01:06.130
+up to but not including high.
+
+26
+00:01:06.480 --> 00:01:08.165
+And of course you can walk
+
+27
+00:01:08.230 --> 00:01:10.960
+through all the entries, in sorted order.
+
+28
+00:01:11.540 --> 00:01:13.950
+Here are six exam scores
+
+29
+00:01:13.950 --> 00:01:14.950
+with their students.
+
+30
+00:01:14.950 --> 00:01:16.950
+The first is sixty-one
+
+31
+00:01:16.950 --> 00:01:19.180
+and the last is ninety-five.
+
+32
+00:01:19.530 --> 00:01:22.638
+floor of eighty: no one scored eighty
+
+33
+00:01:22.720 --> 00:01:24.665
+so the greatest score that
+
+34
+00:01:24.740 --> 00:01:27.100
+is at most eighty.
+
+35
+00:01:27.100 --> 00:01:29.930
+That is seventy-nine, Eli.
+
+36
+00:01:30.280 --> 00:01:33.066
+ceiling of eighty is the smallest
+
+37
+00:01:33.150 --> 00:01:34.990
+score that is at least eighty.
+
+38
+00:01:34.990 --> 00:01:37.120
+That is eighty-four, Fay.
+
+39
+00:01:37.470 --> 00:01:39.488
+The range from seventy up to
+
+40
+00:01:39.560 --> 00:01:42.260
+ninety gives four entries: seventy-two
+
+41
+00:01:42.260 --> 00:01:45.980
+seventy-nine, eighty-four, and eighty-eight.
+
+42
+00:01:45.980 --> 00:01:48.310
+Ninety itself would be excluded.
+
+43
+00:01:48.890 --> 00:01:51.020
+How does a tree find the floor?
+
+44
+00:01:51.020 --> 00:01:53.490
+Walk down from the root, as in a search.
+
+45
+00:01:53.840 --> 00:01:56.190
+When a key is at most the target
+
+46
+00:01:56.190 --> 00:01:58.417
+remember it as a candidate, and go right
+
+47
+00:01:58.470 --> 00:01:59.741
+because a better candidate
+
+48
+00:01:59.790 --> 00:02:01.270
+can only be bigger.
+
+49
+00:02:01.270 --> 00:02:04.040
+When a key is too big, go left.
+
+50
+00:02:04.390 --> 00:02:05.920
+When you run out of tree
+
+51
+00:02:05.920 --> 00:02:08.580
+the last candidate is the answer.
+
+52
+00:02:08.580 --> 00:02:12.030
+That is one path, so about log n steps.
+
+53
+00:02:12.380 --> 00:02:14.010
+A range query is similar.
+
+54
+00:02:14.010 --> 00:02:15.404
+Go through the keys in order
+
+55
+00:02:15.450 --> 00:02:17.389
+but skip every subtree that lies
+
+56
+00:02:17.450 --> 00:02:19.210
+completely outside the range.
+
+57
+00:02:19.210 --> 00:02:21.070
+That costs log n
+
+58
+00:02:21.070 --> 00:02:23.940
+plus one step for each entry returned.
+
+59
+00:02:24.520 --> 00:02:27.050
+Why not keep two sorted lists
+
+60
+00:02:27.050 --> 00:02:29.410
+one for keys and one for values?
+
+61
+00:02:29.410 --> 00:02:32.330
+Binary search finds a key in log n steps
+
+62
+00:02:32.330 --> 00:02:35.560
+and floor, ceiling, and ranges work too.
+
+63
+00:02:35.910 --> 00:02:38.020
+The catch is insertion.
+
+64
+00:02:38.020 --> 00:02:39.743
+A new key goes in the middle
+
+65
+00:02:39.800 --> 00:02:41.697
+and everything after it has to
+
+66
+00:02:41.760 --> 00:02:43.590
+shift one place to the right.
+
+67
+00:02:43.940 --> 00:02:46.530
+On average, half of the list moves.
+
+68
+00:02:46.530 --> 00:02:49.910
+So one insertion costs n over two moves
+
+69
+00:02:49.910 --> 00:02:52.460
+instead of log n comparisons.
+
+70
+00:02:53.040 --> 00:02:54.430
+Pause and predict.
+
+71
+00:02:54.430 --> 00:02:56.590
+We insert ten thousand random keys
+
+72
+00:02:56.590 --> 00:02:59.760
+one at a time, into two sorted lists.
+
+73
+00:03:00.110 --> 00:03:02.480
+How many entries do the shifts move
+
+74
+00:03:02.480 --> 00:03:03.620
+in total?
+
+75
+00:03:03.620 --> 00:03:04.860
+About ten thousand?
+
+76
+00:03:04.860 --> 00:03:06.460
+About a hundred thousand?
+
+77
+00:03:06.460 --> 00:03:08.510
+About twenty-five million?
+
+78
+00:03:08.860 --> 00:03:11.170
+About twenty-five million.
+
+79
+00:03:11.170 --> 00:03:13.788
+Exactly, twenty-four million nine hundred
+
+80
+00:03:13.850 --> 00:03:15.770
+nine thousand forty-three.
+
+81
+00:03:15.770 --> 00:03:18.283
+The tree, for the same keys
+
+82
+00:03:18.370 --> 00:03:20.583
+made about one hundred twenty-two
+
+83
+00:03:20.650 --> 00:03:22.420
+thousand comparisons.
+
+84
+00:03:23.000 --> 00:03:25.650
+But there is a case where the list wins.
+
+85
+00:03:25.650 --> 00:03:28.430
+If the keys arrive already in order
+
+86
+00:03:28.430 --> 00:03:30.130
+every new key goes at the end
+
+87
+00:03:30.130 --> 00:03:31.810
+and nothing has to shift.
+
+88
+00:03:31.810 --> 00:03:33.080
+Zero moves.
+
+89
+00:03:33.430 --> 00:03:35.160
+The tree needs about the same
+
+90
+00:03:35.220 --> 00:03:36.660
+work whatever the order
+
+91
+00:03:36.720 --> 00:03:38.571
+about one hundred twenty-four thousand
+
+92
+00:03:38.620 --> 00:03:40.720
+comparisons for ten thousand keys
+
+93
+00:03:40.720 --> 00:03:44.230
+and it stays balanced, with fourteen levels.
+
+94
+00:03:44.580 --> 00:03:47.341
+So: a sorted list for data that
+
+95
+00:03:47.430 --> 00:03:50.242
+arrives in order, or hardly ever changes.
+
+96
+00:03:50.310 --> 00:03:52.865
+A balanced tree when keys come
+
+97
+00:03:52.950 --> 00:03:54.420
+and go in any order.
+
+98
+00:03:55.000 --> 00:03:56.430
+To sum up.
+
+99
+00:03:56.430 --> 00:04:00.490
+A sorted map adds first, last, floor
+
+100
+00:04:00.490 --> 00:04:01.150
+ceiling
+
+101
+00:04:01.150 --> 00:04:03.960
+and range queries to the ordinary map.
+
+102
+00:04:04.310 --> 00:04:07.360
+A balanced search tree, whether AVL
+
+103
+00:04:07.360 --> 00:04:09.200
+two-four, or red-black
+
+104
+00:04:09.200 --> 00:04:12.350
+answers them all in log n time.
+
+105
+00:04:12.700 --> 00:04:15.410
+A sorted list answers them too
+
+106
+00:04:15.410 --> 00:04:18.300
+but pays n over two on every insertion.
+
+107
+00:04:18.650 --> 00:04:20.540
+That ends the search trees.
+
+108
+00:04:20.540 --> 00:04:23.260
+In the next chapter, we give up order
+
+109
+00:04:23.260 --> 00:04:26.620
+and see how a hash table gets constant time.
+
+110
+00:04:26.620 --> 00:04:28.010
+Now, the code.
+
+111
+00:04:28.637 --> 00:04:31.047
+Here is the sorted map in Java.
+
+112
+00:04:31.047 --> 00:04:32.967
+We'll build it on our AVL tree
+
+113
+00:04:32.967 --> 00:04:36.117
+and compare it with the JDK's own tree map.
+
+114
+00:04:36.697 --> 00:04:39.947
+Avl Sorted Map wraps an AVL tree
+
+115
+00:04:39.947 --> 00:04:42.287
+generic in the key and the value.
+
+116
+00:04:42.287 --> 00:04:45.257
+put, get, and remove call the tree.
+
+117
+00:04:45.607 --> 00:04:49.057
+first entry walks left as far as possible
+
+118
+00:04:49.057 --> 00:04:50.997
+last entry walks right.
+
+119
+00:04:50.997 --> 00:04:53.887
+Entries are returned as map entry.
+
+120
+00:04:54.467 --> 00:04:56.897
+floor entry walks down from the root.
+
+121
+00:04:56.897 --> 00:04:59.497
+An equal key is the answer.
+
+122
+00:04:59.497 --> 00:05:01.637
+A smaller key is a candidate
+
+123
+00:05:01.637 --> 00:05:04.797
+and a closer one can only be on the right.
+
+124
+00:05:04.797 --> 00:05:07.427
+A bigger key sends us left.
+
+125
+00:05:07.777 --> 00:05:10.107
+ceiling entry is the mirror image.
+
+126
+00:05:10.107 --> 00:05:13.737
+Notice compare to again, never less-than.
+
+127
+00:05:14.317 --> 00:05:17.267
+sub map collects the keys from low
+
+128
+00:05:17.267 --> 00:05:19.687
+up to but not including high
+
+129
+00:05:19.687 --> 00:05:21.627
+like the JDK's sub map.
+
+130
+00:05:21.627 --> 00:05:24.997
+It skips whole subtrees outside the range.
+
+131
+00:05:25.577 --> 00:05:27.627
+Run it on the exam scores.
+
+132
+00:05:27.627 --> 00:05:30.447
+floor of eighty is seventy-nine, Eli.
+
+133
+00:05:30.447 --> 00:05:33.057
+ceiling is eighty-four, Fay.
+
+134
+00:05:33.147 --> 00:05:34.859
+The range from seventy to
+
+135
+00:05:34.927 --> 00:05:37.097
+ninety has four entries.
+
+136
+00:05:37.447 --> 00:05:40.537
+And the JDK's tree map, given the same data
+
+137
+00:05:40.537 --> 00:05:41.847
+gives the same answers.
+
+138
+00:05:42.427 --> 00:05:45.137
+tree map is a red-black tree
+
+139
+00:05:45.137 --> 00:05:46.977
+as its documentation says.
+
+140
+00:05:46.977 --> 00:05:50.617
+It offers first entry, last entry
+
+141
+00:05:50.617 --> 00:05:53.817
+floor entry, ceiling entry, lower entry
+
+142
+00:05:53.817 --> 00:05:55.837
+higher entry, and sub map
+
+143
+00:05:55.837 --> 00:05:58.067
+with the same half-open range.
+
+144
+00:05:58.417 --> 00:06:00.350
+tree set is the same idea
+
+145
+00:06:00.427 --> 00:06:02.467
+for keys without values.
+
+146
+00:06:02.467 --> 00:06:04.690
+In practice, you would just use these.
+
+147
+00:06:04.747 --> 00:06:06.097
+Our version is here to show
+
+148
+00:06:06.147 --> 00:06:07.857
+what they do inside.
+
+149
+00:06:08.437 --> 00:06:11.428
+Array List Map keeps two sorted lists
+
+150
+00:06:11.507 --> 00:06:13.801
+and uses Collections binary search
+
+151
+00:06:13.867 --> 00:06:14.987
+to find the position.
+
+152
+00:06:14.987 --> 00:06:16.517
+Lookups are fast.
+
+153
+00:06:16.867 --> 00:06:19.451
+But array list add at an index
+
+154
+00:06:19.537 --> 00:06:21.657
+shifts everything after it
+
+155
+00:06:21.657 --> 00:06:23.507
+and we count those moves.
+
+156
+00:06:23.857 --> 00:06:25.993
+For ten thousand random keys
+
+157
+00:06:26.067 --> 00:06:28.457
+the lists moved twenty-four million nine hundred
+
+158
+00:06:28.507 --> 00:06:30.431
+nine thousand forty-three entries.
+
+159
+00:06:30.487 --> 00:06:33.105
+The tree made about one hundred twenty-two
+
+160
+00:06:33.167 --> 00:06:34.467
+thousand comparisons.
+
+161
+00:06:34.467 --> 00:06:37.097
+Sorted input needs no moves.
+
+162
+00:06:37.677 --> 00:06:39.107
+And the stopwatch
+
+163
+00:06:39.107 --> 00:06:41.387
+measured once on this machine
+
+164
+00:06:41.387 --> 00:06:43.187
+after the JVM warms up.
+
+165
+00:06:43.187 --> 00:06:44.907
+At a thousand keys
+
+166
+00:06:44.907 --> 00:06:46.677
+both are under a millisecond.
+
+167
+00:06:47.027 --> 00:06:48.637
+At ten thousand
+
+168
+00:06:48.637 --> 00:06:50.437
+the tree takes three milliseconds
+
+169
+00:06:50.437 --> 00:06:52.257
+and the lists thirteen.
+
+170
+00:06:52.257 --> 00:06:54.097
+At three hundred thousand
+
+171
+00:06:54.097 --> 00:06:55.997
+the tree takes under half a second
+
+172
+00:06:55.997 --> 00:06:58.467
+and the lists almost three.
+
+173
+00:06:58.817 --> 00:07:02.327
+Shifting is a memory copy, so it is fast
+
+174
+00:07:02.327 --> 00:07:04.287
+but it still grows with n
+
+175
+00:07:04.287 --> 00:07:05.977
+and the tree does not.
+
+176
+00:07:06.557 --> 00:07:09.568
+The test runs random puts and removes
+
+177
+00:07:09.647 --> 00:07:11.205
+two hundred operations on
+
+178
+00:07:11.267 --> 00:07:12.677
+each of forty maps.
+
+179
+00:07:13.027 --> 00:07:16.057
+After each one, it picks a random probe
+
+180
+00:07:16.057 --> 00:07:18.997
+and compares floor entry, ceiling entry
+
+181
+00:07:18.997 --> 00:07:21.937
+and sub map with the JDK's tree map.
+
+182
+00:07:21.937 --> 00:07:24.227
+They must all agree.
+
+183
+00:07:24.807 --> 00:07:26.377
+Common mistakes.
+
+184
+00:07:26.377 --> 00:07:29.457
+Mixing up floor entry and lower entry.
+
+185
+00:07:29.457 --> 00:07:32.767
+Floor allows an equal key, lower does not.
+
+186
+00:07:33.117 --> 00:07:34.794
+Forgetting that sub map
+
+187
+00:07:34.867 --> 00:07:36.436
+excludes the high end.
+
+188
+00:07:36.507 --> 00:07:38.307
+Use the four-argument overload
+
+189
+00:07:38.367 --> 00:07:40.077
+when you want it included.
+
+190
+00:07:40.427 --> 00:07:43.097
+Our own map rejects null values
+
+191
+00:07:43.097 --> 00:07:44.717
+because map entry does.
+
+192
+00:07:44.717 --> 00:07:46.907
+The JDK's tree map allows them.
+
+193
+00:07:47.257 --> 00:07:50.187
+And mutating a key after it is in the map
+
+194
+00:07:50.187 --> 00:07:52.617
+which silently breaks the order.
+
+195
+00:07:53.197 --> 00:07:55.047
+In the standard library
+
+196
+00:07:55.047 --> 00:07:57.707
+tree map and tree set, red-black trees
+
+197
+00:07:57.707 --> 00:07:59.687
+with the navigable map methods.
+
+198
+00:07:59.687 --> 00:08:02.347
+For a map without order, hash map
+
+199
+00:08:02.347 --> 00:08:03.757
+which is next chapter.
+
+200
+00:08:04.107 --> 00:08:06.337
+That completes balanced search trees.
+
+201
+00:08:06.337 --> 00:08:08.307
+Next, hashing.
+

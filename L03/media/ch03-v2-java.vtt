@@ -1,0 +1,702 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:06.363
+A line at a ticket counter has one rule
+
+2
+00:00:06.450 --> 00:00:07.976
+the person who arrived first
+
+3
+00:00:08.030 --> 00:00:09.650
+is served first.
+
+4
+00:00:09.650 --> 00:00:12.140
+Nobody likes it when that rule is broken.
+
+5
+00:00:12.490 --> 00:00:15.433
+Computers have the same rule in many places.
+
+6
+00:00:15.500 --> 00:00:17.187
+A printer works through its jobs
+
+7
+00:00:17.240 --> 00:00:18.708
+in the order they were sent.
+
+8
+00:00:18.760 --> 00:00:20.867
+A web server answers requests
+
+9
+00:00:20.940 --> 00:00:22.690
+in the order they arrived.
+
+10
+00:00:23.040 --> 00:00:25.067
+What is the structure that keeps
+
+11
+00:00:25.130 --> 00:00:27.240
+things in arrival order?
+
+12
+00:00:27.820 --> 00:00:29.590
+It's called a queue
+
+13
+00:00:29.590 --> 00:00:32.180
+and it is the mirror image of the stack.
+
+14
+00:00:32.530 --> 00:00:35.160
+In this video we'll see the queue's promise
+
+15
+00:00:35.160 --> 00:00:37.620
+a clever way to store it in an array
+
+16
+00:00:37.620 --> 00:00:39.610
+and the linked alternative.
+
+17
+00:00:40.190 --> 00:00:43.180
+A queue is first in, first out.
+
+18
+00:00:43.180 --> 00:00:46.020
+You add items at one end, called the rear
+
+19
+00:00:46.020 --> 00:00:48.240
+and you remove them from the other end
+
+20
+00:00:48.240 --> 00:00:49.350
+called the front.
+
+21
+00:00:49.700 --> 00:00:52.672
+Enqueue adds an item at the rear.
+
+22
+00:00:52.750 --> 00:00:54.216
+Dequeue removes the item at
+
+23
+00:00:54.270 --> 00:00:56.135
+the front and returns it.
+
+24
+00:00:56.210 --> 00:00:57.815
+First looks at the front item
+
+25
+00:00:57.870 --> 00:00:59.090
+without removing it.
+
+26
+00:00:59.090 --> 00:01:00.710
+And as with a stack
+
+27
+00:01:00.710 --> 00:01:02.170
+we can ask for the size
+
+28
+00:01:02.170 --> 00:01:04.060
+and whether the queue is empty.
+
+29
+00:01:04.410 --> 00:01:07.552
+Dequeue and first on an empty
+
+30
+00:01:07.660 --> 00:01:09.090
+queue are errors.
+
+31
+00:01:09.670 --> 00:01:14.920
+Enqueue A, B, C, D, in that order.
+
+32
+00:01:14.920 --> 00:01:17.060
+Now dequeue twice.
+
+33
+00:01:17.060 --> 00:01:19.630
+A comes out first, then B.
+
+34
+00:01:19.980 --> 00:01:22.470
+The queue now holds C and D
+
+35
+00:01:22.470 --> 00:01:23.670
+with C at the front.
+
+36
+00:01:23.670 --> 00:01:26.020
+The order of arrival has been respected.
+
+37
+00:01:26.600 --> 00:01:29.504
+The obvious way to store a queue in an array
+
+38
+00:01:29.570 --> 00:01:32.370
+is to keep the front at index zero.
+
+39
+00:01:32.450 --> 00:01:34.577
+But then every dequeue leaves
+
+40
+00:01:34.650 --> 00:01:35.926
+a hole at the start
+
+41
+00:01:35.990 --> 00:01:37.904
+and we shift every other item
+
+42
+00:01:37.970 --> 00:01:39.800
+one place to the left.
+
+43
+00:01:40.150 --> 00:01:43.360
+That's n minus one moves for every dequeue.
+
+44
+00:01:43.360 --> 00:01:44.576
+With a long queue
+
+45
+00:01:44.640 --> 00:01:46.535
+almost all of the time goes into shuffling
+
+46
+00:01:46.580 --> 00:01:48.710
+items that did nothing.
+
+47
+00:01:49.060 --> 00:01:52.070
+The fix is to stop moving the items
+
+48
+00:01:52.070 --> 00:01:53.900
+and move the front instead.
+
+49
+00:01:54.480 --> 00:01:56.599
+Keep a front index.
+
+50
+00:01:56.710 --> 00:01:59.464
+Dequeue just clears the cell and moves the
+
+51
+00:01:59.530 --> 00:02:01.530
+front index one step to the right.
+
+52
+00:02:01.530 --> 00:02:03.000
+No shifting at all.
+
+53
+00:02:03.350 --> 00:02:05.377
+But now the occupied part of the
+
+54
+00:02:05.440 --> 00:02:07.720
+array creeps to the right.
+
+55
+00:02:07.720 --> 00:02:10.097
+Eventually the rear runs off the end
+
+56
+00:02:10.160 --> 00:02:11.317
+even though there are empty
+
+57
+00:02:11.360 --> 00:02:12.510
+cells at the start.
+
+58
+00:02:13.090 --> 00:02:15.980
+So we bend the array into a circle.
+
+59
+00:02:15.980 --> 00:02:18.760
+When the rear reaches the last cell
+
+60
+00:02:18.760 --> 00:02:21.080
+the next position is cell zero.
+
+61
+00:02:21.080 --> 00:02:23.130
+The array wraps around.
+
+62
+00:02:23.480 --> 00:02:27.150
+In code, wrapping is the remainder operator.
+
+63
+00:02:27.150 --> 00:02:30.490
+The next free cell is front plus size
+
+64
+00:02:30.490 --> 00:02:32.400
+modulo the capacity.
+
+65
+00:02:32.750 --> 00:02:36.120
+Enqueue E and it lands in cell zero.
+
+66
+00:02:36.120 --> 00:02:39.500
+Enqueue F and it lands in cell one.
+
+67
+00:02:39.500 --> 00:02:43.094
+The array is full, but nothing was moved
+
+68
+00:02:43.180 --> 00:02:45.318
+and every operation took a
+
+69
+00:02:45.400 --> 00:02:46.950
+constant number of steps.
+
+70
+00:02:47.530 --> 00:02:50.500
+What if the circle is truly full?
+
+71
+00:02:50.500 --> 00:02:52.763
+Then we do the same thing as the stack
+
+72
+00:02:52.820 --> 00:02:54.814
+allocate an array of twice the
+
+73
+00:02:54.880 --> 00:02:57.250
+size and copy the items over.
+
+74
+00:02:57.600 --> 00:02:59.250
+One detail matters.
+
+75
+00:02:59.250 --> 00:03:01.750
+We copy them in queue order
+
+76
+00:03:01.750 --> 00:03:03.430
+starting from the front
+
+77
+00:03:03.430 --> 00:03:06.190
+and put them at the start of the new array.
+
+78
+00:03:06.190 --> 00:03:08.070
+That straightens the circle out
+
+79
+00:03:08.070 --> 00:03:10.560
+and the front index goes back to zero.
+
+80
+00:03:11.140 --> 00:03:12.698
+The other way to build a queue
+
+81
+00:03:12.750 --> 00:03:14.090
+is a chain of nodes.
+
+82
+00:03:14.090 --> 00:03:15.950
+Keep a reference to both ends
+
+83
+00:03:15.950 --> 00:03:18.500
+head is the front, and tail is the rear.
+
+84
+00:03:18.850 --> 00:03:21.960
+Enqueue adds a node after the tail
+
+85
+00:03:21.960 --> 00:03:23.884
+and moves the tail.
+
+86
+00:03:23.980 --> 00:03:26.271
+Dequeue removes the head node and
+
+87
+00:03:26.340 --> 00:03:28.340
+moves the head to the next one.
+
+88
+00:03:28.340 --> 00:03:31.420
+Every operation touches one end only
+
+89
+00:03:31.420 --> 00:03:34.610
+so every operation takes constant time.
+
+90
+00:03:34.960 --> 00:03:37.850
+Why add at the tail and remove at the head
+
+91
+00:03:37.850 --> 00:03:39.550
+and not the other way round?
+
+92
+00:03:39.550 --> 00:03:42.573
+Because a chain can only step forward.
+
+93
+00:03:42.650 --> 00:03:44.026
+Removing at the tail would mean
+
+94
+00:03:44.070 --> 00:03:45.934
+walking all the way from the head
+
+95
+00:03:45.990 --> 00:03:47.840
+to find the node before it.
+
+96
+00:03:48.420 --> 00:03:50.010
+To sum up.
+
+97
+00:03:50.010 --> 00:03:52.790
+A queue is first in, first out.
+
+98
+00:03:52.790 --> 00:03:55.910
+Enqueue at the rear, dequeue from the front
+
+99
+00:03:55.910 --> 00:03:57.700
+all in constant time.
+
+100
+00:03:58.050 --> 00:04:00.601
+In an array, the trick is to move the front
+
+101
+00:04:00.660 --> 00:04:02.620
+index and wrap around
+
+102
+00:04:02.620 --> 00:04:04.860
+instead of moving the items.
+
+103
+00:04:04.860 --> 00:04:06.040
+In a chain
+
+104
+00:04:06.040 --> 00:04:09.650
+the trick is to keep both a head and a tail.
+
+105
+00:04:10.000 --> 00:04:12.440
+Next, we write both in code.
+
+106
+00:04:13.067 --> 00:04:15.467
+Now the queue, in Java.
+
+107
+00:04:16.047 --> 00:04:18.577
+Here is the circular array queue.
+
+108
+00:04:18.577 --> 00:04:22.657
+It keeps an array called data, an int size
+
+109
+00:04:22.657 --> 00:04:24.197
+and an int front
+
+110
+00:04:24.197 --> 00:04:26.247
+the position of the first item.
+
+111
+00:04:26.597 --> 00:04:28.527
+Enqueue computes the rear
+
+112
+00:04:28.527 --> 00:04:30.887
+the front plus the size
+
+113
+00:04:30.887 --> 00:04:32.865
+modulo the length of the array.
+
+114
+00:04:32.927 --> 00:04:34.540
+It stores the item there
+
+115
+00:04:34.607 --> 00:04:36.317
+and increments size.
+
+116
+00:04:36.667 --> 00:04:39.477
+Dequeue reads the item at the front
+
+117
+00:04:39.477 --> 00:04:41.217
+sets that slot to null
+
+118
+00:04:41.217 --> 00:04:43.657
+and moves the front one step forward
+
+119
+00:04:43.657 --> 00:04:45.542
+again modulo the length.
+
+120
+00:04:45.617 --> 00:04:48.173
+That modulo is what makes the index wrap
+
+121
+00:04:48.237 --> 00:04:50.627
+from the last cell back to zero.
+
+122
+00:04:51.207 --> 00:04:54.537
+Let's watch it run, with a capacity of four.
+
+123
+00:04:54.537 --> 00:04:57.817
+After enqueuing A, B, C and D
+
+124
+00:04:57.817 --> 00:05:00.687
+the front is zero and the size is four.
+
+125
+00:05:01.037 --> 00:05:02.447
+Dequeue twice
+
+126
+00:05:02.447 --> 00:05:05.327
+and the front is two with a size of two.
+
+127
+00:05:05.327 --> 00:05:07.557
+The first two cells are null.
+
+128
+00:05:07.907 --> 00:05:10.517
+Now enqueue E and F.
+
+129
+00:05:10.517 --> 00:05:13.257
+They land in cells zero and one
+
+130
+00:05:13.257 --> 00:05:16.965
+the array reads E, F, C, D
+
+131
+00:05:17.097 --> 00:05:19.238
+with the front still at two
+
+132
+00:05:19.317 --> 00:05:21.455
+and the size back to four.
+
+133
+00:05:21.537 --> 00:05:23.178
+The queue has wrapped around
+
+134
+00:05:23.237 --> 00:05:24.347
+the end of the array.
+
+135
+00:05:24.927 --> 00:05:28.357
+One more enqueue, G, finds the array full
+
+136
+00:05:28.357 --> 00:05:30.457
+so resize doubles it.
+
+137
+00:05:30.457 --> 00:05:33.177
+Look at the loop: it walks from the front
+
+138
+00:05:33.177 --> 00:05:34.785
+wrapping with the same modulo
+
+139
+00:05:34.837 --> 00:05:37.196
+and copies each item to index
+
+140
+00:05:37.277 --> 00:05:39.087
+k in the new array.
+
+141
+00:05:39.437 --> 00:05:42.147
+Afterwards the front is zero again.
+
+142
+00:05:42.147 --> 00:05:47.047
+The dequeue order is C, D, E, F, G
+
+143
+00:05:47.047 --> 00:05:49.531
+arrival order, even though the items sat in
+
+144
+00:05:49.587 --> 00:05:51.077
+a wrapped-around layout.
+
+145
+00:05:51.657 --> 00:05:53.947
+The linked queue keeps a head
+
+146
+00:05:53.947 --> 00:05:56.187
+a tail and a size.
+
+147
+00:05:56.187 --> 00:05:58.047
+Enqueue makes a new node.
+
+148
+00:05:58.047 --> 00:05:59.707
+If the queue was empty
+
+149
+00:05:59.707 --> 00:06:01.667
+that node is also the head.
+
+150
+00:06:01.667 --> 00:06:04.967
+Otherwise the old tail's next points to it.
+
+151
+00:06:04.967 --> 00:06:07.137
+Either way it becomes the new tail.
+
+152
+00:06:07.487 --> 00:06:10.257
+Dequeue moves the head forward.
+
+153
+00:06:10.257 --> 00:06:12.077
+And notice the last lines
+
+154
+00:06:12.077 --> 00:06:13.957
+when the queue becomes empty
+
+155
+00:06:13.957 --> 00:06:16.589
+we also set the tail to null.
+
+156
+00:06:16.677 --> 00:06:18.744
+Otherwise the tail would still point at
+
+157
+00:06:18.797 --> 00:06:21.047
+a node that is no longer in the queue.
+
+158
+00:06:21.627 --> 00:06:23.237
+In the standard library
+
+159
+00:06:23.237 --> 00:06:25.265
+Java has a Queue interface
+
+160
+00:06:25.337 --> 00:06:27.478
+and ArrayDeque is the implementation
+
+161
+00:06:27.537 --> 00:06:28.597
+to reach for.
+
+162
+00:06:28.597 --> 00:06:30.317
+It is a circular array
+
+163
+00:06:30.317 --> 00:06:31.747
+just like the one we wrote.
+
+164
+00:06:32.097 --> 00:06:34.938
+Queue has two versions of each operation.
+
+165
+00:06:35.007 --> 00:06:37.317
+Add and remove throw an exception
+
+166
+00:06:37.387 --> 00:06:39.347
+when they can't do their job.
+
+167
+00:06:39.347 --> 00:06:42.127
+Offer and poll report failure instead
+
+168
+00:06:42.127 --> 00:06:45.367
+poll returns null on an empty queue.
+
+169
+00:06:45.367 --> 00:06:47.507
+LinkedList also implements Queue
+
+170
+00:06:47.507 --> 00:06:49.625
+but ArrayDeque is usually faster
+
+171
+00:06:49.687 --> 00:06:50.914
+because it stores items
+
+172
+00:06:50.967 --> 00:06:52.617
+together in one array.
+
+173
+00:06:53.197 --> 00:06:55.742
+Next video: what if you want to add and
+
+174
+00:06:55.807 --> 00:06:57.927
+remove at both ends?
+
+175
+00:06:57.927 --> 00:06:59.877
+That is a deque.
+

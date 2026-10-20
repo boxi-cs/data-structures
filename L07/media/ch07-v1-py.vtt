@@ -1,0 +1,890 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:05.610
+An array is the fastest container there is.
+
+2
+00:00:05.610 --> 00:00:08.670
+Ask for item number five hundred thousand
+
+3
+00:00:08.670 --> 00:00:10.910
+and the computer goes straight to it
+
+4
+00:00:10.910 --> 00:00:12.900
+because the position is the key.
+
+5
+00:00:13.250 --> 00:00:16.660
+Now suppose the keys are not small numbers.
+
+6
+00:00:16.660 --> 00:00:20.600
+They are names, or words, or order numbers.
+
+7
+00:00:20.600 --> 00:00:22.370
+Can we keep that speed?
+
+8
+00:00:22.720 --> 00:00:26.370
+The idea: turn the key into a position.
+
+9
+00:00:26.370 --> 00:00:28.079
+Do the arithmetic once
+
+10
+00:00:28.150 --> 00:00:29.871
+and jump straight to the slot
+
+11
+00:00:29.930 --> 00:00:31.690
+where that key belongs.
+
+12
+00:00:31.690 --> 00:00:33.680
+That is hashing.
+
+13
+00:00:34.260 --> 00:00:35.917
+This chapter is about maps that
+
+14
+00:00:35.970 --> 00:00:38.330
+find a key in about one step
+
+15
+00:00:38.330 --> 00:00:40.420
+without keeping the keys in order.
+
+16
+00:00:40.770 --> 00:00:43.510
+In this video we'll see how a hash function
+
+17
+00:00:43.560 --> 00:00:45.390
+turns a key into a number
+
+18
+00:00:45.460 --> 00:00:47.018
+how that number becomes a
+
+19
+00:00:47.080 --> 00:00:48.360
+position in the table
+
+20
+00:00:48.360 --> 00:00:52.250
+and what makes a hash function good, or bad.
+
+21
+00:00:52.830 --> 00:00:56.070
+A hash function works in two steps.
+
+22
+00:00:56.420 --> 00:01:00.450
+First, the hash code: any key, a word
+
+23
+00:01:00.450 --> 00:01:01.930
+a pair, a record
+
+24
+00:01:01.930 --> 00:01:04.860
+becomes an ordinary whole number.
+
+25
+00:01:05.210 --> 00:01:07.980
+Second, compression: that number
+
+26
+00:01:07.980 --> 00:01:10.412
+which can be huge or even negative
+
+27
+00:01:10.480 --> 00:01:12.474
+is squeezed into a table index
+
+28
+00:01:12.540 --> 00:01:15.170
+between zero and m minus one.
+
+29
+00:01:15.520 --> 00:01:18.190
+The simplest compression is the remainder
+
+30
+00:01:18.190 --> 00:01:21.795
+the index is the hash code, modulo m.
+
+31
+00:01:21.890 --> 00:01:25.030
+If the table has thirteen slots and the
+
+32
+00:01:25.110 --> 00:01:27.650
+hash code is ninety-nine million
+
+33
+00:01:27.650 --> 00:01:29.490
+one hundred sixty-two thousand
+
+34
+00:01:29.490 --> 00:01:30.810
+three hundred twenty-two
+
+35
+00:01:30.810 --> 00:01:32.480
+the index is twelve.
+
+36
+00:01:32.830 --> 00:01:35.412
+Choosing m to be a prime number helps
+
+37
+00:01:35.480 --> 00:01:37.487
+because a prime does not share factors
+
+38
+00:01:37.540 --> 00:01:39.550
+with the patterns in real keys.
+
+39
+00:01:40.130 --> 00:01:41.311
+There is a catch.
+
+40
+00:01:41.380 --> 00:01:43.309
+There are far more possible
+
+41
+00:01:43.380 --> 00:01:45.140
+keys than table slots
+
+42
+00:01:45.220 --> 00:01:47.205
+so two different keys will sometimes
+
+43
+00:01:47.260 --> 00:01:48.560
+land in the same slot.
+
+44
+00:01:48.560 --> 00:01:50.650
+This is called a collision.
+
+45
+00:01:51.000 --> 00:01:53.450
+Collisions cannot be avoided.
+
+46
+00:01:53.450 --> 00:01:55.650
+We can only hope to make them rare
+
+47
+00:01:55.650 --> 00:01:57.590
+and handle them when they happen.
+
+48
+00:01:57.590 --> 00:02:00.160
+The next two videos are about handling them.
+
+49
+00:02:00.510 --> 00:02:02.826
+Here is a collision you can check yourself.
+
+50
+00:02:02.880 --> 00:02:04.917
+The words "A a" and "B B"
+
+51
+00:02:04.980 --> 00:02:06.560
+are different keys
+
+52
+00:02:06.560 --> 00:02:09.340
+but their hash codes are both two thousand
+
+53
+00:02:09.340 --> 00:02:10.470
+one hundred twelve.
+
+54
+00:02:11.050 --> 00:02:13.620
+What makes a hash function good?
+
+55
+00:02:13.620 --> 00:02:17.629
+Mostly, one thing: it must spread real keys
+
+56
+00:02:17.720 --> 00:02:19.770
+evenly over the table.
+
+57
+00:02:20.120 --> 00:02:22.530
+Here is a tempting hash function
+
+58
+00:02:22.530 --> 00:02:24.480
+add up the character codes.
+
+59
+00:02:24.550 --> 00:02:27.205
+Let's test it on the seven hundred twenty
+
+60
+00:02:27.270 --> 00:02:30.280
+ways to rearrange the letters a to f.
+
+61
+00:02:30.630 --> 00:02:33.710
+Rearranging letters never changes their sum.
+
+62
+00:02:33.780 --> 00:02:36.282
+So all seven hundred twenty keys
+
+63
+00:02:36.360 --> 00:02:37.960
+get the same hash code
+
+64
+00:02:37.960 --> 00:02:40.639
+and fall into one single bucket.
+
+65
+00:02:40.720 --> 00:02:43.051
+A table meant to take one step now
+
+66
+00:02:43.120 --> 00:02:44.590
+takes seven hundred twenty.
+
+67
+00:02:44.940 --> 00:02:47.304
+Now a hash function that cares about
+
+68
+00:02:47.370 --> 00:02:49.030
+the position of each letter
+
+69
+00:02:49.030 --> 00:02:50.802
+called a polynomial hash.
+
+70
+00:02:50.870 --> 00:02:54.018
+The same seven hundred twenty keys get seven
+
+71
+00:02:54.090 --> 00:02:56.030
+hundred twenty different hash codes
+
+72
+00:02:56.030 --> 00:02:58.940
+and the longest bucket holds only four.
+
+73
+00:02:59.290 --> 00:03:01.160
+Same keys, same table.
+
+74
+00:03:01.160 --> 00:03:03.770
+The only difference is the hash function.
+
+75
+00:03:04.350 --> 00:03:07.026
+The polynomial hash works like this.
+
+76
+00:03:07.100 --> 00:03:09.764
+Treat the characters as digits of a
+
+77
+00:03:09.840 --> 00:03:11.520
+number written in base thirty-one
+
+78
+00:03:11.520 --> 00:03:13.910
+so the first letter counts most.
+
+79
+00:03:14.260 --> 00:03:16.379
+The hash code of a word is its
+
+80
+00:03:16.450 --> 00:03:18.331
+first character times thirty-one
+
+81
+00:03:18.390 --> 00:03:19.986
+to the power n minus one
+
+82
+00:03:20.050 --> 00:03:22.048
+plus the second times thirty-one
+
+83
+00:03:22.110 --> 00:03:24.350
+to the n minus two, and so on
+
+84
+00:03:24.350 --> 00:03:25.780
+down to the last character.
+
+85
+00:03:26.130 --> 00:03:29.028
+Java uses exactly this rule for strings
+
+86
+00:03:29.100 --> 00:03:30.941
+and the arithmetic wraps around
+
+87
+00:03:31.000 --> 00:03:32.100
+at thirty-two bits
+
+88
+00:03:32.100 --> 00:03:34.440
+so some hash codes come out negative.
+
+89
+00:03:34.440 --> 00:03:36.020
+That is fine
+
+90
+00:03:36.020 --> 00:03:37.890
+as long as we compress them correctly.
+
+91
+00:03:38.240 --> 00:03:41.413
+For example "stop" and "pots"
+
+92
+00:03:41.490 --> 00:03:42.910
+have the same letters.
+
+93
+00:03:42.910 --> 00:03:44.490
+Their sums are equal
+
+94
+00:03:44.490 --> 00:03:46.350
+four hundred fifty-four.
+
+95
+00:03:46.350 --> 00:03:49.950
+Their polynomial hash codes are not
+
+96
+00:03:49.950 --> 00:03:51.890
+three million five hundred forty thousand
+
+97
+00:03:51.890 --> 00:03:53.566
+nine hundred ninety-four
+
+98
+00:03:53.630 --> 00:03:55.256
+and three million four hundred
+
+99
+00:03:55.310 --> 00:03:56.750
+forty-six thousand
+
+100
+00:03:56.750 --> 00:03:58.000
+nine hundred seventy-four.
+
+101
+00:03:58.580 --> 00:04:01.318
+There are two rules a key must follow
+
+102
+00:04:01.390 --> 00:04:03.265
+and breaking either one makes
+
+103
+00:04:03.330 --> 00:04:06.060
+the map quietly lose data.
+
+104
+00:04:06.410 --> 00:04:09.839
+Rule one: keys that are equal must
+
+105
+00:04:09.940 --> 00:04:11.300
+have equal hash codes.
+
+106
+00:04:11.300 --> 00:04:14.294
+If two equal keys hashed to different slots
+
+107
+00:04:14.360 --> 00:04:15.794
+we would look in the wrong slot
+
+108
+00:04:15.840 --> 00:04:17.810
+and never find what we stored.
+
+109
+00:04:18.160 --> 00:04:21.227
+Rule two: a key must not change while
+
+110
+00:04:21.310 --> 00:04:22.830
+it is in the table.
+
+111
+00:04:22.830 --> 00:04:25.530
+Its hash code is used once, when it goes in.
+
+112
+00:04:25.530 --> 00:04:27.590
+If the key changes afterwards
+
+113
+00:04:27.590 --> 00:04:30.070
+it sits in the slot of its old value
+
+114
+00:04:30.070 --> 00:04:31.210
+and a lookup
+
+115
+00:04:31.210 --> 00:04:33.830
+with either the old value or the new one
+
+116
+00:04:33.830 --> 00:04:35.160
+looks somewhere else.
+
+117
+00:04:35.510 --> 00:04:37.900
+The entry is still there
+
+118
+00:04:37.900 --> 00:04:39.060
+counted in the size.
+
+119
+00:04:39.060 --> 00:04:40.950
+It is just unreachable.
+
+120
+00:04:41.530 --> 00:04:42.630
+To sum up.
+
+121
+00:04:42.740 --> 00:04:43.948
+A hash function turns a
+
+122
+00:04:44.000 --> 00:04:45.508
+key into a hash code
+
+123
+00:04:45.580 --> 00:04:47.217
+and compression turns that
+
+124
+00:04:47.280 --> 00:04:48.770
+into a table index.
+
+125
+00:04:49.120 --> 00:04:50.870
+Collisions are unavoidable
+
+126
+00:04:50.870 --> 00:04:54.308
+so what matters is spreading keys evenly
+
+127
+00:04:54.390 --> 00:04:56.669
+add up the letters and every
+
+128
+00:04:56.750 --> 00:04:58.050
+anagram collides
+
+129
+00:04:58.050 --> 00:05:01.040
+weigh the positions and they spread.
+
+130
+00:05:01.390 --> 00:05:04.480
+And two rules for keys: equal keys
+
+131
+00:05:04.480 --> 00:05:06.120
+equal hash codes
+
+132
+00:05:06.120 --> 00:05:09.510
+and never change a key inside a table.
+
+133
+00:05:09.860 --> 00:05:10.890
+Next time
+
+134
+00:05:10.890 --> 00:05:13.190
+we handle collisions the simplest way
+
+135
+00:05:13.190 --> 00:05:15.380
+let every slot hold a chain.
+
+136
+00:05:16.007 --> 00:05:18.487
+Now the same ideas in Python.
+
+137
+00:05:19.067 --> 00:05:21.197
+Here is the polynomial hash.
+
+138
+00:05:21.197 --> 00:05:22.492
+We start from zero
+
+139
+00:05:22.557 --> 00:05:24.663
+and for each character we multiply
+
+140
+00:05:24.717 --> 00:05:27.143
+the running value by the base and
+
+141
+00:05:27.217 --> 00:05:28.627
+add the character code.
+
+142
+00:05:28.977 --> 00:05:31.147
+Python integers never overflow
+
+143
+00:05:31.147 --> 00:05:32.962
+so we have to wrap by hand
+
+144
+00:05:33.027 --> 00:05:36.385
+the helper called to int thirty-two keeps
+
+145
+00:05:36.467 --> 00:05:38.922
+only the low thirty-two bits and turns
+
+146
+00:05:38.987 --> 00:05:40.347
+them into a signed number
+
+147
+00:05:40.347 --> 00:05:42.057
+exactly like Java does.
+
+148
+00:05:42.407 --> 00:05:44.562
+With the base thirty-one this gives the
+
+149
+00:05:44.617 --> 00:05:47.897
+same hash codes as Java's string hash.
+
+150
+00:05:47.897 --> 00:05:49.535
+That is on purpose
+
+151
+00:05:49.617 --> 00:05:51.861
+the Python and Java maps in this chapter
+
+152
+00:05:51.917 --> 00:05:53.537
+will probe the same slots
+
+153
+00:05:53.537 --> 00:05:55.567
+and the traces will match.
+
+154
+00:05:56.147 --> 00:05:59.481
+Compression is one operation, the remainder.
+
+155
+00:05:59.557 --> 00:06:01.860
+In Python the percent operator
+
+156
+00:06:01.937 --> 00:06:05.144
+is already safe: for a positive m the result
+
+157
+00:06:05.217 --> 00:06:06.697
+is never negative
+
+158
+00:06:06.697 --> 00:06:10.107
+so minus three modulo seven is four.
+
+159
+00:06:10.457 --> 00:06:11.945
+Run it on a few strings.
+
+160
+00:06:12.007 --> 00:06:13.949
+The hash code of hello is
+
+161
+00:06:14.027 --> 00:06:15.327
+ninety-nine million
+
+162
+00:06:15.327 --> 00:06:16.927
+one hundred sixty-two thousand
+
+163
+00:06:16.927 --> 00:06:18.025
+three hundred twenty-two
+
+164
+00:06:18.067 --> 00:06:19.737
+and in thirteen slots it
+
+165
+00:06:19.807 --> 00:06:21.377
+goes to index twelve.
+
+166
+00:06:21.727 --> 00:06:24.883
+"A a" and "B B" give the same number.
+
+167
+00:06:24.957 --> 00:06:27.433
+And stop and pots have the
+
+168
+00:06:27.537 --> 00:06:28.897
+same sum of letters
+
+169
+00:06:28.897 --> 00:06:31.207
+but different polynomial codes.
+
+170
+00:06:31.787 --> 00:06:34.574
+Now the two rules for keys.
+
+171
+00:06:34.677 --> 00:06:36.361
+Here is a class whose equality
+
+172
+00:06:36.417 --> 00:06:38.157
+ignores the reading number
+
+173
+00:06:38.157 --> 00:06:40.417
+but whose hash code includes it.
+
+174
+00:06:40.417 --> 00:06:43.177
+Two readings of twenty degrees are equal
+
+175
+00:06:43.177 --> 00:06:44.987
+but they hash differently.
+
+176
+00:06:45.337 --> 00:06:46.919
+Put the first one in a dictionary
+
+177
+00:06:46.967 --> 00:06:48.767
+and look up the second
+
+178
+00:06:48.767 --> 00:06:51.367
+Python says it is not there.
+
+179
+00:06:51.367 --> 00:06:53.947
+Equal keys, different hash codes
+
+180
+00:06:53.947 --> 00:06:55.777
+the rule is broken.
+
+181
+00:06:56.127 --> 00:06:58.897
+The second class is a mutable point.
+
+182
+00:06:58.897 --> 00:07:02.217
+We store it, then change its x coordinate.
+
+183
+00:07:02.217 --> 00:07:04.837
+Now a lookup with the old value fails
+
+184
+00:07:04.837 --> 00:07:07.099
+and so does a lookup with the new one
+
+185
+00:07:07.157 --> 00:07:08.856
+and yet the dictionary still
+
+186
+00:07:08.917 --> 00:07:10.167
+holds one entry.
+
+187
+00:07:10.517 --> 00:07:12.033
+Python protects you from the
+
+188
+00:07:12.087 --> 00:07:13.427
+most common mistake.
+
+189
+00:07:13.427 --> 00:07:16.887
+If a class defines equality but no hash
+
+190
+00:07:16.887 --> 00:07:18.587
+Python makes it unhashable
+
+191
+00:07:18.587 --> 00:07:20.797
+and refuses to use it as a key.
+
+192
+00:07:21.377 --> 00:07:23.427
+One last Python detail.
+
+193
+00:07:23.427 --> 00:07:26.447
+The built-in hash for strings is randomized
+
+194
+00:07:26.447 --> 00:07:28.287
+every time Python starts
+
+195
+00:07:28.287 --> 00:07:30.044
+it picks a new secret seed
+
+196
+00:07:30.107 --> 00:07:32.299
+so the same word has a different
+
+197
+00:07:32.367 --> 00:07:33.897
+hash in different runs.
+
+198
+00:07:34.247 --> 00:07:36.203
+That protects servers from attackers
+
+199
+00:07:36.257 --> 00:07:38.410
+who craft keys that all collide.
+
+200
+00:07:38.477 --> 00:07:40.690
+It also means you must never save
+
+201
+00:07:40.757 --> 00:07:42.772
+built-in hash values to a file
+
+202
+00:07:42.837 --> 00:07:44.695
+or rely on the iteration order
+
+203
+00:07:44.757 --> 00:07:46.167
+of a set of strings.
+
+204
+00:07:46.517 --> 00:07:49.147
+Our own hash code does not change
+
+205
+00:07:49.147 --> 00:07:51.787
+hello is ninety-nine million
+
+206
+00:07:51.787 --> 00:07:53.247
+one hundred sixty-two thousand
+
+207
+00:07:53.247 --> 00:07:55.717
+three hundred twenty-two, in every process.
+
+208
+00:07:56.297 --> 00:07:58.987
+Three mistakes to avoid in Python.
+
+209
+00:07:58.987 --> 00:08:02.687
+First, defining equality without a hash
+
+210
+00:08:02.687 --> 00:08:05.447
+which makes the class unhashable.
+
+211
+00:08:05.447 --> 00:08:06.347
+Second
+
+212
+00:08:06.347 --> 00:08:08.607
+hashing a field that equality ignores
+
+213
+00:08:08.607 --> 00:08:11.187
+which breaks the contract quietly.
+
+214
+00:08:11.187 --> 00:08:11.905
+Third
+
+215
+00:08:12.007 --> 00:08:14.231
+saving the built-in string hash anywhere
+
+216
+00:08:14.287 --> 00:08:16.097
+that outlives the process.
+
+217
+00:08:16.677 --> 00:08:17.987
+To recap
+
+218
+00:08:17.987 --> 00:08:20.967
+wrap the polynomial hash to thirty-two bits
+
+219
+00:08:20.967 --> 00:08:22.967
+compress with the remainder
+
+220
+00:08:22.967 --> 00:08:25.667
+make equal keys hash equally
+
+221
+00:08:25.667 --> 00:08:28.717
+and never change a key inside a table.
+
+222
+00:08:29.067 --> 00:08:31.067
+Next, the chains.
+

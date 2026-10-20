@@ -1,0 +1,690 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:04.950
+Is this sentence a palindrome?
+
+2
+00:00:04.950 --> 00:00:07.650
+It reads the same forwards and backwards
+
+3
+00:00:07.650 --> 00:00:10.450
+once you ignore spaces and punctuation
+
+4
+00:00:10.450 --> 00:00:15.220
+a man, a plan, a canal, Panama.
+
+5
+00:00:15.570 --> 00:00:17.060
+How would you check it?
+
+6
+00:00:17.060 --> 00:00:19.040
+Compare the first letter with the last
+
+7
+00:00:19.040 --> 00:00:21.500
+then the second with the second to last
+
+8
+00:00:21.500 --> 00:00:23.130
+and so on, moving inward.
+
+9
+00:00:23.480 --> 00:00:24.977
+That needs a structure where
+
+10
+00:00:25.030 --> 00:00:27.190
+you can look at, and remove
+
+11
+00:00:27.190 --> 00:00:28.760
+items at both ends.
+
+12
+00:00:29.340 --> 00:00:31.030
+It's called a deque
+
+13
+00:00:31.030 --> 00:00:32.870
+short for double-ended queue
+
+14
+00:00:32.870 --> 00:00:34.980
+and people say it like the word deck.
+
+15
+00:00:35.330 --> 00:00:37.184
+In this video we'll see what
+
+16
+00:00:37.220 --> 00:00:39.980
+a deque lets you do, how to store one
+
+17
+00:00:39.980 --> 00:00:42.210
+and the palindrome check done with it.
+
+18
+00:00:42.790 --> 00:00:44.777
+A deque lets you add and
+
+19
+00:00:44.860 --> 00:00:46.289
+remove at both ends.
+
+20
+00:00:46.360 --> 00:00:48.905
+Add first and add last put an item
+
+21
+00:00:48.980 --> 00:00:50.602
+at the front or at the back.
+
+22
+00:00:50.660 --> 00:00:53.381
+Remove first and remove last take an item from
+
+23
+00:00:53.440 --> 00:00:55.350
+the front or the back and return it.
+
+24
+00:00:55.700 --> 00:00:58.294
+First and last look at the two end
+
+25
+00:00:58.370 --> 00:00:59.930
+items without removing them.
+
+26
+00:00:59.930 --> 00:01:01.130
+As before
+
+27
+00:01:01.130 --> 00:01:03.633
+the size and the empty check are there too
+
+28
+00:01:03.690 --> 00:01:05.038
+and removing from an empty
+
+29
+00:01:05.090 --> 00:01:06.580
+deque is an error.
+
+30
+00:01:07.160 --> 00:01:09.510
+A deque contains the other two.
+
+31
+00:01:09.510 --> 00:01:11.870
+Use only one end and you have a stack.
+
+32
+00:01:11.930 --> 00:01:13.951
+Add at one end and remove from the
+
+33
+00:01:14.010 --> 00:01:15.720
+other and you have a queue.
+
+34
+00:01:16.070 --> 00:01:19.090
+So a deque is the most general of the three
+
+35
+00:01:19.160 --> 00:01:21.110
+linear structures in this chapter.
+
+36
+00:01:21.690 --> 00:01:23.639
+You might expect that being more
+
+37
+00:01:23.700 --> 00:01:25.720
+flexible must cost more.
+
+38
+00:01:25.720 --> 00:01:27.072
+It doesn't have to.
+
+39
+00:01:27.140 --> 00:01:29.521
+A good deque does all four end
+
+40
+00:01:29.600 --> 00:01:32.490
+operations in constant time.
+
+41
+00:01:32.840 --> 00:01:35.010
+But that depends on how it's stored
+
+42
+00:01:35.010 --> 00:01:36.630
+and the choice matters.
+
+43
+00:01:36.630 --> 00:01:38.400
+Let's check both ways.
+
+44
+00:01:38.980 --> 00:01:40.950
+In a circular array
+
+45
+00:01:40.950 --> 00:01:43.850
+add last works exactly like enqueue
+
+46
+00:01:43.850 --> 00:01:46.510
+the item goes at front plus size
+
+47
+00:01:46.510 --> 00:01:48.220
+modulo the capacity.
+
+48
+00:01:48.570 --> 00:01:50.680
+Add first is the new move.
+
+49
+00:01:50.680 --> 00:01:53.780
+We step the front index one cell backwards
+
+50
+00:01:53.780 --> 00:01:56.840
+modulo the capacity, and put the item there.
+
+51
+00:01:56.840 --> 00:01:58.600
+From cell zero
+
+52
+00:01:58.600 --> 00:02:01.500
+one step back lands on the last cell
+
+53
+00:02:01.500 --> 00:02:03.890
+the front wraps below zero.
+
+54
+00:02:04.240 --> 00:02:06.721
+Remove first is the dequeue we know.
+
+55
+00:02:06.790 --> 00:02:09.214
+Remove last just clears the cell
+
+56
+00:02:09.290 --> 00:02:11.450
+at front plus size minus one
+
+57
+00:02:11.450 --> 00:02:13.170
+and reduces the size.
+
+58
+00:02:13.170 --> 00:02:14.970
+Four operations
+
+59
+00:02:14.970 --> 00:02:17.240
+each a constant number of steps.
+
+60
+00:02:17.820 --> 00:02:19.379
+With a chain of nodes
+
+61
+00:02:19.450 --> 00:02:20.856
+add first and remove first
+
+62
+00:02:20.910 --> 00:02:22.390
+are easy at the head.
+
+63
+00:02:22.390 --> 00:02:23.910
+Add last is easy too
+
+64
+00:02:23.910 --> 00:02:25.900
+if we keep a tail reference.
+
+65
+00:02:26.250 --> 00:02:28.886
+But remove last is a problem
+
+66
+00:02:28.980 --> 00:02:30.440
+in a singly linked chain.
+
+67
+00:02:30.440 --> 00:02:33.005
+We need the node before the tail
+
+68
+00:02:33.080 --> 00:02:34.816
+and the only way to find it
+
+69
+00:02:34.880 --> 00:02:36.580
+is to walk from the head.
+
+70
+00:02:36.580 --> 00:02:38.850
+That's n minus one steps.
+
+71
+00:02:39.200 --> 00:02:42.450
+The fix is to give every node two links
+
+72
+00:02:42.450 --> 00:02:44.310
+next, and previous.
+
+73
+00:02:44.310 --> 00:02:46.930
+Then the tail knows its predecessor
+
+74
+00:02:46.930 --> 00:02:49.970
+and all four operations take constant time.
+
+75
+00:02:49.970 --> 00:02:52.210
+That's a doubly linked list
+
+76
+00:02:52.210 --> 00:02:54.320
+and we'll build one in Chapter two.
+
+77
+00:02:54.900 --> 00:02:56.850
+Now the palindrome check.
+
+78
+00:02:56.850 --> 00:02:59.010
+First, put every letter or digit
+
+79
+00:02:59.010 --> 00:03:01.810
+in lower case, into a deque.
+
+80
+00:03:01.810 --> 00:03:04.260
+Spaces and punctuation are skipped.
+
+81
+00:03:04.610 --> 00:03:05.900
+Then repeat
+
+82
+00:03:05.900 --> 00:03:07.620
+take the first letter off the front
+
+83
+00:03:07.620 --> 00:03:09.740
+and the last letter off the back.
+
+84
+00:03:09.740 --> 00:03:12.647
+If they differ, it is not a palindrome.
+
+85
+00:03:12.720 --> 00:03:15.338
+If they always agree until fewer
+
+86
+00:03:15.420 --> 00:03:17.890
+than two letters are left, it is.
+
+87
+00:03:18.240 --> 00:03:20.110
+Each letter is handled once
+
+88
+00:03:20.110 --> 00:03:21.272
+with constant work
+
+89
+00:03:21.330 --> 00:03:23.518
+so the whole check takes time proportional
+
+90
+00:03:23.570 --> 00:03:25.480
+to the length of the text.
+
+91
+00:03:26.060 --> 00:03:27.433
+To sum up.
+
+92
+00:03:27.570 --> 00:03:29.188
+A deque is a queue you can
+
+93
+00:03:29.250 --> 00:03:30.561
+use from both ends
+
+94
+00:03:30.630 --> 00:03:32.699
+and it contains the stack and
+
+95
+00:03:32.770 --> 00:03:34.460
+the queue as special cases.
+
+96
+00:03:34.810 --> 00:03:37.639
+A circular array gives all four end
+
+97
+00:03:37.720 --> 00:03:39.420
+operations in constant time
+
+98
+00:03:39.420 --> 00:03:41.642
+because the front can step backwards.
+
+99
+00:03:41.700 --> 00:03:44.129
+A singly linked chain can't remove
+
+100
+00:03:44.200 --> 00:03:45.260
+at the tail quickly
+
+101
+00:03:45.260 --> 00:03:48.810
+so a linked deque needs two links per node.
+
+102
+00:03:49.160 --> 00:03:50.650
+Next, the code
+
+103
+00:03:50.650 --> 00:03:53.360
+and the standard library version.
+
+104
+00:03:53.987 --> 00:03:56.947
+Now the deque, in Python.
+
+105
+00:03:57.527 --> 00:03:59.416
+The circular deque has the same
+
+106
+00:03:59.477 --> 00:04:03.017
+three fields as the queue: a list, a size
+
+107
+00:04:03.017 --> 00:04:05.237
+and a front index.
+
+108
+00:04:05.237 --> 00:04:07.927
+Add last is the queue's enqueue.
+
+109
+00:04:08.277 --> 00:04:10.227
+Add first is the new line.
+
+110
+00:04:10.227 --> 00:04:13.347
+It sets front to front minus one
+
+111
+00:04:13.347 --> 00:04:14.847
+modulo the length of the list.
+
+112
+00:04:14.847 --> 00:04:15.947
+In Python
+
+113
+00:04:16.047 --> 00:04:18.413
+the percent operator always returns a result
+
+114
+00:04:18.467 --> 00:04:20.707
+between zero and length minus one
+
+115
+00:04:20.707 --> 00:04:22.147
+so from zero
+
+116
+00:04:22.147 --> 00:04:24.717
+minus one wraps to the last cell.
+
+117
+00:04:25.067 --> 00:04:27.104
+Remove first and remove last
+
+118
+00:04:27.177 --> 00:04:28.777
+are the mirror images
+
+119
+00:04:28.777 --> 00:04:30.672
+one moves the front forward
+
+120
+00:04:30.737 --> 00:04:32.653
+the other just clears the last
+
+121
+00:04:32.717 --> 00:04:34.587
+cell and reduces the size.
+
+122
+00:04:35.167 --> 00:04:38.217
+Let's run it with a capacity of four.
+
+123
+00:04:38.217 --> 00:04:41.277
+Add last B puts B in cell zero.
+
+124
+00:04:41.277 --> 00:04:44.177
+Add first A moves the front to cell three
+
+125
+00:04:44.177 --> 00:04:48.137
+and puts A there: the list reads B, None
+
+126
+00:04:48.137 --> 00:04:51.647
+None, A, with front three and size two.
+
+127
+00:04:51.997 --> 00:04:55.327
+Add last C and D fill the two empty cells
+
+128
+00:04:55.327 --> 00:04:56.972
+so the deque is full.
+
+129
+00:04:57.047 --> 00:04:59.853
+Now remove first returns A and
+
+130
+00:04:59.947 --> 00:05:03.287
+remove last returns D, leaving B and C
+
+131
+00:05:03.287 --> 00:05:05.557
+with the front back at zero.
+
+132
+00:05:06.137 --> 00:05:07.839
+Both add operations check
+
+133
+00:05:07.907 --> 00:05:09.627
+for a full list first.
+
+134
+00:05:09.627 --> 00:05:12.339
+If it is full, they call the same resize
+
+135
+00:05:12.407 --> 00:05:13.547
+we met with the queue
+
+136
+00:05:13.547 --> 00:05:15.167
+copy the items in order
+
+137
+00:05:15.167 --> 00:05:16.287
+starting from the front
+
+138
+00:05:16.287 --> 00:05:18.247
+into a list twice as long
+
+139
+00:05:18.247 --> 00:05:20.097
+and reset the front to zero.
+
+140
+00:05:20.447 --> 00:05:23.213
+So a deque never refuses an item
+
+141
+00:05:23.297 --> 00:05:25.035
+and the amortized cost of an
+
+142
+00:05:25.097 --> 00:05:26.717
+add is still constant
+
+143
+00:05:26.717 --> 00:05:28.407
+for the same reason as before.
+
+144
+00:05:28.757 --> 00:05:31.147
+Two small methods, first and last
+
+145
+00:05:31.147 --> 00:05:32.927
+just read the cell at the front
+
+146
+00:05:32.927 --> 00:05:36.127
+and the cell at front plus size minus one
+
+147
+00:05:36.127 --> 00:05:38.157
+again modulo the length.
+
+148
+00:05:38.737 --> 00:05:40.873
+Here is the palindrome check.
+
+149
+00:05:40.947 --> 00:05:44.603
+We lower-case the text and add each
+
+150
+00:05:44.707 --> 00:05:47.327
+letter or digit to the deque.
+
+151
+00:05:47.327 --> 00:05:50.027
+Then, while at least two letters remain
+
+152
+00:05:50.027 --> 00:05:53.137
+we remove one from each end and compare.
+
+153
+00:05:53.487 --> 00:05:55.297
+Racecar gives True.
+
+154
+00:05:55.297 --> 00:05:57.897
+The Panama sentence gives True.
+
+155
+00:05:57.897 --> 00:05:59.437
+And stack gives False
+
+156
+00:05:59.437 --> 00:06:01.097
+because the first letter, s
+
+157
+00:06:01.097 --> 00:06:03.007
+is not the last letter, k.
+
+158
+00:06:03.587 --> 00:06:07.577
+Python's collections dot deque is a deque.
+
+159
+00:06:07.577 --> 00:06:11.237
+Appendleft and append add at the two ends
+
+160
+00:06:11.237 --> 00:06:14.237
+and popleft and pop remove from them.
+
+161
+00:06:14.237 --> 00:06:16.667
+All four take constant time.
+
+162
+00:06:17.017 --> 00:06:19.547
+It also accepts a maximum length.
+
+163
+00:06:19.547 --> 00:06:20.680
+When it is full
+
+164
+00:06:20.747 --> 00:06:22.958
+adding at one end silently drops
+
+165
+00:06:23.027 --> 00:06:24.396
+an item from the other end
+
+166
+00:06:24.447 --> 00:06:26.113
+which is handy for keeping only
+
+167
+00:06:26.167 --> 00:06:27.537
+the most recent items.
+
+168
+00:06:28.117 --> 00:06:31.047
+Next, the last video of the chapter
+
+169
+00:06:31.047 --> 00:06:33.287
+two classic applications
+
+170
+00:06:33.287 --> 00:06:35.128
+bracket matching with a stack
+
+171
+00:06:35.187 --> 00:06:37.381
+and a first look at breadth-first
+
+172
+00:06:37.447 --> 00:06:38.957
+search with a queue.
+

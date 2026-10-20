@@ -1,0 +1,974 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:05.470
+Think of the folders on your computer.
+
+2
+00:00:05.470 --> 00:00:08.210
+A folder holds files and other folders
+
+3
+00:00:08.210 --> 00:00:10.750
+which hold more folders, and so on
+
+4
+00:00:10.750 --> 00:00:12.220
+as deep as you like.
+
+5
+00:00:12.570 --> 00:00:14.160
+Or a family tree.
+
+6
+00:00:14.160 --> 00:00:16.080
+Or a company's org chart.
+
+7
+00:00:16.080 --> 00:00:18.340
+Or the structure of a web page.
+
+8
+00:00:18.340 --> 00:00:19.930
+All of them are trees.
+
+9
+00:00:20.280 --> 00:00:22.069
+So here is a question.
+
+10
+00:00:22.150 --> 00:00:24.001
+How do you visit every item
+
+11
+00:00:24.070 --> 00:00:26.102
+in a tree exactly once?
+
+12
+00:00:26.190 --> 00:00:28.003
+And does it matter in which
+
+13
+00:00:28.070 --> 00:00:29.240
+order you visit them?
+
+14
+00:00:29.820 --> 00:00:31.970
+This chapter is about trees
+
+15
+00:00:31.970 --> 00:00:33.860
+and how to search them.
+
+16
+00:00:34.210 --> 00:00:35.847
+In this first video we'll learn
+
+17
+00:00:35.900 --> 00:00:37.600
+the vocabulary of trees
+
+18
+00:00:37.600 --> 00:00:39.320
+four ways to walk through one
+
+19
+00:00:39.320 --> 00:00:41.810
+and why the order of the walk matters.
+
+20
+00:00:42.390 --> 00:00:45.300
+Here is a tree with seven nodes.
+
+21
+00:00:45.300 --> 00:00:47.820
+The node at the top is the root.
+
+22
+00:00:47.820 --> 00:00:50.780
+Every other node has exactly one parent
+
+23
+00:00:50.780 --> 00:00:52.190
+the node directly above it.
+
+24
+00:00:52.540 --> 00:00:54.610
+A node can have children.
+
+25
+00:00:54.610 --> 00:00:57.630
+A node with no children is a leaf.
+
+26
+00:00:57.630 --> 00:01:00.970
+Here the leaves are twenty, forty
+
+27
+00:01:00.970 --> 00:01:02.540
+sixty and eighty.
+
+28
+00:01:02.890 --> 00:01:05.268
+The depth of a node is the number
+
+29
+00:01:05.340 --> 00:01:06.820
+of steps down from the root.
+
+30
+00:01:06.820 --> 00:01:08.380
+The root has depth zero
+
+31
+00:01:08.380 --> 00:01:10.600
+its children have depth one
+
+32
+00:01:10.600 --> 00:01:13.450
+and these four leaves have depth two.
+
+33
+00:01:13.800 --> 00:01:16.770
+The height of the tree is its largest depth
+
+34
+00:01:16.770 --> 00:01:18.650
+which here is two.
+
+35
+00:01:18.650 --> 00:01:21.776
+A tree with a single node has height zero
+
+36
+00:01:21.850 --> 00:01:23.943
+and by convention an empty tree
+
+37
+00:01:24.010 --> 00:01:25.680
+has height minus one.
+
+38
+00:01:26.030 --> 00:01:27.620
+In a binary tree
+
+39
+00:01:27.620 --> 00:01:29.920
+every node has at most two children
+
+40
+00:01:29.920 --> 00:01:31.440
+called left and right.
+
+41
+00:01:31.440 --> 00:01:32.520
+And any node
+
+42
+00:01:32.520 --> 00:01:34.120
+together with everything below it
+
+43
+00:01:34.120 --> 00:01:35.350
+is a subtree.
+
+44
+00:01:35.930 --> 00:01:38.620
+This gives us a recursive definition.
+
+45
+00:01:38.620 --> 00:01:41.313
+A binary tree is either empty
+
+46
+00:01:41.400 --> 00:01:44.455
+or it is a root together with a left
+
+47
+00:01:44.540 --> 00:01:46.440
+subtree and a right subtree
+
+48
+00:01:46.440 --> 00:01:49.570
+and both of those are binary trees again.
+
+49
+00:01:49.920 --> 00:01:52.640
+That should remind you of Chapter four
+
+50
+00:01:52.710 --> 00:01:55.113
+a big problem handed to smaller
+
+51
+00:01:55.190 --> 00:01:56.380
+copies of itself.
+
+52
+00:01:56.450 --> 00:01:57.931
+Almost every algorithm on
+
+53
+00:01:57.990 --> 00:01:59.170
+trees has this shape
+
+54
+00:01:59.170 --> 00:02:00.831
+do something with the root
+
+55
+00:02:00.890 --> 00:02:02.722
+and let recursion take care
+
+56
+00:02:02.790 --> 00:02:04.040
+of the two subtrees.
+
+57
+00:02:04.620 --> 00:02:05.910
+Now the walk.
+
+58
+00:02:05.910 --> 00:02:08.179
+There are three classic orders
+
+59
+00:02:08.250 --> 00:02:09.962
+and the only difference between them
+
+60
+00:02:10.010 --> 00:02:12.100
+is when you visit the root.
+
+61
+00:02:12.450 --> 00:02:15.480
+In preorder, you visit the root first
+
+62
+00:02:15.480 --> 00:02:16.880
+then the left subtree
+
+63
+00:02:16.880 --> 00:02:18.120
+then the right subtree.
+
+64
+00:02:18.120 --> 00:02:21.560
+Here that gives fifty, thirty, twenty
+
+65
+00:02:21.560 --> 00:02:25.530
+forty, seventy, sixty, eighty.
+
+66
+00:02:25.880 --> 00:02:27.210
+In inorder
+
+67
+00:02:27.210 --> 00:02:29.370
+you visit the left subtree first
+
+68
+00:02:29.370 --> 00:02:31.850
+then the root, then the right subtree
+
+69
+00:02:31.850 --> 00:02:36.810
+twenty, thirty, forty, fifty, sixty
+
+70
+00:02:36.810 --> 00:02:38.550
+seventy, eighty.
+
+71
+00:02:38.550 --> 00:02:41.770
+Look at that: the keys come out sorted.
+
+72
+00:02:41.770 --> 00:02:43.590
+That is no accident
+
+73
+00:02:43.590 --> 00:02:46.280
+and in the next video we will see why.
+
+74
+00:02:46.630 --> 00:02:49.824
+In postorder, both subtrees come first and
+
+75
+00:02:49.900 --> 00:02:54.300
+the root comes last: twenty, forty, thirty
+
+76
+00:02:54.300 --> 00:02:57.910
+sixty, eighty, seventy, fifty.
+
+77
+00:02:58.260 --> 00:03:01.130
+There is a fourth order that ignores
+
+78
+00:03:01.210 --> 00:03:02.570
+the recursive structure.
+
+79
+00:03:02.570 --> 00:03:05.150
+Level order visits the root
+
+80
+00:03:05.150 --> 00:03:07.130
+then everything at depth one
+
+81
+00:03:07.130 --> 00:03:10.370
+then everything at depth two, and so on
+
+82
+00:03:10.370 --> 00:03:15.850
+fifty, thirty, seventy, twenty, forty
+
+83
+00:03:15.850 --> 00:03:17.380
+sixty, eighty.
+
+84
+00:03:17.960 --> 00:03:20.070
+Does the order really matter?
+
+85
+00:03:20.070 --> 00:03:22.510
+Take an arithmetic expression
+
+86
+00:03:22.510 --> 00:03:25.710
+three plus four, times, five minus two.
+
+87
+00:03:25.710 --> 00:03:28.670
+As a tree, every operator is a node
+
+88
+00:03:28.670 --> 00:03:31.160
+and the numbers are leaves.
+
+89
+00:03:31.510 --> 00:03:33.487
+Walk this tree in postorder
+
+90
+00:03:33.560 --> 00:03:37.680
+and you get three, four, plus, five, two
+
+91
+00:03:37.680 --> 00:03:39.080
+minus, times.
+
+92
+00:03:39.180 --> 00:03:40.856
+Every operator comes right
+
+93
+00:03:40.920 --> 00:03:42.540
+after its two operands
+
+94
+00:03:42.540 --> 00:03:44.180
+so no parentheses are needed.
+
+95
+00:03:44.180 --> 00:03:46.280
+A stack can evaluate it.
+
+96
+00:03:46.280 --> 00:03:47.800
+Push three and four
+
+97
+00:03:47.800 --> 00:03:49.660
+and plus turns them into seven.
+
+98
+00:03:49.660 --> 00:03:51.440
+Push five and two
+
+99
+00:03:51.440 --> 00:03:53.640
+and minus turns them into three.
+
+100
+00:03:53.640 --> 00:03:55.550
+Times gives twenty-one.
+
+101
+00:03:55.900 --> 00:03:59.110
+Now walk the same tree in inorder.
+
+102
+00:03:59.110 --> 00:04:04.930
+You get three, plus, four, times, five
+
+103
+00:04:04.930 --> 00:04:06.630
+minus, two.
+
+104
+00:04:06.630 --> 00:04:08.530
+The parentheses are gone
+
+105
+00:04:08.530 --> 00:04:11.350
+and read normally this means something else
+
+106
+00:04:11.350 --> 00:04:14.710
+three plus twenty, minus two.
+
+107
+00:04:14.710 --> 00:04:17.990
+Preorder gives yet another sequence: times
+
+108
+00:04:17.990 --> 00:04:23.780
+plus, three, four, minus, five, two.
+
+109
+00:04:24.130 --> 00:04:26.700
+Same tree, same nodes
+
+110
+00:04:26.700 --> 00:04:27.860
+three different results.
+
+111
+00:04:27.860 --> 00:04:31.250
+The order of the walk is the whole point.
+
+112
+00:04:31.830 --> 00:04:34.560
+How does a computer perform these walks?
+
+113
+00:04:34.560 --> 00:04:37.414
+The recursive versions use the call stack
+
+114
+00:04:37.480 --> 00:04:39.815
+every recursive call is a frame that
+
+115
+00:04:39.880 --> 00:04:41.830
+remembers where to continue.
+
+116
+00:04:42.180 --> 00:04:44.224
+We can take the call stack away
+
+117
+00:04:44.290 --> 00:04:46.410
+and use a stack of our own.
+
+118
+00:04:46.410 --> 00:04:48.650
+For preorder: push the root.
+
+119
+00:04:48.650 --> 00:04:52.030
+Then repeat: pop a node, visit it
+
+120
+00:04:52.130 --> 00:04:54.042
+and push its right child and
+
+121
+00:04:54.110 --> 00:04:55.290
+then its left child
+
+122
+00:04:55.290 --> 00:04:57.540
+so that the left child is popped first.
+
+123
+00:04:57.890 --> 00:05:00.540
+Level order uses a queue instead.
+
+124
+00:05:00.540 --> 00:05:01.660
+Visit a node
+
+125
+00:05:01.660 --> 00:05:03.428
+and add its children at the back.
+
+126
+00:05:03.480 --> 00:05:04.824
+The node that has waited
+
+127
+00:05:04.880 --> 00:05:07.120
+longest is always next.
+
+128
+00:05:07.120 --> 00:05:09.940
+A stack, last in first out, goes deep.
+
+129
+00:05:09.940 --> 00:05:13.130
+A queue, first in first out, goes wide.
+
+130
+00:05:13.480 --> 00:05:14.690
+Either way
+
+131
+00:05:14.690 --> 00:05:17.370
+every node is visited exactly once.
+
+132
+00:05:17.370 --> 00:05:19.550
+For a tree with n nodes
+
+133
+00:05:19.550 --> 00:05:22.280
+a walk takes time proportional to n.
+
+134
+00:05:22.860 --> 00:05:23.990
+To sum up.
+
+135
+00:05:23.990 --> 00:05:27.470
+A tree has a root, parents and children
+
+136
+00:05:27.470 --> 00:05:30.166
+leaves, depth and height.
+
+137
+00:05:30.270 --> 00:05:32.916
+A binary tree is a root with
+
+138
+00:05:33.010 --> 00:05:35.020
+two smaller binary trees.
+
+139
+00:05:35.370 --> 00:05:38.840
+There are three depth-first walks, preorder
+
+140
+00:05:38.840 --> 00:05:40.520
+inorder and postorder
+
+141
+00:05:40.520 --> 00:05:43.680
+and one breadth-first walk, level order.
+
+142
+00:05:43.680 --> 00:05:46.520
+Recursion or a stack gives the first three
+
+143
+00:05:46.520 --> 00:05:48.570
+a queue gives the last.
+
+144
+00:05:48.920 --> 00:05:51.150
+In the next video we make the inorder
+
+145
+00:05:51.210 --> 00:05:53.410
+walk come out sorted on purpose
+
+146
+00:05:53.410 --> 00:05:55.480
+with binary search trees.
+
+147
+00:05:56.107 --> 00:05:57.482
+Now let's build this tree
+
+148
+00:05:57.537 --> 00:05:59.227
+in Python and walk it.
+
+149
+00:05:59.807 --> 00:06:02.263
+Python has no built-in tree type
+
+150
+00:06:02.337 --> 00:06:04.439
+so a node is a small object
+
+151
+00:06:04.517 --> 00:06:05.697
+with three attributes.
+
+152
+00:06:05.697 --> 00:06:09.447
+The key, the left child and the right child.
+
+153
+00:06:09.797 --> 00:06:12.660
+None means that subtree is empty
+
+154
+00:06:12.747 --> 00:06:14.459
+so a leaf is a node whose
+
+155
+00:06:14.527 --> 00:06:16.317
+two children are None.
+
+156
+00:06:16.897 --> 00:06:18.687
+This is preorder.
+
+157
+00:06:18.687 --> 00:06:22.107
+If the node is None, there is nothing to do.
+
+158
+00:06:22.107 --> 00:06:24.127
+Otherwise visit the key
+
+159
+00:06:24.127 --> 00:06:26.147
+walk the left subtree
+
+160
+00:06:26.147 --> 00:06:27.937
+and walk the right subtree.
+
+161
+00:06:28.287 --> 00:06:30.764
+Inorder and postorder are the same
+
+162
+00:06:30.837 --> 00:06:32.957
+three lines in a different order.
+
+163
+00:06:32.957 --> 00:06:36.487
+Only the position of the visit line changes.
+
+164
+00:06:36.837 --> 00:06:38.753
+The function takes a visit
+
+165
+00:06:38.827 --> 00:06:40.447
+function as an argument
+
+166
+00:06:40.447 --> 00:06:43.627
+so the same walk can print the keys
+
+167
+00:06:43.627 --> 00:06:46.197
+collect them in a list, or add them up.
+
+168
+00:06:46.777 --> 00:06:49.807
+Running it on our tree: size seven
+
+169
+00:06:49.807 --> 00:06:54.607
+height two, leaves twenty, forty, sixty
+
+170
+00:06:54.607 --> 00:06:55.377
+eighty.
+
+171
+00:06:55.727 --> 00:06:57.878
+Preorder, inorder
+
+172
+00:06:57.997 --> 00:07:00.706
+postorder and level order give exactly
+
+173
+00:07:00.777 --> 00:07:03.047
+the sequences from the last part.
+
+174
+00:07:03.627 --> 00:07:06.117
+Height is another recursive function.
+
+175
+00:07:06.117 --> 00:07:08.664
+An empty tree has height minus one
+
+176
+00:07:08.737 --> 00:07:10.890
+and every other tree is one more
+
+177
+00:07:10.957 --> 00:07:12.627
+than its taller child.
+
+178
+00:07:12.977 --> 00:07:15.627
+With minus one for the empty tree
+
+179
+00:07:15.627 --> 00:07:17.071
+a leaf comes out as zero
+
+180
+00:07:17.127 --> 00:07:18.517
+which matches the definition
+
+181
+00:07:18.567 --> 00:07:19.897
+in the last part.
+
+182
+00:07:20.477 --> 00:07:23.167
+Here is inorder with our own stack.
+
+183
+00:07:23.167 --> 00:07:25.027
+Go left as far as you can
+
+184
+00:07:25.027 --> 00:07:26.827
+pushing every node on the way.
+
+185
+00:07:26.827 --> 00:07:29.387
+Then pop one, visit it
+
+186
+00:07:29.387 --> 00:07:31.397
+and move to its right child.
+
+187
+00:07:31.747 --> 00:07:34.437
+The output is the same twenty to eighty.
+
+188
+00:07:34.437 --> 00:07:37.077
+And it cannot run out of recursion depth
+
+189
+00:07:37.077 --> 00:07:39.467
+which matters on very deep trees.
+
+190
+00:07:40.047 --> 00:07:41.937
+Level order uses a queue.
+
+191
+00:07:41.937 --> 00:07:43.909
+We use collections dot deque
+
+192
+00:07:43.977 --> 00:07:45.448
+because popping from the front
+
+193
+00:07:45.497 --> 00:07:47.505
+of a list takes linear time
+
+194
+00:07:47.577 --> 00:07:49.247
+while popleft on a deque
+
+195
+00:07:49.317 --> 00:07:50.847
+takes constant time.
+
+196
+00:07:51.197 --> 00:07:52.967
+Add the children at the back
+
+197
+00:07:52.967 --> 00:07:55.077
+take the next node from the front.
+
+198
+00:07:55.657 --> 00:07:57.184
+The expression tree uses
+
+199
+00:07:57.247 --> 00:07:58.580
+the same node class
+
+200
+00:07:58.647 --> 00:08:00.689
+with operators as keys in the inner
+
+201
+00:08:00.747 --> 00:08:03.497
+nodes and numbers in the leaves.
+
+202
+00:08:03.847 --> 00:08:06.077
+Evaluate is postorder
+
+203
+00:08:06.077 --> 00:08:07.997
+compute both operands
+
+204
+00:08:07.997 --> 00:08:09.657
+then apply the operator.
+
+205
+00:08:09.657 --> 00:08:11.127
+It prints twenty-one.
+
+206
+00:08:11.477 --> 00:08:13.855
+And the inorder walk prints three
+
+207
+00:08:13.927 --> 00:08:16.727
+plus four times five minus two
+
+208
+00:08:16.727 --> 00:08:18.747
+with the parentheses missing.
+
+209
+00:08:18.747 --> 00:08:22.307
+To keep them we need to_infix
+
+210
+00:08:22.307 --> 00:08:24.597
+which adds them around every inner node.
+
+211
+00:08:25.177 --> 00:08:27.367
+Three common mistakes.
+
+212
+00:08:27.367 --> 00:08:29.504
+First, forgetting the None check.
+
+213
+00:08:29.567 --> 00:08:31.262
+Then node dot left on None
+
+214
+00:08:31.327 --> 00:08:33.487
+raises an AttributeError
+
+215
+00:08:33.487 --> 00:08:37.177
+because None has no attribute called key.
+
+216
+00:08:37.527 --> 00:08:40.700
+Second, confusing height counted in edges
+
+217
+00:08:40.777 --> 00:08:42.897
+with height counted in nodes.
+
+218
+00:08:42.897 --> 00:08:45.217
+Our code counts edges
+
+219
+00:08:45.217 --> 00:08:47.251
+a single node has height zero.
+
+220
+00:08:47.317 --> 00:08:48.648
+Check which convention your
+
+221
+00:08:48.697 --> 00:08:50.487
+textbook or exam uses.
+
+222
+00:08:50.837 --> 00:08:51.887
+Third
+
+223
+00:08:51.887 --> 00:08:55.047
+relying on recursion for very deep trees.
+
+224
+00:08:55.047 --> 00:08:57.329
+A chain of five hundred nodes is fine
+
+225
+00:08:57.387 --> 00:08:58.660
+and a chain of two thousand
+
+226
+00:08:58.707 --> 00:09:00.687
+raises a RecursionError
+
+227
+00:09:00.687 --> 00:09:04.157
+so for deep trees use the iterative walks.
+
+228
+00:09:04.737 --> 00:09:07.767
+What does Python's standard library offer?
+
+229
+00:09:07.767 --> 00:09:09.407
+No tree.
+
+230
+00:09:09.407 --> 00:09:11.627
+Dictionaries and sets are hash tables
+
+231
+00:09:11.627 --> 00:09:13.007
+which we meet in Chapter seven
+
+232
+00:09:13.007 --> 00:09:15.427
+and heapq is a heap
+
+233
+00:09:15.427 --> 00:09:17.017
+which we meet in Chapter eight.
+
+234
+00:09:17.367 --> 00:09:19.097
+For sorted data
+
+235
+00:09:19.097 --> 00:09:21.657
+the bisect module works on a sorted list.
+
+236
+00:09:21.657 --> 00:09:23.356
+Third-party packages exist
+
+237
+00:09:23.417 --> 00:09:25.085
+but to understand the structures
+
+238
+00:09:25.137 --> 00:09:27.847
+you have to build one, and we will.
+
+239
+00:09:28.427 --> 00:09:31.237
+In Python: a three-attribute node
+
+240
+00:09:31.237 --> 00:09:34.322
+None for empty, recursion for the walks
+
+241
+00:09:34.397 --> 00:09:37.323
+and a stack or a deque when you
+
+242
+00:09:37.417 --> 00:09:38.947
+want to avoid recursion.
+
+243
+00:09:39.297 --> 00:09:41.857
+Next: binary search trees.
+

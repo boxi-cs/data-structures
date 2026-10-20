@@ -1,0 +1,898 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:04.714
+Often you do not receive
+
+2
+00:00:04.790 --> 00:00:06.030
+entries one at a time.
+
+3
+00:00:06.030 --> 00:00:08.310
+You have them all, in an array
+
+4
+00:00:08.310 --> 00:00:09.700
+and you want a heap.
+
+5
+00:00:10.050 --> 00:00:13.260
+The obvious method: insert them one by one.
+
+6
+00:00:13.260 --> 00:00:15.940
+Each insert costs up to log n
+
+7
+00:00:15.940 --> 00:00:18.890
+so that is up to n log n in total.
+
+8
+00:00:19.240 --> 00:00:22.358
+Can we do better, by using the fact that we
+
+9
+00:00:22.430 --> 00:00:23.970
+already have everything?
+
+10
+00:00:23.970 --> 00:00:25.310
+We can.
+
+11
+00:00:25.310 --> 00:00:29.030
+And the answer is surprising: n steps
+
+12
+00:00:29.030 --> 00:00:30.440
+not n log n.
+
+13
+00:00:31.020 --> 00:00:32.525
+In this video we'll see
+
+14
+00:00:32.590 --> 00:00:35.630
+the bottom-up method, a worked example
+
+15
+00:00:35.630 --> 00:00:39.380
+and why it adds up to only about n steps.
+
+16
+00:00:39.960 --> 00:00:41.930
+Draw the array as a tree.
+
+17
+00:00:41.930 --> 00:00:43.930
+It is not a heap yet.
+
+18
+00:00:43.930 --> 00:00:45.710
+But look at the leaves
+
+19
+00:00:45.710 --> 00:00:47.021
+the entries at the bottom.
+
+20
+00:00:47.070 --> 00:00:49.124
+A single entry with no children
+
+21
+00:00:49.190 --> 00:00:51.000
+is already a heap.
+
+22
+00:00:51.350 --> 00:00:53.440
+So work from the bottom up.
+
+23
+00:00:53.440 --> 00:00:55.440
+Take the last node that has a child
+
+24
+00:00:55.440 --> 00:00:56.460
+and sink it
+
+25
+00:00:56.460 --> 00:00:58.830
+exactly like the down-heap from last time.
+
+26
+00:00:59.180 --> 00:01:02.741
+Then go back one index, and do it again.
+
+27
+00:01:02.830 --> 00:01:05.727
+At each step the two subtrees below
+
+28
+00:01:05.810 --> 00:01:07.483
+a node are already heaps
+
+29
+00:01:07.550 --> 00:01:09.406
+so sinking the node makes the
+
+30
+00:01:09.470 --> 00:01:11.060
+whole subtree a heap.
+
+31
+00:01:11.410 --> 00:01:13.340
+When we have sunk the root
+
+32
+00:01:13.340 --> 00:01:15.370
+the whole tree is a heap.
+
+33
+00:01:15.950 --> 00:01:18.800
+Which is the last node that has a child?
+
+34
+00:01:18.800 --> 00:01:21.680
+It is the parent of the last entry.
+
+35
+00:01:21.680 --> 00:01:23.620
+Here there are ten entries
+
+36
+00:01:23.620 --> 00:01:25.200
+the last index is nine
+
+37
+00:01:25.200 --> 00:01:27.430
+and its parent is index four.
+
+38
+00:01:27.780 --> 00:01:32.410
+So we sink the nodes at index four, three
+
+39
+00:01:32.410 --> 00:01:36.060
+two, one, and zero, in that order.
+
+40
+00:01:36.640 --> 00:01:41.650
+Our entries: twenty, sixteen, nine, twelve
+
+41
+00:01:41.650 --> 00:01:48.000
+five, eight, three, fourteen, six, eleven.
+
+42
+00:01:48.350 --> 00:01:52.160
+Index four holds five, with one child
+
+43
+00:01:52.160 --> 00:01:53.260
+eleven.
+
+44
+00:01:53.260 --> 00:01:55.320
+Five is smaller, so nothing to do.
+
+45
+00:01:55.320 --> 00:01:56.790
+One comparison.
+
+46
+00:01:57.140 --> 00:01:59.430
+Index three holds twelve
+
+47
+00:01:59.430 --> 00:02:02.030
+with children fourteen and six.
+
+48
+00:02:02.030 --> 00:02:03.610
+Six is the smaller child
+
+49
+00:02:03.610 --> 00:02:05.630
+and smaller than twelve, so swap.
+
+50
+00:02:05.630 --> 00:02:08.140
+Two comparisons, one swap.
+
+51
+00:02:08.490 --> 00:02:10.520
+Index two holds nine
+
+52
+00:02:10.520 --> 00:02:12.520
+with children eight and three.
+
+53
+00:02:12.520 --> 00:02:13.600
+Three is smaller.
+
+54
+00:02:13.600 --> 00:02:14.340
+Swap.
+
+55
+00:02:14.340 --> 00:02:16.690
+Two comparisons, one swap.
+
+56
+00:02:17.040 --> 00:02:19.550
+Index one holds sixteen
+
+57
+00:02:19.550 --> 00:02:21.770
+with children six and five.
+
+58
+00:02:21.770 --> 00:02:23.690
+Five is smaller: swap
+
+59
+00:02:23.690 --> 00:02:26.750
+and then it sinks again, past eleven.
+
+60
+00:02:26.750 --> 00:02:29.040
+Three comparisons, two swaps.
+
+61
+00:02:29.390 --> 00:02:32.360
+Finally index zero holds twenty.
+
+62
+00:02:32.360 --> 00:02:33.980
+It sinks through three
+
+63
+00:02:33.980 --> 00:02:36.200
+and then through eight, to the bottom.
+
+64
+00:02:36.200 --> 00:02:38.630
+Four comparisons, two swaps.
+
+65
+00:02:38.980 --> 00:02:41.150
+The result is a valid heap.
+
+66
+00:02:41.150 --> 00:02:45.140
+In total: twelve comparisons, and six swaps.
+
+67
+00:02:45.720 --> 00:02:47.340
+Pause and predict.
+
+68
+00:02:47.430 --> 00:02:48.876
+Insert the same ten entries
+
+69
+00:02:48.930 --> 00:02:50.830
+one at a time instead.
+
+70
+00:02:50.830 --> 00:02:52.330
+Do you get the same heap?
+
+71
+00:02:52.330 --> 00:02:53.640
+Do you pay the same?
+
+72
+00:02:53.990 --> 00:02:55.860
+Not the same heap.
+
+73
+00:02:55.860 --> 00:03:00.380
+Inserting one by one gives three, six, five
+
+74
+00:03:00.380 --> 00:03:04.600
+nine, eleven, sixteen, eight, twenty
+
+75
+00:03:04.600 --> 00:03:05.860
+fourteen, twelve.
+
+76
+00:03:05.860 --> 00:03:09.070
+A different array, and equally valid.
+
+77
+00:03:09.420 --> 00:03:11.370
+And not the same price
+
+78
+00:03:11.370 --> 00:03:14.170
+seventeen comparisons and twelve swaps
+
+79
+00:03:14.170 --> 00:03:16.300
+against twelve and six.
+
+80
+00:03:16.650 --> 00:03:18.860
+A heap is not unique.
+
+81
+00:03:18.860 --> 00:03:21.080
+Many arrays satisfy the order rule
+
+82
+00:03:21.080 --> 00:03:23.250
+and the two methods pick different ones.
+
+83
+00:03:23.830 --> 00:03:25.700
+Why is bottom-up cheap?
+
+84
+00:03:25.700 --> 00:03:28.780
+Look at how much work each node can cost.
+
+85
+00:03:28.780 --> 00:03:31.380
+Sinking a node costs at most its height
+
+86
+00:03:31.380 --> 00:03:33.350
+the number of levels below it.
+
+87
+00:03:33.700 --> 00:03:36.390
+And most of the nodes are near the bottom.
+
+88
+00:03:36.390 --> 00:03:38.670
+About half of all the nodes are leaves
+
+89
+00:03:38.670 --> 00:03:39.790
+with height zero.
+
+90
+00:03:39.790 --> 00:03:41.060
+They cost nothing.
+
+91
+00:03:41.410 --> 00:03:43.546
+About a quarter are one level
+
+92
+00:03:43.620 --> 00:03:44.500
+above the leaves.
+
+93
+00:03:44.500 --> 00:03:47.020
+They cost at most one level each.
+
+94
+00:03:47.020 --> 00:03:49.940
+About an eighth are two levels above
+
+95
+00:03:49.940 --> 00:03:51.530
+and cost at most two.
+
+96
+00:03:51.880 --> 00:03:54.650
+Add it up: n over four times one
+
+97
+00:03:54.650 --> 00:03:56.770
+plus n over eight times two
+
+98
+00:03:56.770 --> 00:04:00.030
+plus n over sixteen times three, and so on.
+
+99
+00:04:00.030 --> 00:04:02.720
+This sum is smaller than n.
+
+100
+00:04:03.070 --> 00:04:05.780
+Only the single root costs the full height
+
+101
+00:04:05.780 --> 00:04:06.600
+log n.
+
+102
+00:04:06.600 --> 00:04:08.150
+There is one of it.
+
+103
+00:04:08.730 --> 00:04:11.240
+Compare with inserting one by one.
+
+104
+00:04:11.240 --> 00:04:13.385
+There, it is the entries at the bottom
+
+105
+00:04:13.440 --> 00:04:14.640
+that are expensive
+
+106
+00:04:14.640 --> 00:04:17.330
+a new entry may climb all the way up.
+
+107
+00:04:17.680 --> 00:04:19.175
+The two methods spend their
+
+108
+00:04:19.230 --> 00:04:21.310
+effort in opposite places.
+
+109
+00:04:21.310 --> 00:04:24.090
+Bottom-up makes the many cheap
+
+110
+00:04:24.090 --> 00:04:25.830
+and the few expensive.
+
+111
+00:04:25.830 --> 00:04:27.330
+Inserting does the opposite
+
+112
+00:04:27.330 --> 00:04:28.560
+in the worst case.
+
+113
+00:04:28.910 --> 00:04:30.420
+For decreasing keys
+
+114
+00:04:30.420 --> 00:04:32.651
+with a thousand entries
+
+115
+00:04:32.740 --> 00:04:34.856
+bottom-up needs one thousand nine
+
+116
+00:04:34.920 --> 00:04:36.858
+hundred eighty-two comparisons.
+
+117
+00:04:36.920 --> 00:04:39.966
+Inserting one by one needs seven thousand
+
+118
+00:04:40.040 --> 00:04:41.790
+nine hundred eighty-seven.
+
+119
+00:04:42.140 --> 00:04:44.440
+With sixty-four thousand entries
+
+120
+00:04:44.510 --> 00:04:45.760
+bottom-up needs a hundred
+
+121
+00:04:45.810 --> 00:04:46.890
+twenty-eight thousand.
+
+122
+00:04:46.890 --> 00:04:49.406
+Almost exactly two per entry.
+
+123
+00:04:49.490 --> 00:04:51.249
+Inserting needs eight hundred
+
+124
+00:04:51.310 --> 00:04:52.730
+ninety-four thousand
+
+125
+00:04:52.730 --> 00:04:54.860
+about fourteen per entry.
+
+126
+00:04:55.440 --> 00:04:57.666
+One honest caveat.
+
+127
+00:04:57.790 --> 00:04:59.627
+Decreasing keys are the worst
+
+128
+00:04:59.690 --> 00:05:00.930
+case for inserting.
+
+129
+00:05:00.930 --> 00:05:03.844
+With random keys, a new entry usually stops
+
+130
+00:05:03.910 --> 00:05:05.285
+after a level or two
+
+131
+00:05:05.350 --> 00:05:08.181
+and inserting one by one costs only about
+
+132
+00:05:08.250 --> 00:05:10.720
+two point three comparisons per entry.
+
+133
+00:05:11.070 --> 00:05:12.980
+Bottom-up still wins
+
+134
+00:05:12.980 --> 00:05:14.900
+with about one point nine
+
+135
+00:05:14.900 --> 00:05:16.620
+and it has a guarantee
+
+136
+00:05:16.620 --> 00:05:19.300
+never more than two comparisons per entry
+
+137
+00:05:19.300 --> 00:05:20.340
+whatever the input.
+
+138
+00:05:20.340 --> 00:05:23.920
+The n log n for inserting is a worst case
+
+139
+00:05:23.920 --> 00:05:25.070
+not an average.
+
+140
+00:05:25.650 --> 00:05:26.680
+To sum up.
+
+141
+00:05:26.680 --> 00:05:29.500
+To build a heap from n entries
+
+142
+00:05:29.500 --> 00:05:31.840
+sink every node that has a child
+
+143
+00:05:31.840 --> 00:05:34.130
+from the last one back to the root.
+
+144
+00:05:34.480 --> 00:05:36.610
+Most nodes are near the bottom
+
+145
+00:05:36.610 --> 00:05:37.935
+where sinking is cheap
+
+146
+00:05:37.990 --> 00:05:39.691
+so the total is at most about
+
+147
+00:05:39.750 --> 00:05:41.640
+two n comparisons.
+
+148
+00:05:41.990 --> 00:05:44.920
+Next: a surprising use of this.
+
+149
+00:05:44.920 --> 00:05:47.780
+Build a heap, then take everything out.
+
+150
+00:05:47.780 --> 00:05:49.720
+That sorts the array in place.
+
+151
+00:05:49.720 --> 00:05:51.310
+It is called heap sort.
+
+152
+00:05:51.937 --> 00:05:55.007
+Let's build a heap from a list in Python
+
+153
+00:05:55.007 --> 00:05:56.497
+and count the steps.
+
+154
+00:05:57.077 --> 00:05:58.767
+The method is three lines.
+
+155
+00:05:58.767 --> 00:06:01.467
+We loop j from the parent of the last entry
+
+156
+00:06:01.467 --> 00:06:02.512
+down to zero.
+
+157
+00:06:02.587 --> 00:06:04.417
+The range starts at parent
+
+158
+00:06:04.487 --> 00:06:08.087
+of the last index, stops before minus one
+
+159
+00:06:08.087 --> 00:06:10.037
+and counts down by one.
+
+160
+00:06:10.387 --> 00:06:13.144
+For each j, we call the same down-heap
+
+161
+00:06:13.217 --> 00:06:14.737
+we used for remove min.
+
+162
+00:06:14.737 --> 00:06:15.707
+Nothing new.
+
+163
+00:06:16.057 --> 00:06:18.687
+The constructor copies the list you give it
+
+164
+00:06:18.687 --> 00:06:20.007
+then calls heapify.
+
+165
+00:06:20.007 --> 00:06:22.177
+Your original list is left alone.
+
+166
+00:06:22.757 --> 00:06:25.907
+Here is the real run on our ten entries.
+
+167
+00:06:25.907 --> 00:06:29.827
+Fix node four: one comparison, no swap.
+
+168
+00:06:29.827 --> 00:06:32.747
+Node three: two comparisons, one swap.
+
+169
+00:06:32.747 --> 00:06:34.607
+Node two: two and one.
+
+170
+00:06:34.607 --> 00:06:36.567
+Node one: three and two.
+
+171
+00:06:36.567 --> 00:06:38.557
+Node zero: four and two.
+
+172
+00:06:38.907 --> 00:06:42.497
+Total: twelve comparisons and six swaps.
+
+173
+00:06:42.497 --> 00:06:45.067
+And the result is a valid heap.
+
+174
+00:06:45.647 --> 00:06:49.297
+The same ten entries inserted one by one
+
+175
+00:06:49.297 --> 00:06:52.517
+seventeen comparisons and twelve swaps.
+
+176
+00:06:52.517 --> 00:06:55.087
+A different array, equally valid.
+
+177
+00:06:55.667 --> 00:06:57.917
+Now let's measure at scale.
+
+178
+00:06:57.917 --> 00:07:00.931
+For n entries in decreasing order
+
+179
+00:07:01.017 --> 00:07:02.733
+we count the comparisons of
+
+180
+00:07:02.797 --> 00:07:04.217
+bottom-up construction
+
+181
+00:07:04.217 --> 00:07:07.067
+and of n separate inserts.
+
+182
+00:07:07.417 --> 00:07:09.567
+At a thousand entries
+
+183
+00:07:09.567 --> 00:07:11.457
+one thousand nine hundred eighty-two
+
+184
+00:07:11.507 --> 00:07:13.088
+against seven thousand nine
+
+185
+00:07:13.147 --> 00:07:14.307
+hundred eighty-seven.
+
+186
+00:07:14.307 --> 00:07:16.767
+At sixty-four thousand
+
+187
+00:07:16.767 --> 00:07:18.387
+a hundred twenty-eight thousand
+
+188
+00:07:18.387 --> 00:07:21.177
+against almost nine hundred thousand.
+
+189
+00:07:21.527 --> 00:07:24.597
+The first column stays near two per entry.
+
+190
+00:07:24.597 --> 00:07:27.607
+The second keeps growing, like log n.
+
+191
+00:07:28.187 --> 00:07:31.519
+With random order, the gap closes.
+
+192
+00:07:31.617 --> 00:07:33.748
+Bottom-up costs about one point
+
+193
+00:07:33.817 --> 00:07:35.857
+nine comparisons per entry
+
+194
+00:07:35.857 --> 00:07:38.397
+and inserting about two point three.
+
+195
+00:07:38.397 --> 00:07:40.217
+Bottom-up is still cheaper
+
+196
+00:07:40.217 --> 00:07:43.747
+and its guarantee holds for every input.
+
+197
+00:07:44.327 --> 00:07:45.437
+In practice
+
+198
+00:07:45.437 --> 00:07:47.997
+call heapify from the heap Q module.
+
+199
+00:07:47.997 --> 00:07:51.157
+It turns a list into a heap, in place
+
+200
+00:07:51.157 --> 00:07:52.447
+in linear time.
+
+201
+00:07:52.797 --> 00:07:54.610
+Our version gives the same array
+
+202
+00:07:54.667 --> 00:07:56.087
+for distinct entries
+
+203
+00:07:56.087 --> 00:07:57.677
+the test suite checks it.
+
+204
+00:07:58.027 --> 00:07:59.348
+A frequent mistake
+
+205
+00:07:59.417 --> 00:08:01.288
+calling heap push in a loop
+
+206
+00:08:01.357 --> 00:08:02.597
+on an existing list
+
+207
+00:08:02.597 --> 00:08:04.837
+which is the slower n log n way.
+
+208
+00:08:04.837 --> 00:08:08.307
+If you already have the list, use heapify.
+
+209
+00:08:08.887 --> 00:08:10.797
+Two common mistakes.
+
+210
+00:08:10.797 --> 00:08:11.397
+One
+
+211
+00:08:11.517 --> 00:08:15.227
+looping from zero up to n instead of from
+
+212
+00:08:15.317 --> 00:08:18.197
+the last internal node down to zero.
+
+213
+00:08:18.197 --> 00:08:20.397
+Sinking the root first does not work
+
+214
+00:08:20.397 --> 00:08:23.447
+because its subtrees are not heaps yet.
+
+215
+00:08:23.797 --> 00:08:27.037
+Two: starting at n minus one instead
+
+216
+00:08:27.127 --> 00:08:28.327
+of at its parent.
+
+217
+00:08:28.327 --> 00:08:30.067
+The leaves cost nothing
+
+218
+00:08:30.067 --> 00:08:32.402
+but you do pay for pointless calls
+
+219
+00:08:32.467 --> 00:08:34.882
+and you can index past the end if you
+
+220
+00:08:34.947 --> 00:08:36.517
+forget to check for children.
+
+221
+00:08:37.097 --> 00:08:41.096
+So in Python: heapify from the last internal
+
+222
+00:08:41.187 --> 00:08:42.627
+node down to the root
+
+223
+00:08:42.627 --> 00:08:45.427
+or call heapq dot heapify.
+
+224
+00:08:45.427 --> 00:08:47.617
+Next: heap sort.
+

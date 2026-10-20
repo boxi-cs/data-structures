@@ -1,0 +1,762 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:05.039
+You press the Back button in your browser
+
+2
+00:00:05.090 --> 00:00:06.307
+and you land on the page you
+
+3
+00:00:06.350 --> 00:00:07.510
+were on a moment ago.
+
+4
+00:00:07.510 --> 00:00:08.610
+Press it again
+
+5
+00:00:08.610 --> 00:00:10.580
+and you go one page further back.
+
+6
+00:00:10.930 --> 00:00:13.380
+In a text editor, you press Undo
+
+7
+00:00:13.380 --> 00:00:15.480
+and your most recent change disappears.
+
+8
+00:00:15.480 --> 00:00:16.360
+Press it again
+
+9
+00:00:16.360 --> 00:00:19.090
+and the change before that one disappears.
+
+10
+00:00:19.440 --> 00:00:21.430
+Both of these remember a history
+
+11
+00:00:21.430 --> 00:00:24.130
+and both give it back in the same order
+
+12
+00:00:24.130 --> 00:00:26.360
+the most recent thing first.
+
+13
+00:00:26.710 --> 00:00:29.286
+What is the simplest data structure
+
+14
+00:00:29.360 --> 00:00:31.390
+that behaves exactly like that?
+
+15
+00:00:31.970 --> 00:00:33.717
+It is called a stack
+
+16
+00:00:33.800 --> 00:00:35.385
+and it is the first structure
+
+17
+00:00:35.440 --> 00:00:36.450
+in this chapter.
+
+18
+00:00:36.800 --> 00:00:38.132
+In this video we'll see
+
+19
+00:00:38.190 --> 00:00:40.910
+what a stack promises, what it costs
+
+20
+00:00:40.910 --> 00:00:42.600
+and the two ways to build one.
+
+21
+00:00:43.180 --> 00:00:45.112
+A stack is a collection where you
+
+22
+00:00:45.170 --> 00:00:47.090
+can only work with one end.
+
+23
+00:00:47.090 --> 00:00:48.690
+You add an item on top.
+
+24
+00:00:48.690 --> 00:00:50.030
+You look at the top.
+
+25
+00:00:50.030 --> 00:00:51.700
+You remove the top.
+
+26
+00:00:52.050 --> 00:00:53.900
+Think of a pile of plates.
+
+27
+00:00:53.900 --> 00:00:55.360
+You put a plate on top
+
+28
+00:00:55.360 --> 00:00:56.820
+and when you want one
+
+29
+00:00:56.820 --> 00:00:58.500
+you take it from the top.
+
+30
+00:00:58.500 --> 00:01:00.730
+Nobody pulls a plate out of the middle.
+
+31
+00:01:01.080 --> 00:01:04.934
+The rule has a name: last in, first out.
+
+32
+00:01:05.030 --> 00:01:07.107
+The last item that went in is the
+
+33
+00:01:07.170 --> 00:01:09.050
+first item that comes out.
+
+34
+00:01:09.050 --> 00:01:11.880
+People often write it L I F O.
+
+35
+00:01:12.460 --> 00:01:15.510
+A stack supports a handful of operations.
+
+36
+00:01:15.510 --> 00:01:17.950
+Push adds an item on top.
+
+37
+00:01:17.950 --> 00:01:21.735
+Pop removes the top item and returns it.
+
+38
+00:01:21.830 --> 00:01:23.635
+Top returns the top item
+
+39
+00:01:23.710 --> 00:01:25.140
+without removing it.
+
+40
+00:01:25.490 --> 00:01:27.640
+Two more questions are handy
+
+41
+00:01:27.640 --> 00:01:29.080
+how many items are there
+
+42
+00:01:29.080 --> 00:01:31.250
+and is the stack empty?
+
+43
+00:01:31.600 --> 00:01:34.190
+That is the whole interface.
+
+44
+00:01:34.190 --> 00:01:36.498
+Pop and top both need an item to work with
+
+45
+00:01:36.550 --> 00:01:38.621
+so asking for them on an empty
+
+46
+00:01:38.690 --> 00:01:40.360
+stack is an error.
+
+47
+00:01:40.940 --> 00:01:42.830
+Let's run a small example.
+
+48
+00:01:42.830 --> 00:01:46.070
+Start with an empty stack and push three
+
+49
+00:01:46.070 --> 00:01:48.500
+then seven, then one.
+
+50
+00:01:48.850 --> 00:01:50.560
+Now the top is one.
+
+51
+00:01:50.560 --> 00:01:52.920
+If we pop, we get one back
+
+52
+00:01:52.920 --> 00:01:55.410
+and the stack is down to three and seven.
+
+53
+00:01:55.760 --> 00:01:58.510
+Pop again and we get seven.
+
+54
+00:01:58.510 --> 00:02:01.270
+Pop again, and we get three.
+
+55
+00:02:01.270 --> 00:02:03.690
+We pushed three, seven, one
+
+56
+00:02:03.690 --> 00:02:07.050
+and we got them back as one, seven, three
+
+57
+00:02:07.050 --> 00:02:08.440
+exactly reversed.
+
+58
+00:02:08.790 --> 00:02:11.020
+That reversal is not an accident.
+
+59
+00:02:11.020 --> 00:02:13.078
+It's the whole point of a stack
+
+60
+00:02:13.140 --> 00:02:14.906
+and it is why stacks are
+
+61
+00:02:14.980 --> 00:02:16.550
+good at undoing things.
+
+62
+00:02:17.130 --> 00:02:18.540
+You may be thinking
+
+63
+00:02:18.540 --> 00:02:20.440
+a list can do all of this and more.
+
+64
+00:02:20.440 --> 00:02:22.170
+Why restrict ourselves?
+
+65
+00:02:22.720 --> 00:02:25.250
+Because the restriction is a promise.
+
+66
+00:02:25.250 --> 00:02:26.950
+If you hand someone a stack
+
+67
+00:02:26.950 --> 00:02:29.688
+they can't peek at the middle or reorder it
+
+68
+00:02:29.750 --> 00:02:31.621
+so the structure never has to maintain
+
+69
+00:02:31.670 --> 00:02:33.840
+anything except the top.
+
+70
+00:02:34.190 --> 00:02:36.780
+A smaller promise is easier to keep
+
+71
+00:02:36.780 --> 00:02:38.420
+and as we'll see
+
+72
+00:02:38.420 --> 00:02:40.469
+it can be kept very cheaply.
+
+73
+00:02:40.540 --> 00:02:41.817
+Choosing the right restriction
+
+74
+00:02:41.860 --> 00:02:43.950
+is a design skill in itself.
+
+75
+00:02:44.530 --> 00:02:47.780
+How much work does each operation take?
+
+76
+00:02:47.780 --> 00:02:48.600
+Push
+
+77
+00:02:48.600 --> 00:02:52.360
+pop and top only ever touch the top item.
+
+78
+00:02:52.360 --> 00:02:54.570
+They don't look at the other items at all.
+
+79
+00:02:54.920 --> 00:02:57.878
+So each takes a constant number of steps
+
+80
+00:02:57.950 --> 00:02:59.639
+no matter whether the stack holds
+
+81
+00:02:59.690 --> 00:03:01.930
+ten items or ten million.
+
+82
+00:03:01.930 --> 00:03:04.960
+In Big-O terms, that's O of one.
+
+83
+00:03:05.310 --> 00:03:07.120
+There's one footnote
+
+84
+00:03:07.120 --> 00:03:09.160
+for one of the two implementations
+
+85
+00:03:09.160 --> 00:03:10.870
+and we'll meet it in the code.
+
+86
+00:03:11.450 --> 00:03:13.980
+Stacks show up everywhere.
+
+87
+00:03:13.980 --> 00:03:16.307
+Undo and Back, as we saw.
+
+88
+00:03:16.400 --> 00:03:17.594
+Checking that the brackets
+
+89
+00:03:17.640 --> 00:03:18.880
+in a program match
+
+90
+00:03:18.880 --> 00:03:20.770
+which we'll do in video four.
+
+91
+00:03:21.120 --> 00:03:23.670
+And the one every program relies on
+
+92
+00:03:23.670 --> 00:03:24.670
+the call stack.
+
+93
+00:03:24.670 --> 00:03:26.970
+Each function call pushes a frame
+
+94
+00:03:26.970 --> 00:03:28.532
+each return pops it.
+
+95
+00:03:28.610 --> 00:03:30.555
+In Chapter four we'll see recursion
+
+96
+00:03:30.610 --> 00:03:32.320
+through exactly this lens.
+
+97
+00:03:32.900 --> 00:03:35.590
+There are two natural ways to build a stack.
+
+98
+00:03:35.590 --> 00:03:37.070
+Keep the items in an array
+
+99
+00:03:37.070 --> 00:03:38.690
+with the top at the end.
+
+100
+00:03:38.690 --> 00:03:41.190
+Or link the items together in a chain
+
+101
+00:03:41.190 --> 00:03:42.900
+with the top at the front.
+
+102
+00:03:43.250 --> 00:03:45.600
+The array is compact and fast
+
+103
+00:03:45.600 --> 00:03:47.160
+but it has a fixed size
+
+104
+00:03:47.160 --> 00:03:48.940
+so it sometimes has to grow.
+
+105
+00:03:48.940 --> 00:03:51.980
+The chain grows one item at a time
+
+106
+00:03:51.980 --> 00:03:54.450
+but every item carries a pointer.
+
+107
+00:03:54.800 --> 00:03:56.724
+Both give the same behaviour.
+
+108
+00:03:56.790 --> 00:03:58.576
+Which one is better is a
+
+109
+00:03:58.650 --> 00:03:59.850
+question of trade-offs
+
+110
+00:03:59.850 --> 00:04:01.600
+and we'll look at both next.
+
+111
+00:04:02.180 --> 00:04:03.530
+To sum up.
+
+112
+00:04:03.530 --> 00:04:06.870
+A stack is last in, first out.
+
+113
+00:04:06.870 --> 00:04:09.570
+You can push, pop, and look at the top
+
+114
+00:04:09.570 --> 00:04:10.820
+and nothing else.
+
+115
+00:04:11.170 --> 00:04:13.748
+Every operation takes constant time
+
+116
+00:04:13.820 --> 00:04:15.093
+and the restriction is what
+
+117
+00:04:15.140 --> 00:04:16.330
+makes that possible.
+
+118
+00:04:16.680 --> 00:04:17.950
+In the next part
+
+119
+00:04:17.950 --> 00:04:21.000
+we write both versions in code and run them.
+
+120
+00:04:21.627 --> 00:04:24.227
+Now let's build both stacks in Python.
+
+121
+00:04:24.807 --> 00:04:26.737
+Here is the array-based stack.
+
+122
+00:04:26.737 --> 00:04:29.177
+We keep a Python list called data
+
+123
+00:04:29.177 --> 00:04:31.197
+filled with None to reserve space
+
+124
+00:04:31.197 --> 00:04:33.104
+and a counter called size.
+
+125
+00:04:33.177 --> 00:04:35.081
+The top item always lives
+
+126
+00:04:35.157 --> 00:04:37.327
+at index size minus one.
+
+127
+00:04:37.677 --> 00:04:40.016
+Push stores the new item at index
+
+128
+00:04:40.087 --> 00:04:43.007
+size and adds one to size.
+
+129
+00:04:43.007 --> 00:04:44.407
+Pop does the reverse
+
+130
+00:04:44.407 --> 00:04:47.247
+it subtracts one from size, reads the item
+
+131
+00:04:47.247 --> 00:04:48.811
+and puts None in its place
+
+132
+00:04:48.867 --> 00:04:50.991
+so the list doesn't hold on to an item
+
+133
+00:04:51.047 --> 00:04:52.837
+the stack no longer contains.
+
+134
+00:04:53.187 --> 00:04:56.544
+Top just reads index size minus one.
+
+135
+00:04:56.637 --> 00:05:00.042
+Both pop and top raise an IndexError
+
+136
+00:05:00.137 --> 00:05:01.667
+when the stack is empty.
+
+137
+00:05:02.247 --> 00:05:05.517
+But what happens when the array is full?
+
+138
+00:05:05.517 --> 00:05:07.297
+Push checks first.
+
+139
+00:05:07.297 --> 00:05:09.937
+If size equals the length of data
+
+140
+00:05:09.937 --> 00:05:12.637
+it calls resize with twice the length
+
+141
+00:05:12.637 --> 00:05:14.277
+it makes a new list
+
+142
+00:05:14.277 --> 00:05:16.017
+copies every item across
+
+143
+00:05:16.017 --> 00:05:17.727
+and replaces the old one.
+
+144
+00:05:18.077 --> 00:05:19.629
+We start with a capacity of
+
+145
+00:05:19.687 --> 00:05:21.818
+two and push five items.
+
+146
+00:05:21.907 --> 00:05:23.918
+The capacity stays at two for
+
+147
+00:05:23.987 --> 00:05:25.327
+the first two pushes
+
+148
+00:05:25.327 --> 00:05:28.967
+doubles to four at the third, stays at four
+
+149
+00:05:28.967 --> 00:05:31.277
+and doubles to eight at the fifth.
+
+150
+00:05:31.627 --> 00:05:34.537
+Copying takes time proportional to the size
+
+151
+00:05:34.537 --> 00:05:36.277
+but it happens rarely.
+
+152
+00:05:36.277 --> 00:05:37.657
+Because we double
+
+153
+00:05:37.657 --> 00:05:39.643
+most pushes cost one step.
+
+154
+00:05:39.717 --> 00:05:42.135
+The amortized analysis video in Chapter
+
+155
+00:05:42.197 --> 00:05:44.746
+one showed that the average cost per
+
+156
+00:05:44.817 --> 00:05:46.667
+push is still constant.
+
+157
+00:05:47.247 --> 00:05:49.804
+The linked stack needs no capacity.
+
+158
+00:05:49.877 --> 00:05:51.873
+Each item lives in a small Node
+
+159
+00:05:51.937 --> 00:05:54.419
+object holding the element and a
+
+160
+00:05:54.497 --> 00:05:55.828
+reference to the next node.
+
+161
+00:05:55.877 --> 00:05:57.728
+The stack keeps just a head
+
+162
+00:05:57.797 --> 00:05:59.567
+reference and a size.
+
+163
+00:05:59.917 --> 00:06:01.754
+Push creates a node whose
+
+164
+00:06:01.827 --> 00:06:03.667
+next is the old head
+
+165
+00:06:03.667 --> 00:06:06.642
+then makes that node the new head.
+
+166
+00:06:06.727 --> 00:06:09.209
+Pop reads the head's element and
+
+167
+00:06:09.287 --> 00:06:11.357
+moves head to the next node.
+
+168
+00:06:11.707 --> 00:06:13.454
+No copying, ever
+
+169
+00:06:13.557 --> 00:06:15.587
+and every call takes constant
+
+170
+00:06:15.657 --> 00:06:18.877
+time in the worst case, not only on average.
+
+171
+00:06:18.877 --> 00:06:22.027
+The price is one extra reference per item.
+
+172
+00:06:22.607 --> 00:06:24.973
+In practice you rarely write
+
+173
+00:06:25.057 --> 00:06:26.477
+your own stack in Python.
+
+174
+00:06:26.477 --> 00:06:29.357
+A plain list already works as one
+
+175
+00:06:29.357 --> 00:06:31.297
+append pushes at the end
+
+176
+00:06:31.297 --> 00:06:32.937
+pop removes from the end
+
+177
+00:06:32.937 --> 00:06:35.577
+and the last element, index minus one
+
+178
+00:06:35.577 --> 00:06:36.687
+is the top.
+
+179
+00:06:37.037 --> 00:06:39.842
+A collections dot deque works the same way
+
+180
+00:06:39.907 --> 00:06:41.621
+and it is also the one you
+
+181
+00:06:41.687 --> 00:06:42.987
+will want for queues
+
+182
+00:06:42.987 --> 00:06:44.597
+which is the next video.
+
+183
+00:06:45.177 --> 00:06:47.129
+So an array stack is fast
+
+184
+00:06:47.207 --> 00:06:48.524
+but sometimes copies
+
+185
+00:06:48.587 --> 00:06:51.231
+and a linked stack never copies but
+
+186
+00:06:51.307 --> 00:06:52.927
+carries a pointer per item.
+
+187
+00:06:52.927 --> 00:06:54.507
+Both give you push
+
+188
+00:06:54.507 --> 00:06:56.697
+pop and top in constant time.
+
+189
+00:06:57.047 --> 00:07:00.042
+Next up: queues, where the first item in
+
+190
+00:07:00.117 --> 00:07:01.847
+is the first one out.
+

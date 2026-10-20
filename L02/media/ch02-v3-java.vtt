@@ -1,0 +1,838 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:05.430
+An array keeps its items side by side.
+
+2
+00:00:05.430 --> 00:00:07.210
+To insert at the front
+
+3
+00:00:07.210 --> 00:00:10.420
+every item has to move over, one by one.
+
+4
+00:00:10.770 --> 00:00:13.160
+For a list of a million items
+
+5
+00:00:13.160 --> 00:00:14.840
+that is a million moves
+
+6
+00:00:14.840 --> 00:00:17.330
+just to add one name at the beginning.
+
+7
+00:00:17.680 --> 00:00:19.769
+Is there a way to add at the front
+
+8
+00:00:19.830 --> 00:00:21.760
+without moving anything?
+
+9
+00:00:22.340 --> 00:00:23.290
+There is
+
+10
+00:00:23.290 --> 00:00:26.170
+and it works by giving up something we had
+
+11
+00:00:26.170 --> 00:00:28.860
+the items no longer sit side by side.
+
+12
+00:00:29.210 --> 00:00:30.542
+In this video we'll see
+
+13
+00:00:30.600 --> 00:00:32.560
+what a linked list is
+
+14
+00:00:32.560 --> 00:00:35.120
+how to change it by rewiring references
+
+15
+00:00:35.120 --> 00:00:37.650
+and what it is actually fast at.
+
+16
+00:00:38.230 --> 00:00:39.840
+A linked list is built from
+
+17
+00:00:39.900 --> 00:00:41.800
+small boxes called nodes.
+
+18
+00:00:41.800 --> 00:00:43.940
+Each node holds one value
+
+19
+00:00:43.940 --> 00:00:45.080
+and one reference
+
+20
+00:00:45.080 --> 00:00:46.790
+an arrow to the next node.
+
+21
+00:00:47.140 --> 00:00:49.590
+The nodes can be anywhere in memory.
+
+22
+00:00:49.590 --> 00:00:52.380
+What keeps them in order is the arrows.
+
+23
+00:00:52.730 --> 00:00:55.780
+The last node has no next node.
+
+24
+00:00:55.780 --> 00:00:58.810
+We draw that as a small empty mark.
+
+25
+00:00:59.390 --> 00:01:01.675
+The list itself is just a reference
+
+26
+00:01:01.740 --> 00:01:02.980
+to the first node.
+
+27
+00:01:02.980 --> 00:01:04.190
+We call it head.
+
+28
+00:01:04.540 --> 00:01:07.390
+We also keep a reference to the last node
+
+29
+00:01:07.390 --> 00:01:08.350
+called tail.
+
+30
+00:01:08.350 --> 00:01:10.060
+We'll see why in a moment.
+
+31
+00:01:10.410 --> 00:01:12.121
+If someone hands us the head
+
+32
+00:01:12.180 --> 00:01:14.029
+we can reach every item by
+
+33
+00:01:14.100 --> 00:01:15.340
+following the arrows.
+
+34
+00:01:15.340 --> 00:01:17.780
+If nobody holds a reference to a node
+
+35
+00:01:17.780 --> 00:01:19.330
+no one can ever reach it.
+
+36
+00:01:19.910 --> 00:01:22.060
+Watch how we reach the third item.
+
+37
+00:01:22.060 --> 00:01:24.840
+We start at head, and follow one arrow
+
+38
+00:01:24.840 --> 00:01:26.030
+then another.
+
+39
+00:01:26.380 --> 00:01:31.083
+To reach item i, we have to follow i arrows.
+
+40
+00:01:31.190 --> 00:01:33.072
+There is no formula that
+
+41
+00:01:33.150 --> 00:01:34.250
+jumps straight there
+
+42
+00:01:34.250 --> 00:01:35.788
+like the one for arrays.
+
+43
+00:01:35.850 --> 00:01:38.358
+Reaching an item by its index takes
+
+44
+00:01:38.430 --> 00:01:40.740
+time proportional to i.
+
+45
+00:01:41.320 --> 00:01:42.610
+Now the front.
+
+46
+00:01:42.610 --> 00:01:44.920
+We want to add A before B.
+
+47
+00:01:45.270 --> 00:01:48.640
+First, we create a new node holding A.
+
+48
+00:01:48.640 --> 00:01:49.880
+It's floating free
+
+49
+00:01:49.880 --> 00:01:51.470
+not yet part of the list.
+
+50
+00:01:51.820 --> 00:01:52.710
+Step one
+
+51
+00:01:52.710 --> 00:01:56.420
+make A point to the current first node, B.
+
+52
+00:01:56.770 --> 00:02:00.370
+Step two: move head to point at A.
+
+53
+00:02:00.720 --> 00:02:02.470
+Two references changed.
+
+54
+00:02:02.470 --> 00:02:04.089
+Not one item moved
+
+55
+00:02:04.170 --> 00:02:06.509
+and it doesn't matter whether the list
+
+56
+00:02:06.570 --> 00:02:09.680
+has three items or three million.
+
+57
+00:02:10.260 --> 00:02:12.830
+But the order of those two steps matters.
+
+58
+00:02:12.830 --> 00:02:14.590
+Let's try them the other way round
+
+59
+00:02:14.590 --> 00:02:15.740
+on a copy.
+
+60
+00:02:16.090 --> 00:02:18.220
+Move head to A first.
+
+61
+00:02:18.220 --> 00:02:19.720
+Now head points at A
+
+62
+00:02:19.720 --> 00:02:22.050
+and A points to nothing yet.
+
+63
+00:02:22.400 --> 00:02:26.010
+The old first node, B, still points to C.
+
+64
+00:02:26.010 --> 00:02:29.370
+But nothing points to B any more: not head
+
+65
+00:02:29.370 --> 00:02:30.150
+not A.
+
+66
+00:02:30.150 --> 00:02:34.200
+And no one can reach B, C or D.
+
+67
+00:02:34.800 --> 00:02:37.370
+The whole list is lost.
+
+68
+00:02:37.370 --> 00:02:41.438
+So the rule is: connect the new node to the
+
+69
+00:02:41.530 --> 00:02:43.570
+rest of the list first
+
+70
+00:02:43.570 --> 00:02:46.320
+then change what the list starts with.
+
+71
+00:02:46.900 --> 00:02:49.530
+At the other end, that's what tail is for.
+
+72
+00:02:49.530 --> 00:02:51.690
+To add E at the end
+
+73
+00:02:51.690 --> 00:02:54.170
+we make the last node point to E
+
+74
+00:02:54.170 --> 00:02:56.180
+and move tail to E.
+
+75
+00:02:56.530 --> 00:02:58.640
+Two reference changes again.
+
+76
+00:02:58.640 --> 00:03:00.255
+Without a tail reference
+
+77
+00:03:00.320 --> 00:03:01.930
+we'd have to walk the whole list
+
+78
+00:03:01.980 --> 00:03:03.690
+first to find the last node.
+
+79
+00:03:04.270 --> 00:03:06.320
+To remove the first item
+
+80
+00:03:06.320 --> 00:03:08.630
+we move head to the second node.
+
+81
+00:03:08.980 --> 00:03:12.210
+The old first node is no longer reachable.
+
+82
+00:03:12.210 --> 00:03:13.690
+In most languages
+
+83
+00:03:13.690 --> 00:03:16.700
+the system notices and reclaims its memory.
+
+84
+00:03:17.050 --> 00:03:18.530
+One reference changed.
+
+85
+00:03:19.110 --> 00:03:20.380
+More generally
+
+86
+00:03:20.380 --> 00:03:23.380
+suppose we already hold a node, say B
+
+87
+00:03:23.380 --> 00:03:26.550
+and we want to insert X right after it.
+
+88
+00:03:26.900 --> 00:03:29.010
+Same recipe, same order.
+
+89
+00:03:29.010 --> 00:03:29.770
+First
+
+90
+00:03:29.770 --> 00:03:33.150
+make X point to whatever B pointed to.
+
+91
+00:03:33.150 --> 00:03:36.100
+Then make B point to X.
+
+92
+00:03:36.700 --> 00:03:39.620
+Two references, and nothing else moves.
+
+93
+00:03:40.200 --> 00:03:42.090
+But notice the words
+
+94
+00:03:42.090 --> 00:03:44.532
+a node you already hold.
+
+95
+00:03:44.630 --> 00:03:45.995
+How do we get hold of the
+
+96
+00:03:46.050 --> 00:03:47.480
+node in the middle?
+
+97
+00:03:47.830 --> 00:03:49.940
+We have to walk there from head
+
+98
+00:03:49.940 --> 00:03:51.560
+one arrow at a time.
+
+99
+00:03:51.560 --> 00:03:54.080
+For the middle of a list of n items
+
+100
+00:03:54.080 --> 00:03:56.310
+that's about n over two arrows.
+
+101
+00:03:56.660 --> 00:03:58.852
+So inserting in the middle of a linked
+
+102
+00:03:58.910 --> 00:04:01.310
+list is not constant time, either.
+
+103
+00:04:01.310 --> 00:04:03.790
+The insertion itself is cheap.
+
+104
+00:04:03.790 --> 00:04:06.100
+The search is not.
+
+105
+00:04:06.680 --> 00:04:08.480
+Here is the comparison.
+
+106
+00:04:08.830 --> 00:04:12.720
+Reading item i: the array is constant time
+
+107
+00:04:12.720 --> 00:04:15.150
+the linked list needs i hops.
+
+108
+00:04:15.500 --> 00:04:17.370
+Inserting at the front
+
+109
+00:04:17.370 --> 00:04:19.610
+the array shifts everything
+
+110
+00:04:19.610 --> 00:04:22.380
+the linked list changes two references.
+
+111
+00:04:22.730 --> 00:04:26.060
+Inserting after a node we already hold
+
+112
+00:04:26.060 --> 00:04:29.300
+the array shifts the items after it
+
+113
+00:04:29.300 --> 00:04:32.210
+the linked list changes two references.
+
+114
+00:04:32.560 --> 00:04:35.510
+Inserting at a given position, by index
+
+115
+00:04:35.510 --> 00:04:38.170
+both are proportional to n
+
+116
+00:04:38.170 --> 00:04:41.840
+one by shifting items, the other by walking.
+
+117
+00:04:42.190 --> 00:04:44.080
+Neither wins everywhere.
+
+118
+00:04:44.080 --> 00:04:46.800
+The linked list wins at the front
+
+119
+00:04:46.800 --> 00:04:49.670
+and wherever we already hold the node.
+
+120
+00:04:50.250 --> 00:04:51.300
+To sum up.
+
+121
+00:04:51.300 --> 00:04:54.920
+A linked list is nodes joined by references
+
+122
+00:04:55.000 --> 00:04:57.044
+and the list is a reference
+
+123
+00:04:57.120 --> 00:04:58.890
+to the first node.
+
+124
+00:04:59.240 --> 00:05:01.110
+Insert and remove at the front
+
+125
+00:05:01.110 --> 00:05:03.530
+and insert after a held node
+
+126
+00:05:03.530 --> 00:05:05.610
+change only one or two references.
+
+127
+00:05:05.610 --> 00:05:08.186
+But the order of those changes matters
+
+128
+00:05:08.250 --> 00:05:09.428
+and getting to a node in the
+
+129
+00:05:09.470 --> 00:05:11.320
+middle takes a walk.
+
+130
+00:05:11.670 --> 00:05:12.540
+Next
+
+131
+00:05:12.540 --> 00:05:14.780
+we'll make the end operations cheap too
+
+132
+00:05:14.780 --> 00:05:17.430
+with two more kinds of linked list.
+
+133
+00:05:18.057 --> 00:05:21.217
+Let's build a singly linked list in Java.
+
+134
+00:05:21.797 --> 00:05:25.147
+A node is a small nested class.
+
+135
+00:05:25.147 --> 00:05:26.867
+E is a type parameter
+
+136
+00:05:26.867 --> 00:05:29.147
+the list can hold any type of value.
+
+137
+00:05:29.147 --> 00:05:32.020
+The value, and the reference to the next
+
+138
+00:05:32.067 --> 00:05:33.327
+node of the same kind.
+
+139
+00:05:33.327 --> 00:05:35.207
+When there is no next node
+
+140
+00:05:35.207 --> 00:05:36.477
+the reference is null.
+
+141
+00:05:36.827 --> 00:05:37.877
+In Java
+
+142
+00:05:37.877 --> 00:05:40.437
+a variable of class type holds a reference
+
+143
+00:05:40.437 --> 00:05:42.110
+never the object itself
+
+144
+00:05:42.177 --> 00:05:44.858
+so a node pointing at another node
+
+145
+00:05:44.937 --> 00:05:47.067
+needs no special syntax.
+
+146
+00:05:47.647 --> 00:05:51.657
+The list keeps head, tail and the size.
+
+147
+00:05:51.657 --> 00:05:54.487
+For an empty list, head and tail are null.
+
+148
+00:05:55.067 --> 00:05:56.537
+Here's addFirst.
+
+149
+00:05:56.537 --> 00:05:59.677
+The new Node gets the old head as its next
+
+150
+00:05:59.677 --> 00:06:01.797
+and only then is head assigned.
+
+151
+00:06:01.797 --> 00:06:03.467
+Same order as before.
+
+152
+00:06:03.817 --> 00:06:06.327
+If tail was null, the list was empty
+
+153
+00:06:06.327 --> 00:06:08.887
+and the new node is the tail too.
+
+154
+00:06:08.887 --> 00:06:10.817
+Then size goes up.
+
+155
+00:06:11.167 --> 00:06:13.454
+No loop, so the cost does not depend
+
+156
+00:06:13.517 --> 00:06:14.967
+on the length of the list.
+
+157
+00:06:15.547 --> 00:06:17.623
+removeFirst throws an exception
+
+158
+00:06:17.677 --> 00:06:19.197
+if the list is empty.
+
+159
+00:06:19.197 --> 00:06:21.677
+Otherwise it moves head to the next node
+
+160
+00:06:21.677 --> 00:06:23.757
+and if that leaves the list empty
+
+161
+00:06:23.757 --> 00:06:24.987
+sets tail to null.
+
+162
+00:06:25.337 --> 00:06:26.927
+It returns the value.
+
+163
+00:06:26.927 --> 00:06:29.007
+Nothing refers to the old node
+
+164
+00:06:29.007 --> 00:06:31.497
+so the garbage collector reclaims it.
+
+165
+00:06:32.077 --> 00:06:35.567
+insertAfter takes a node we already hold.
+
+166
+00:06:35.567 --> 00:06:39.507
+The new Node gets node.next as its next
+
+167
+00:06:39.507 --> 00:06:42.597
+then it is assigned to node.next.
+
+168
+00:06:42.947 --> 00:06:46.177
+If the node was the tail, the tail moves.
+
+169
+00:06:46.177 --> 00:06:48.157
+We compare with double equals
+
+170
+00:06:48.157 --> 00:06:50.597
+which for objects compares references
+
+171
+00:06:50.597 --> 00:06:51.597
+not values.
+
+172
+00:06:51.597 --> 00:06:54.077
+That is exactly the question we want
+
+173
+00:06:54.077 --> 00:06:55.747
+is it the same node?
+
+174
+00:06:56.327 --> 00:07:00.077
+nodeAt walks from head, following next
+
+175
+00:07:00.077 --> 00:07:01.487
+index times.
+
+176
+00:07:01.837 --> 00:07:04.454
+That is the slow part of any
+
+177
+00:07:04.547 --> 00:07:06.477
+position-based operation.
+
+178
+00:07:07.057 --> 00:07:11.207
+We build B, C, D, add A at the front
+
+179
+00:07:11.207 --> 00:07:15.177
+insert X after B, and remove the first item.
+
+180
+00:07:15.527 --> 00:07:21.477
+The result: B, X, C, D, head B, tail D
+
+181
+00:07:21.477 --> 00:07:22.207
+size four.
+
+182
+00:07:22.787 --> 00:07:24.197
+Now the stopwatch
+
+183
+00:07:24.197 --> 00:07:27.048
+after a warm-up for the virtual machine.
+
+184
+00:07:27.117 --> 00:07:28.951
+Inserting at the front of the list takes
+
+185
+00:07:28.997 --> 00:07:31.517
+about a hundredth of a microsecond
+
+186
+00:07:31.517 --> 00:07:33.187
+at every size.
+
+187
+00:07:33.537 --> 00:07:36.604
+The array, at sixteen thousand items
+
+188
+00:07:36.687 --> 00:07:38.813
+takes about one and a half microseconds
+
+189
+00:07:38.867 --> 00:07:40.027
+for the same insert
+
+190
+00:07:40.027 --> 00:07:42.937
+and the time doubles when the size doubles.
+
+191
+00:07:43.287 --> 00:07:45.497
+In the middle, something interesting.
+
+192
+00:07:45.557 --> 00:07:48.381
+The array needs under one microsecond
+
+193
+00:07:48.457 --> 00:07:50.257
+at sixteen thousand items.
+
+194
+00:07:50.257 --> 00:07:52.717
+The linked list needs about six
+
+195
+00:07:52.717 --> 00:07:54.687
+and the time grows with n.
+
+196
+00:07:55.037 --> 00:07:56.539
+Both grow with n.
+
+197
+00:07:56.627 --> 00:07:58.850
+But shifting an array is just
+
+198
+00:07:58.927 --> 00:08:00.627
+copying neighbouring memory
+
+199
+00:08:00.627 --> 00:08:03.164
+which the hardware does extremely well.
+
+200
+00:08:03.227 --> 00:08:04.911
+Following references from node
+
+201
+00:08:04.967 --> 00:08:07.387
+to node is slower per step.
+
+202
+00:08:07.387 --> 00:08:08.767
+So in Java
+
+203
+00:08:08.767 --> 00:08:10.447
+the linked list wins at the front
+
+204
+00:08:10.447 --> 00:08:12.437
+and the array wins in the middle.
+
+205
+00:08:13.017 --> 00:08:13.862
+In Java
+
+206
+00:08:13.967 --> 00:08:16.226
+a linked list is a generic node class
+
+207
+00:08:16.287 --> 00:08:18.687
+and a few careful assignments.
+
+208
+00:08:18.687 --> 00:08:21.287
+Next: lists with a second link
+
+209
+00:08:21.287 --> 00:08:23.257
+and lists that go round in a circle.
+

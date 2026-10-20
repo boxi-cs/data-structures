@@ -1,0 +1,926 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:04.795
+A search tree finds
+
+2
+00:00:04.890 --> 00:00:07.427
+inserts and deletes in time proportional
+
+3
+00:00:07.490 --> 00:00:08.350
+to its height.
+
+4
+00:00:08.350 --> 00:00:10.010
+So the whole question is
+
+5
+00:00:10.010 --> 00:00:11.340
+how tall is the tree?
+
+6
+00:00:11.690 --> 00:00:13.240
+Let's do an experiment.
+
+7
+00:00:13.240 --> 00:00:17.160
+We insert the keys one, two, three
+
+8
+00:00:17.160 --> 00:00:19.940
+four and so on, in increasing order
+
+9
+00:00:19.940 --> 00:00:21.980
+into an empty search tree.
+
+10
+00:00:21.980 --> 00:00:23.850
+What does the tree look like?
+
+11
+00:00:24.430 --> 00:00:26.680
+This is the last video of the chapter
+
+12
+00:00:26.680 --> 00:00:28.870
+and it ends with a problem.
+
+13
+00:00:29.220 --> 00:00:30.737
+We'll see how a search tree
+
+14
+00:00:30.790 --> 00:00:31.950
+turns into a list
+
+15
+00:00:31.950 --> 00:00:34.045
+how many comparisons that costs
+
+16
+00:00:34.110 --> 00:00:35.823
+and what happens when the keys
+
+17
+00:00:35.870 --> 00:00:37.860
+arrive in random order.
+
+18
+00:00:38.440 --> 00:00:41.070
+Insert ten into an empty tree.
+
+19
+00:00:41.070 --> 00:00:43.030
+It becomes the root.
+
+20
+00:00:43.030 --> 00:00:44.310
+Insert twenty.
+
+21
+00:00:44.310 --> 00:00:45.430
+It is larger
+
+22
+00:00:45.430 --> 00:00:47.520
+so it goes to the right of ten.
+
+23
+00:00:47.870 --> 00:00:49.760
+Insert thirty.
+
+24
+00:00:49.760 --> 00:00:52.500
+Larger than ten, larger than twenty
+
+25
+00:00:52.500 --> 00:00:55.440
+so it goes to the right of twenty.
+
+26
+00:00:55.440 --> 00:00:57.440
+Forty goes to the right of thirty
+
+27
+00:00:57.440 --> 00:00:58.630
+and so on.
+
+28
+00:00:58.980 --> 00:01:01.056
+Every new key is larger than
+
+29
+00:01:01.130 --> 00:01:02.450
+everything in the tree
+
+30
+00:01:02.450 --> 00:01:04.730
+so it always goes to the far right.
+
+31
+00:01:04.730 --> 00:01:06.900
+The left subtrees stay empty.
+
+32
+00:01:07.250 --> 00:01:08.980
+The tree is a chain.
+
+33
+00:01:08.980 --> 00:01:11.200
+Every node has just one child
+
+34
+00:01:11.200 --> 00:01:13.620
+and the tree is as tall as it can be
+
+35
+00:01:13.620 --> 00:01:17.080
+with n keys, the height is n minus one.
+
+36
+00:01:17.080 --> 00:01:20.290
+This is a linked list, drawn at an angle.
+
+37
+00:01:20.640 --> 00:01:22.135
+And it is still a perfectly
+
+38
+00:01:22.190 --> 00:01:23.290
+valid search tree.
+
+39
+00:01:23.290 --> 00:01:24.710
+The rule holds.
+
+40
+00:01:24.710 --> 00:01:26.840
+It simply is not a fast one.
+
+41
+00:01:27.190 --> 00:01:29.481
+You may have heard that a binary search
+
+42
+00:01:29.540 --> 00:01:32.200
+tree searches in time log n.
+
+43
+00:01:32.200 --> 00:01:35.560
+That is only true when the tree is short.
+
+44
+00:01:35.640 --> 00:01:37.730
+The truth is time proportional
+
+45
+00:01:37.800 --> 00:01:38.752
+to the height
+
+46
+00:01:38.820 --> 00:01:41.251
+and the height can be anywhere from
+
+47
+00:01:41.320 --> 00:01:44.670
+log base two of n to n minus one.
+
+48
+00:01:45.250 --> 00:01:46.555
+What does that cost?
+
+49
+00:01:46.620 --> 00:01:48.631
+Take a thousand keys inserted
+
+50
+00:01:48.700 --> 00:01:50.224
+in increasing order.
+
+51
+00:01:50.300 --> 00:01:52.201
+The tree has height nine
+
+52
+00:01:52.280 --> 00:01:53.730
+hundred ninety-nine.
+
+53
+00:01:54.080 --> 00:01:55.808
+To find the last key
+
+54
+00:01:55.890 --> 00:01:57.521
+the search compares it with every
+
+55
+00:01:57.570 --> 00:01:59.310
+one of the thousand keys.
+
+56
+00:01:59.310 --> 00:02:01.210
+A thousand comparisons
+
+57
+00:02:01.210 --> 00:02:03.960
+where binary search would need about ten.
+
+58
+00:02:04.310 --> 00:02:06.380
+With ten thousand keys
+
+59
+00:02:06.380 --> 00:02:08.140
+the height is nine thousand
+
+60
+00:02:08.140 --> 00:02:09.469
+nine hundred ninety-nine
+
+61
+00:02:09.520 --> 00:02:11.409
+and the search for the last key makes
+
+62
+00:02:11.460 --> 00:02:12.960
+ten thousand comparisons.
+
+63
+00:02:13.020 --> 00:02:15.485
+The average node sits almost five
+
+64
+00:02:15.560 --> 00:02:17.310
+thousand steps below the root.
+
+65
+00:02:17.660 --> 00:02:19.890
+Inserting is just as bad
+
+66
+00:02:19.890 --> 00:02:21.350
+and so is deleting.
+
+67
+00:02:21.350 --> 00:02:24.570
+Every operation is as slow as a linked list.
+
+68
+00:02:24.570 --> 00:02:26.410
+We built all this machinery
+
+69
+00:02:26.410 --> 00:02:28.300
+and got nothing.
+
+70
+00:02:28.880 --> 00:02:31.250
+Now shuffle the same thousand keys
+
+71
+00:02:31.250 --> 00:02:33.520
+and insert them in random order.
+
+72
+00:02:33.870 --> 00:02:35.934
+The first key becomes the root
+
+73
+00:02:36.000 --> 00:02:38.112
+and it is probably neither very
+
+74
+00:02:38.180 --> 00:02:39.480
+small nor very large
+
+75
+00:02:39.480 --> 00:02:41.911
+so the tree splits roughly in two
+
+76
+00:02:41.980 --> 00:02:43.251
+and the same happens again
+
+77
+00:02:43.300 --> 00:02:44.750
+at every level below.
+
+78
+00:02:45.100 --> 00:02:48.470
+The result: a height of twenty-two
+
+79
+00:02:48.470 --> 00:02:50.437
+instead of nine hundred ninety-nine.
+
+80
+00:02:50.490 --> 00:02:52.911
+A perfectly balanced tree with a thousand
+
+81
+00:02:52.970 --> 00:02:54.901
+keys would have height nine
+
+82
+00:02:54.970 --> 00:02:57.067
+so the shuffled tree is more than
+
+83
+00:02:57.130 --> 00:02:58.930
+twice as tall as a perfect one
+
+84
+00:02:58.930 --> 00:03:01.860
+and still tiny next to a chain.
+
+85
+00:03:02.210 --> 00:03:04.157
+A better measure is the average
+
+86
+00:03:04.220 --> 00:03:05.387
+depth of a node.
+
+87
+00:03:05.460 --> 00:03:07.396
+For the shuffled thousand keys
+
+88
+00:03:07.460 --> 00:03:10.657
+it is eleven point oh two.
+
+89
+00:03:10.780 --> 00:03:13.485
+Probability theory says that for random insertion
+
+90
+00:03:13.540 --> 00:03:16.705
+order the average depth is about two times
+
+91
+00:03:16.780 --> 00:03:18.560
+the natural logarithm of n
+
+92
+00:03:18.560 --> 00:03:20.134
+minus a small constant.
+
+93
+00:03:20.200 --> 00:03:22.155
+For a thousand keys that works
+
+94
+00:03:22.220 --> 00:03:23.450
+out to about eleven.
+
+95
+00:03:23.800 --> 00:03:25.910
+With ten thousand keys
+
+96
+00:03:25.910 --> 00:03:27.844
+the shuffled tree has height twenty-nine
+
+97
+00:03:27.890 --> 00:03:29.911
+and the average node sits fourteen
+
+98
+00:03:29.970 --> 00:03:32.010
+point seven two steps down
+
+99
+00:03:32.010 --> 00:03:33.321
+not five thousand.
+
+100
+00:03:33.390 --> 00:03:36.244
+Searching for every key takes about fifteen
+
+101
+00:03:36.310 --> 00:03:38.880
+point seven comparisons on average.
+
+102
+00:03:39.230 --> 00:03:42.160
+So when keys arrive in random order
+
+103
+00:03:42.160 --> 00:03:43.340
+the tree stays short
+
+104
+00:03:43.340 --> 00:03:45.864
+and operations cost about log n.
+
+105
+00:03:45.940 --> 00:03:47.599
+The height still grows only
+
+106
+00:03:47.660 --> 00:03:49.136
+in proportion to log n
+
+107
+00:03:49.200 --> 00:03:51.178
+though the tallest path is a bit
+
+108
+00:03:51.240 --> 00:03:52.950
+longer than the average one.
+
+109
+00:03:53.530 --> 00:03:56.894
+Why can't we just rely on random order?
+
+110
+00:03:56.980 --> 00:03:59.034
+Because the order in which keys
+
+111
+00:03:59.100 --> 00:04:02.010
+arrive is not ours to choose.
+
+112
+00:04:02.360 --> 00:04:05.767
+Timestamps, order numbers and identifiers
+
+113
+00:04:05.850 --> 00:04:07.856
+arrive in increasing order.
+
+114
+00:04:07.930 --> 00:04:10.226
+A list that was sorted once and then
+
+115
+00:04:10.290 --> 00:04:12.552
+loaded into a tree is sorted.
+
+116
+00:04:12.630 --> 00:04:15.218
+Nearly sorted data is nearly
+
+117
+00:04:15.310 --> 00:04:17.440
+as bad as sorted data.
+
+118
+00:04:17.790 --> 00:04:19.801
+We could shuffle everything first
+
+119
+00:04:19.860 --> 00:04:21.198
+but that only works when we have
+
+120
+00:04:21.240 --> 00:04:22.968
+all the keys in advance.
+
+121
+00:04:23.040 --> 00:04:24.681
+Many programs add and remove
+
+122
+00:04:24.740 --> 00:04:25.830
+keys all the time.
+
+123
+00:04:26.410 --> 00:04:28.040
+What we want is a tree that
+
+124
+00:04:28.100 --> 00:04:29.680
+keeps itself short
+
+125
+00:04:29.680 --> 00:04:31.360
+whatever the order of the keys.
+
+126
+00:04:31.360 --> 00:04:33.820
+After every insertion and deletion
+
+127
+00:04:33.820 --> 00:04:35.620
+it repairs its own shape
+
+128
+00:04:35.620 --> 00:04:38.250
+using only a few local changes.
+
+129
+00:04:38.600 --> 00:04:41.210
+Those local changes are called rotations
+
+130
+00:04:41.210 --> 00:04:43.830
+and trees that use them have names
+
+131
+00:04:43.830 --> 00:04:46.250
+AVL trees, two-four trees
+
+132
+00:04:46.250 --> 00:04:47.310
+and red-black trees.
+
+133
+00:04:47.310 --> 00:04:50.710
+They guarantee a height of order log n
+
+134
+00:04:50.710 --> 00:04:51.910
+so search
+
+135
+00:04:51.910 --> 00:04:55.290
+insert and delete all take time O of log n
+
+136
+00:04:55.290 --> 00:04:56.280
+always.
+
+137
+00:04:56.630 --> 00:04:59.670
+That is the subject of Chapter six.
+
+138
+00:05:00.250 --> 00:05:01.340
+To sum up.
+
+139
+00:05:01.340 --> 00:05:02.051
+Search
+
+140
+00:05:02.140 --> 00:05:04.815
+insert and delete in a binary search tree
+
+141
+00:05:04.880 --> 00:05:07.610
+take time proportional to its height.
+
+142
+00:05:07.960 --> 00:05:10.554
+Keys inserted in sorted order give
+
+143
+00:05:10.630 --> 00:05:12.650
+a chain of height n minus one
+
+144
+00:05:12.650 --> 00:05:14.789
+which is as slow as a linked list.
+
+145
+00:05:14.850 --> 00:05:16.509
+Random order gives a height
+
+146
+00:05:16.570 --> 00:05:18.240
+proportional to log n.
+
+147
+00:05:18.590 --> 00:05:20.680
+Real data is often sorted
+
+148
+00:05:20.680 --> 00:05:23.300
+so we need trees that balance themselves.
+
+149
+00:05:23.300 --> 00:05:25.070
+See you in Chapter six.
+
+150
+00:05:25.697 --> 00:05:28.507
+Now let's run the experiment in Python
+
+151
+00:05:28.507 --> 00:05:29.737
+with real numbers.
+
+152
+00:05:30.317 --> 00:05:32.847
+To measure the height without recursion
+
+153
+00:05:32.847 --> 00:05:34.927
+we go level by level.
+
+154
+00:05:34.927 --> 00:05:36.211
+We start with the root
+
+155
+00:05:36.267 --> 00:05:38.722
+and replace the current level by
+
+156
+00:05:38.787 --> 00:05:40.367
+the list of all the children
+
+157
+00:05:40.367 --> 00:05:43.357
+counting levels, until the list is empty.
+
+158
+00:05:43.707 --> 00:05:46.457
+The same loop, weighted by the depth
+
+159
+00:05:46.457 --> 00:05:48.421
+gives the average depth of a node.
+
+160
+00:05:48.477 --> 00:05:50.634
+We avoid recursion because a chain
+
+161
+00:05:50.697 --> 00:05:52.756
+of a thousand nodes would overflow
+
+162
+00:05:52.817 --> 00:05:54.547
+Python's recursion limit.
+
+163
+00:05:55.127 --> 00:05:57.857
+For the random order we need a shuffle.
+
+164
+00:05:57.857 --> 00:06:00.297
+We could use random dot shuffle
+
+165
+00:06:00.297 --> 00:06:03.167
+but this course also has a Java version
+
+166
+00:06:03.237 --> 00:06:05.207
+and the two languages produce different
+
+167
+00:06:05.257 --> 00:06:07.567
+sequences for the same seed.
+
+168
+00:06:07.917 --> 00:06:09.776
+So we wrote a tiny shuffle
+
+169
+00:06:09.847 --> 00:06:11.706
+with a fixed generator
+
+170
+00:06:11.787 --> 00:06:15.367
+a sixty-four-bit linear congruential generator.
+
+171
+00:06:15.367 --> 00:06:18.507
+Python and Java give the identical order
+
+172
+00:06:18.507 --> 00:06:21.117
+and the numbers in both videos match.
+
+173
+00:06:21.697 --> 00:06:23.773
+The experiment builds a tree
+
+174
+00:06:23.847 --> 00:06:25.327
+from the sorted keys
+
+175
+00:06:25.327 --> 00:06:27.227
+and one from the shuffled keys
+
+176
+00:06:27.227 --> 00:06:30.937
+for n equal to a thousand and ten thousand.
+
+177
+00:06:31.287 --> 00:06:32.537
+Look at the output.
+
+178
+00:06:32.537 --> 00:06:35.425
+Sorted: height nine hundred ninety-nine
+
+179
+00:06:35.497 --> 00:06:38.337
+and nine thousand, nine hundred ninety-nine.
+
+180
+00:06:38.337 --> 00:06:41.287
+Shuffled: twenty-two and twenty-nine.
+
+181
+00:06:41.637 --> 00:06:44.084
+The average depth tells the same story
+
+182
+00:06:44.147 --> 00:06:45.960
+five hundred against eleven
+
+183
+00:06:46.027 --> 00:06:47.494
+for a thousand keys
+
+184
+00:06:47.567 --> 00:06:49.702
+and five thousand against fifteen
+
+185
+00:06:49.767 --> 00:06:51.477
+for ten thousand.
+
+186
+00:06:52.057 --> 00:06:53.842
+Counting comparisons
+
+187
+00:06:53.927 --> 00:06:56.345
+finding the last key in the sorted tree
+
+188
+00:06:56.407 --> 00:06:58.467
+takes a thousand comparisons
+
+189
+00:06:58.467 --> 00:07:00.777
+and ten thousand for the bigger tree.
+
+190
+00:07:01.127 --> 00:07:02.702
+In the shuffled tree
+
+191
+00:07:02.777 --> 00:07:05.621
+a search for any key takes about twelve comparisons
+
+192
+00:07:05.677 --> 00:07:07.717
+on average for a thousand keys
+
+193
+00:07:07.717 --> 00:07:10.500
+and about sixteen for ten thousand.
+
+194
+00:07:10.577 --> 00:07:12.261
+That is the difference between
+
+195
+00:07:12.317 --> 00:07:14.687
+linear and logarithmic.
+
+196
+00:07:15.267 --> 00:07:17.701
+One more thing about deep trees.
+
+197
+00:07:17.777 --> 00:07:19.700
+The recursive height function from
+
+198
+00:07:19.757 --> 00:07:21.638
+the first video works on a chain
+
+199
+00:07:21.697 --> 00:07:22.845
+of five hundred nodes
+
+200
+00:07:22.897 --> 00:07:24.401
+but a chain of two thousand
+
+201
+00:07:24.457 --> 00:07:26.377
+raises a RecursionError
+
+202
+00:07:26.457 --> 00:07:28.416
+because Python allows only about
+
+203
+00:07:28.477 --> 00:07:30.467
+a thousand nested calls.
+
+204
+00:07:30.817 --> 00:07:33.487
+The loop version does not care.
+
+205
+00:07:33.487 --> 00:07:36.220
+This is why search and insert are loops
+
+206
+00:07:36.287 --> 00:07:38.908
+and why you should be careful with recursion
+
+207
+00:07:38.967 --> 00:07:40.897
+on trees that might degenerate.
+
+208
+00:07:41.477 --> 00:07:42.947
+Common mistakes.
+
+209
+00:07:42.947 --> 00:07:45.790
+First, assuming that a binary search
+
+210
+00:07:45.867 --> 00:07:48.147
+tree is automatically fast.
+
+211
+00:07:48.147 --> 00:07:51.117
+It is fast only when it is short.
+
+212
+00:07:51.467 --> 00:07:54.617
+Second, testing with random data
+
+213
+00:07:54.617 --> 00:07:57.017
+and then deploying with sorted data.
+
+214
+00:07:57.017 --> 00:07:59.827
+Always try sorted input in a test.
+
+215
+00:08:00.177 --> 00:08:01.094
+Third
+
+216
+00:08:01.247 --> 00:08:03.352
+using random dot shuffle and expecting
+
+217
+00:08:03.407 --> 00:08:05.470
+the same numbers as another program.
+
+218
+00:08:05.527 --> 00:08:07.753
+A seed fixes the sequence only
+
+219
+00:08:07.827 --> 00:08:09.617
+for one implementation.
+
+220
+00:08:10.197 --> 00:08:11.803
+Python's standard library
+
+221
+00:08:11.867 --> 00:08:13.623
+has no balanced tree.
+
+222
+00:08:13.707 --> 00:08:16.116
+The usual answers are a dictionary
+
+223
+00:08:16.187 --> 00:08:17.967
+when you do not need order
+
+224
+00:08:17.967 --> 00:08:21.227
+a sorted list with bisect for small data
+
+225
+00:08:21.227 --> 00:08:23.317
+or a third-party package.
+
+226
+00:08:23.667 --> 00:08:26.737
+That brings us to what a balanced tree does
+
+227
+00:08:26.737 --> 00:08:28.107
+in the next chapter.
+
+228
+00:08:28.687 --> 00:08:31.477
+In Python: measure height with a loop
+
+229
+00:08:31.477 --> 00:08:33.797
+test it on keys in sorted order
+
+230
+00:08:33.797 --> 00:08:36.687
+and expect a chain from sorted keys.
+
+231
+00:08:37.037 --> 00:08:38.757
+See you in Chapter six.
+

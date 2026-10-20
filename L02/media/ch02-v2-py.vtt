@@ -1,0 +1,770 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:04.903
+Last time we saw that an array
+
+2
+00:00:04.970 --> 00:00:06.790
+has a fixed capacity.
+
+3
+00:00:06.790 --> 00:00:09.910
+Here is one with room for four items
+
+4
+00:00:09.910 --> 00:00:11.900
+and it is full.
+
+5
+00:00:12.250 --> 00:00:14.400
+Now a fifth item arrives.
+
+6
+00:00:14.400 --> 00:00:16.485
+We can't put it just after the block
+
+7
+00:00:16.540 --> 00:00:17.837
+because that memory may belong
+
+8
+00:00:17.880 --> 00:00:19.050
+to something else.
+
+9
+00:00:19.400 --> 00:00:21.634
+And yet the lists in your phone and your
+
+10
+00:00:21.690 --> 00:00:24.390
+browser never say the list is full.
+
+11
+00:00:24.390 --> 00:00:25.800
+So what do they do?
+
+12
+00:00:26.380 --> 00:00:28.693
+The answer is a dynamic array
+
+13
+00:00:28.770 --> 00:00:30.373
+and a surprisingly beautiful
+
+14
+00:00:30.430 --> 00:00:31.580
+piece of counting.
+
+15
+00:00:31.930 --> 00:00:33.856
+We'll see how to grow an array
+
+16
+00:00:33.920 --> 00:00:35.480
+why the size of the growth
+
+17
+00:00:35.540 --> 00:00:37.280
+matters enormously
+
+18
+00:00:37.280 --> 00:00:40.010
+and what amortized cost means.
+
+19
+00:00:40.590 --> 00:00:42.120
+Here is the trick.
+
+20
+00:00:42.120 --> 00:00:45.280
+When the array is full, we reserve a new
+
+21
+00:00:45.280 --> 00:00:47.070
+bigger block somewhere else.
+
+22
+00:00:47.420 --> 00:00:49.796
+Then we copy every item from the
+
+23
+00:00:49.870 --> 00:00:52.700
+old block into the new one, in order.
+
+24
+00:00:53.050 --> 00:00:55.160
+The old block is no longer needed
+
+25
+00:00:55.160 --> 00:00:56.880
+so we let it go.
+
+26
+00:00:56.880 --> 00:00:59.570
+And now there is room for the new item.
+
+27
+00:00:59.920 --> 00:01:01.651
+Notice what that cost
+
+28
+00:01:01.730 --> 00:01:04.006
+one copy for each item that
+
+29
+00:01:04.090 --> 00:01:05.040
+was already there.
+
+30
+00:01:05.620 --> 00:01:07.910
+How much bigger should the new block be?
+
+31
+00:01:07.910 --> 00:01:11.420
+The simplest idea: just one slot bigger.
+
+32
+00:01:11.770 --> 00:01:13.474
+Then the next append finds
+
+33
+00:01:13.540 --> 00:01:15.280
+the array full again
+
+34
+00:01:15.280 --> 00:01:17.500
+and we copy everything again.
+
+35
+00:01:17.500 --> 00:01:18.820
+And again.
+
+36
+00:01:18.820 --> 00:01:22.410
+Every single append copies the whole array.
+
+37
+00:01:22.760 --> 00:01:26.950
+Appending n items copies one, plus two
+
+38
+00:01:26.950 --> 00:01:30.170
+plus three, up to n minus one items.
+
+39
+00:01:30.170 --> 00:01:33.550
+That adds up to n times n minus one
+
+40
+00:01:33.550 --> 00:01:34.760
+over two.
+
+41
+00:01:35.360 --> 00:01:38.590
+For ten items, forty-five copies.
+
+42
+00:01:38.590 --> 00:01:39.930
+For a thousand
+
+43
+00:01:39.930 --> 00:01:42.070
+almost five hundred thousand.
+
+44
+00:01:42.070 --> 00:01:44.410
+For four thousand items
+
+45
+00:01:44.410 --> 00:01:46.760
+nearly eight million copies.
+
+46
+00:01:47.340 --> 00:01:49.270
+Now try the other idea
+
+47
+00:01:49.270 --> 00:01:50.610
+when the array is full
+
+48
+00:01:50.610 --> 00:01:53.140
+make the new block twice as big.
+
+49
+00:01:53.490 --> 00:01:57.890
+Capacity one, two, four, eight, sixteen.
+
+50
+00:01:58.000 --> 00:02:00.028
+Most appends find free space
+
+51
+00:02:00.100 --> 00:02:01.920
+and cost nothing extra.
+
+52
+00:02:01.920 --> 00:02:05.050
+Only when the array fills up do we copy.
+
+53
+00:02:05.400 --> 00:02:10.410
+And the copies are one, two, four, eight
+
+54
+00:02:10.410 --> 00:02:13.640
+each time as many as the old capacity.
+
+55
+00:02:13.990 --> 00:02:17.620
+Add them up: for ten items, fifteen copies.
+
+56
+00:02:17.620 --> 00:02:20.560
+A hundred items, one hundred twenty-seven.
+
+57
+00:02:20.560 --> 00:02:23.680
+A thousand, one thousand twenty-three.
+
+58
+00:02:23.680 --> 00:02:26.910
+Four thousand, four thousand ninety-five.
+
+59
+00:02:27.260 --> 00:02:29.982
+Compare four thousand ninety-five copies
+
+60
+00:02:30.050 --> 00:02:32.014
+with nearly eight million.
+
+61
+00:02:32.090 --> 00:02:34.064
+The copying total is less than
+
+62
+00:02:34.130 --> 00:02:35.820
+twice the number of items.
+
+63
+00:02:36.400 --> 00:02:37.450
+Here's why.
+
+64
+00:02:37.450 --> 00:02:38.990
+Each time we double
+
+65
+00:02:38.990 --> 00:02:44.480
+from capacity c to two c, we copy c items.
+
+66
+00:02:44.830 --> 00:02:46.841
+But the array was half empty right
+
+67
+00:02:46.900 --> 00:02:48.677
+after the previous doubling
+
+68
+00:02:48.740 --> 00:02:50.794
+so those c items include c over
+
+69
+00:02:50.860 --> 00:02:52.540
+two that arrived since.
+
+70
+00:02:52.540 --> 00:02:55.310
+Only the newest half did any new work.
+
+71
+00:02:55.660 --> 00:02:58.010
+Picture it as paying with coins.
+
+72
+00:02:58.010 --> 00:03:00.310
+Every append pays three coins
+
+73
+00:03:00.310 --> 00:03:03.860
+one to write itself, and two to put away.
+
+74
+00:03:04.210 --> 00:03:05.822
+By the time we need to copy
+
+75
+00:03:05.880 --> 00:03:08.155
+each of the newest c over two items
+
+76
+00:03:08.220 --> 00:03:09.860
+has put away two coins.
+
+77
+00:03:09.860 --> 00:03:12.160
+That is c coins
+
+78
+00:03:12.160 --> 00:03:15.370
+exactly enough to copy all c items.
+
+79
+00:03:15.720 --> 00:03:17.766
+So three coins per append always
+
+80
+00:03:17.830 --> 00:03:19.030
+covers the copying.
+
+81
+00:03:19.030 --> 00:03:21.480
+The cost per append is constant.
+
+82
+00:03:22.060 --> 00:03:25.229
+This is called amortized constant time
+
+83
+00:03:25.310 --> 00:03:27.301
+the cost averaged over a long
+
+84
+00:03:27.370 --> 00:03:29.100
+sequence of operations.
+
+85
+00:03:29.450 --> 00:03:32.607
+It does not say that every append is cheap.
+
+86
+00:03:32.680 --> 00:03:34.757
+The append that triggers a resize
+
+87
+00:03:34.820 --> 00:03:36.580
+copies the whole array
+
+88
+00:03:36.580 --> 00:03:39.490
+that single append is big-O of n.
+
+89
+00:03:39.840 --> 00:03:42.974
+What it promises is that in any long run
+
+90
+00:03:43.050 --> 00:03:46.302
+the total is at most a small constant
+
+91
+00:03:46.390 --> 00:03:48.476
+times the number of appends.
+
+92
+00:03:48.550 --> 00:03:51.224
+Rare expensive appends are paid
+
+93
+00:03:51.310 --> 00:03:53.080
+for by many cheap ones.
+
+94
+00:03:53.660 --> 00:03:55.670
+Doubling has a price.
+
+95
+00:03:55.670 --> 00:03:57.330
+Right after a resize
+
+96
+00:03:57.330 --> 00:03:58.990
+half the array is empty
+
+97
+00:03:58.990 --> 00:04:01.420
+so up to half the memory is spare.
+
+98
+00:04:01.770 --> 00:04:04.180
+Real libraries pick a growth factor that
+
+99
+00:04:04.240 --> 00:04:07.300
+balances speed against wasted space.
+
+100
+00:04:07.300 --> 00:04:09.920
+Some double, some grow by half
+
+101
+00:04:09.920 --> 00:04:11.038
+some by an eighth.
+
+102
+00:04:11.100 --> 00:04:13.616
+Any fixed factor greater than one keeps
+
+103
+00:04:13.680 --> 00:04:15.570
+the cost per append constant.
+
+104
+00:04:15.920 --> 00:04:17.957
+What does not work is adding
+
+105
+00:04:18.030 --> 00:04:19.590
+a fixed number of slots.
+
+106
+00:04:19.590 --> 00:04:21.790
+That is the one-slot idea again
+
+107
+00:04:21.790 --> 00:04:23.560
+and it is quadratic.
+
+108
+00:04:24.140 --> 00:04:25.170
+To sum up.
+
+109
+00:04:25.170 --> 00:04:26.930
+When an array is full
+
+110
+00:04:26.930 --> 00:04:29.970
+a dynamic array allocates a bigger block
+
+111
+00:04:29.970 --> 00:04:33.460
+copies the items and drops the old block.
+
+112
+00:04:33.810 --> 00:04:36.880
+Growing by a constant factor, like doubling
+
+113
+00:04:36.880 --> 00:04:39.591
+makes appends amortized constant time.
+
+114
+00:04:39.660 --> 00:04:41.443
+Growing by a constant number of
+
+115
+00:04:41.500 --> 00:04:43.850
+slots makes them quadratic.
+
+116
+00:04:44.200 --> 00:04:45.110
+Next
+
+117
+00:04:45.110 --> 00:04:47.430
+a completely different way to store a list
+
+118
+00:04:47.430 --> 00:04:48.710
+no block at all
+
+119
+00:04:48.710 --> 00:04:51.000
+just items that point to each other.
+
+120
+00:04:51.626 --> 00:04:54.216
+Let's write a dynamic array in Python
+
+121
+00:04:54.216 --> 00:04:56.386
+and count its copies.
+
+122
+00:04:56.966 --> 00:04:59.636
+The class keeps four things: the block
+
+123
+00:04:59.636 --> 00:05:01.736
+which is a list of fixed length
+
+124
+00:05:01.736 --> 00:05:04.336
+starting with just one slot, the size
+
+125
+00:05:04.336 --> 00:05:06.176
+how many slots are used
+
+126
+00:05:06.176 --> 00:05:08.736
+a function that says how to grow
+
+127
+00:05:08.736 --> 00:05:10.656
+and a counter of copies
+
+128
+00:05:10.656 --> 00:05:13.206
+which we will use to check our arithmetic.
+
+129
+00:05:13.556 --> 00:05:15.063
+Notice that we never use
+
+130
+00:05:15.126 --> 00:05:16.943
+the list's own growth.
+
+131
+00:05:17.026 --> 00:05:18.891
+We make a list of exactly
+
+132
+00:05:18.966 --> 00:05:20.126
+the length we want
+
+133
+00:05:20.126 --> 00:05:22.276
+and treat it as a fixed block.
+
+134
+00:05:22.856 --> 00:05:25.866
+Append first asks: is the block full?
+
+135
+00:05:25.866 --> 00:05:28.456
+That is when size equals the block's length.
+
+136
+00:05:28.806 --> 00:05:31.060
+If so, it asks the grow function
+
+137
+00:05:31.116 --> 00:05:33.936
+for the new capacity, and resizes.
+
+138
+00:05:33.936 --> 00:05:36.463
+Either way, it then writes the value into
+
+139
+00:05:36.516 --> 00:05:37.776
+the next free slot
+
+140
+00:05:37.776 --> 00:05:39.726
+and adds one to the size.
+
+141
+00:05:40.306 --> 00:05:42.434
+Resize creates a brand new
+
+142
+00:05:42.516 --> 00:05:45.546
+list of the new length, full of None.
+
+143
+00:05:45.896 --> 00:05:49.046
+Then a loop copies the items one by one
+
+144
+00:05:49.046 --> 00:05:50.696
+and counts each copy.
+
+145
+00:05:51.046 --> 00:05:54.316
+Last, the new list replaces the old one.
+
+146
+00:05:54.316 --> 00:05:56.496
+Nothing refers to the old list any more
+
+147
+00:05:56.496 --> 00:05:59.526
+so Python reclaims its memory by itself.
+
+148
+00:06:00.106 --> 00:06:02.036
+Growth rules are just functions.
+
+149
+00:06:02.036 --> 00:06:04.416
+Double returns twice the capacity.
+
+150
+00:06:04.416 --> 00:06:07.426
+Plus-one returns the capacity plus one.
+
+151
+00:06:07.776 --> 00:06:10.126
+Same class, two behaviours.
+
+152
+00:06:10.126 --> 00:06:11.576
+Let's watch what happens.
+
+153
+00:06:12.156 --> 00:06:15.270
+With doubling, we append seventeen items
+
+154
+00:06:15.346 --> 00:06:16.972
+and print the capacity and the
+
+155
+00:06:17.026 --> 00:06:19.036
+number of copies after each.
+
+156
+00:06:19.386 --> 00:06:24.016
+Capacity one, two, four, four
+
+157
+00:06:24.016 --> 00:06:26.036
+then eight for four appends
+
+158
+00:06:26.036 --> 00:06:27.896
+then sixteen for eight appends
+
+159
+00:06:27.956 --> 00:06:29.909
+and at the seventeenth append
+
+160
+00:06:29.976 --> 00:06:31.803
+it doubles to thirty-two.
+
+161
+00:06:31.876 --> 00:06:33.986
+The copy count after seventeen
+
+162
+00:06:34.056 --> 00:06:38.096
+appends is thirty-one: one, two, four
+
+163
+00:06:38.096 --> 00:06:39.746
+eight and sixteen.
+
+164
+00:06:40.326 --> 00:06:43.396
+Now we count copies for the two rules
+
+165
+00:06:43.396 --> 00:06:45.126
+for four sizes.
+
+166
+00:06:45.476 --> 00:06:46.914
+At a thousand items
+
+167
+00:06:46.986 --> 00:06:48.180
+doubling made one thousand
+
+168
+00:06:48.226 --> 00:06:49.255
+twenty-three copies
+
+169
+00:06:49.306 --> 00:06:52.354
+and plus-one made four hundred ninety-nine
+
+170
+00:06:52.426 --> 00:06:54.366
+thousand five hundred.
+
+171
+00:06:54.366 --> 00:06:56.104
+At four thousand
+
+172
+00:06:56.206 --> 00:06:57.973
+four thousand ninety-five against
+
+173
+00:06:58.026 --> 00:07:00.026
+almost eight million.
+
+174
+00:07:00.026 --> 00:07:01.996
+Exactly what the formulas said.
+
+175
+00:07:02.576 --> 00:07:04.470
+Python's built-in list is
+
+176
+00:07:04.546 --> 00:07:06.079
+itself a dynamic array.
+
+177
+00:07:06.146 --> 00:07:08.472
+We can watch its capacity grow by measuring
+
+178
+00:07:08.526 --> 00:07:11.016
+how much memory the list uses.
+
+179
+00:07:11.366 --> 00:07:13.236
+On this version of CPython
+
+180
+00:07:13.236 --> 00:07:16.516
+the capacity jumps from four to eight
+
+181
+00:07:16.516 --> 00:07:19.156
+to sixteen, twenty-four, thirty-two
+
+182
+00:07:19.156 --> 00:07:19.761
+and so on.
+
+183
+00:07:19.816 --> 00:07:22.221
+For large lists it grows by only
+
+184
+00:07:22.296 --> 00:07:24.086
+about an eighth each time.
+
+185
+00:07:24.436 --> 00:07:26.786
+That is a smaller factor than two
+
+186
+00:07:26.786 --> 00:07:28.816
+but still a constant factor
+
+187
+00:07:28.886 --> 00:07:31.131
+so appends are still amortized
+
+188
+00:07:31.206 --> 00:07:32.276
+constant time.
+
+189
+00:07:32.856 --> 00:07:36.087
+So in Python, we got a dynamic array from
+
+190
+00:07:36.166 --> 00:07:37.466
+a fixed-length list
+
+191
+00:07:37.466 --> 00:07:40.506
+plus a growth rule and a loop of copies.
+
+192
+00:07:40.506 --> 00:07:42.896
+Next time: linked lists.
+

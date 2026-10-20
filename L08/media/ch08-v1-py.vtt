@@ -1,0 +1,850 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:05.370
+An emergency room does not treat patients
+
+2
+00:00:05.430 --> 00:00:06.870
+in the order they walk in.
+
+3
+00:00:06.870 --> 00:00:08.790
+A broken arm waits.
+
+4
+00:00:08.790 --> 00:00:11.180
+A heart attack goes first.
+
+5
+00:00:11.530 --> 00:00:13.420
+Whenever a doctor is free
+
+6
+00:00:13.420 --> 00:00:15.128
+the question is always the same
+
+7
+00:00:15.180 --> 00:00:17.113
+who is the most urgent person
+
+8
+00:00:17.180 --> 00:00:18.810
+waiting right now?
+
+9
+00:00:19.160 --> 00:00:21.650
+Computers ask this all the time.
+
+10
+00:00:21.650 --> 00:00:24.130
+Which task should the processor run next?
+
+11
+00:00:24.130 --> 00:00:26.254
+Which flight should be boarded first?
+
+12
+00:00:26.310 --> 00:00:28.329
+Which road should a route
+
+13
+00:00:28.410 --> 00:00:30.120
+planner explore next?
+
+14
+00:00:30.470 --> 00:00:32.481
+We need a collection where putting
+
+15
+00:00:32.540 --> 00:00:33.800
+something in is fast
+
+16
+00:00:33.860 --> 00:00:35.834
+and taking out the most urgent
+
+17
+00:00:35.900 --> 00:00:37.540
+item is fast too.
+
+18
+00:00:37.540 --> 00:00:40.510
+That collection is a priority queue.
+
+19
+00:00:41.090 --> 00:00:43.010
+This is the first video of the chapter
+
+20
+00:00:43.060 --> 00:00:45.410
+on heaps and priority queues.
+
+21
+00:00:45.760 --> 00:00:48.950
+We'll see what a priority queue promises
+
+22
+00:00:48.950 --> 00:00:50.870
+two simple ways to build one
+
+23
+00:00:50.870 --> 00:00:52.960
+and why neither is good enough.
+
+24
+00:00:53.540 --> 00:00:56.210
+A priority queue stores entries.
+
+25
+00:00:56.210 --> 00:00:58.950
+Each entry is a pair: a key
+
+26
+00:00:58.950 --> 00:01:01.630
+which is the priority, and a value
+
+27
+00:01:01.630 --> 00:01:03.010
+which is the thing we care about
+
+28
+00:01:03.010 --> 00:01:05.020
+like a patient or a task.
+
+29
+00:01:05.370 --> 00:01:06.680
+By convention
+
+30
+00:01:06.680 --> 00:01:08.820
+the smaller key is the more urgent one.
+
+31
+00:01:08.820 --> 00:01:10.730
+Key one beats key three.
+
+32
+00:01:11.080 --> 00:01:13.330
+There are only a few operations.
+
+33
+00:01:13.330 --> 00:01:15.702
+Insert puts in a new entry.
+
+34
+00:01:15.790 --> 00:01:17.044
+Min looks at the entry with
+
+35
+00:01:17.090 --> 00:01:19.760
+the smallest key, without removing it.
+
+36
+00:01:19.830 --> 00:01:21.508
+Remove min takes that entry
+
+37
+00:01:21.570 --> 00:01:23.240
+out and returns it.
+
+38
+00:01:23.590 --> 00:01:27.500
+And there is a size, and a test for empty.
+
+39
+00:01:27.500 --> 00:01:28.670
+That is all.
+
+40
+00:01:29.020 --> 00:01:31.138
+Notice what is missing.
+
+41
+00:01:31.230 --> 00:01:33.846
+There is no operation for "give
+
+42
+00:01:33.930 --> 00:01:35.387
+me the third smallest"
+
+43
+00:01:35.450 --> 00:01:37.174
+and no promise that the entries
+
+44
+00:01:37.230 --> 00:01:39.190
+are kept in sorted order.
+
+45
+00:01:39.190 --> 00:01:42.500
+The only promise is about the smallest one.
+
+46
+00:01:43.080 --> 00:01:44.850
+The simplest idea
+
+47
+00:01:44.850 --> 00:01:47.760
+keep the entries in a list, in any order.
+
+48
+00:01:48.110 --> 00:01:49.880
+Insert is trivial.
+
+49
+00:01:49.880 --> 00:01:52.060
+Put the new entry at the end.
+
+50
+00:01:52.060 --> 00:01:53.080
+One step
+
+51
+00:01:53.080 --> 00:01:55.310
+no matter how many entries there are.
+
+52
+00:01:55.660 --> 00:01:57.590
+But to find the smallest
+
+53
+00:01:57.590 --> 00:01:59.350
+we have to look at every entry
+
+54
+00:01:59.350 --> 00:02:01.111
+because it could be anywhere.
+
+55
+00:02:01.170 --> 00:02:02.696
+Remove min takes a number of
+
+56
+00:02:02.750 --> 00:02:04.820
+steps proportional to n.
+
+57
+00:02:05.400 --> 00:02:08.490
+Second idea: keep the list sorted
+
+58
+00:02:08.490 --> 00:02:10.440
+with the smallest at the end.
+
+59
+00:02:10.790 --> 00:02:13.120
+Now remove min is trivial.
+
+60
+00:02:13.120 --> 00:02:14.500
+Take the last entry.
+
+61
+00:02:14.500 --> 00:02:15.670
+One step.
+
+62
+00:02:16.020 --> 00:02:18.710
+But insert has to find the right place
+
+63
+00:02:18.710 --> 00:02:22.250
+and then make room, shifting entries over.
+
+64
+00:02:22.250 --> 00:02:25.020
+That is up to n steps.
+
+65
+00:02:25.370 --> 00:02:27.610
+So we have not removed the cost.
+
+66
+00:02:27.680 --> 00:02:29.592
+We have moved it from taking
+
+67
+00:02:29.660 --> 00:02:31.370
+out to putting in.
+
+68
+00:02:31.950 --> 00:02:33.300
+Pause and predict.
+
+69
+00:02:33.300 --> 00:02:35.480
+We insert a thousand entries
+
+70
+00:02:35.480 --> 00:02:36.620
+one after another
+
+71
+00:02:36.620 --> 00:02:39.670
+and then remove all of them, smallest first.
+
+72
+00:02:40.020 --> 00:02:43.390
+How many steps does the unsorted list need?
+
+73
+00:02:43.390 --> 00:02:44.980
+And the sorted list?
+
+74
+00:02:45.330 --> 00:02:47.084
+The unsorted list needs
+
+75
+00:02:47.160 --> 00:02:48.640
+half a million steps.
+
+76
+00:02:48.640 --> 00:02:50.420
+And the sorted list?
+
+77
+00:02:50.420 --> 00:02:52.860
+Also half a million, in the worst case
+
+78
+00:02:52.860 --> 00:02:55.370
+when the keys arrive in increasing order.
+
+79
+00:02:55.720 --> 00:02:57.624
+Neither list is cheap.
+
+80
+00:02:57.710 --> 00:02:59.347
+Sorting the collection did
+
+81
+00:02:59.410 --> 00:03:01.030
+not make the job easier.
+
+82
+00:03:01.030 --> 00:03:03.680
+It only changed who pays.
+
+83
+00:03:04.260 --> 00:03:07.490
+There is a third structure, called a heap
+
+84
+00:03:07.490 --> 00:03:09.220
+and it makes a different bargain.
+
+85
+00:03:09.570 --> 00:03:11.700
+A heap is not sorted.
+
+86
+00:03:11.700 --> 00:03:13.940
+It only keeps the smallest entry at the top
+
+87
+00:03:13.940 --> 00:03:15.810
+and a loose order below it.
+
+88
+00:03:16.160 --> 00:03:18.670
+That is exactly the promise we need
+
+89
+00:03:18.670 --> 00:03:20.824
+and it is cheap to keep.
+
+90
+00:03:20.910 --> 00:03:23.196
+Insert and remove min both cost
+
+91
+00:03:23.270 --> 00:03:25.240
+about the logarithm of n.
+
+92
+00:03:25.590 --> 00:03:27.120
+For a thousand entries
+
+93
+00:03:27.120 --> 00:03:30.300
+that is about ten steps, not a thousand.
+
+94
+00:03:30.300 --> 00:03:32.590
+We will build it in the next video.
+
+95
+00:03:33.170 --> 00:03:35.960
+Let's count, with the same job as before
+
+96
+00:03:35.960 --> 00:03:39.300
+insert n entries, then remove all of them.
+
+97
+00:03:39.300 --> 00:03:40.320
+Increasing keys
+
+98
+00:03:40.320 --> 00:03:42.970
+so the sorted list is at its worst.
+
+99
+00:03:43.320 --> 00:03:45.195
+For five hundred entries
+
+100
+00:03:45.270 --> 00:03:47.832
+each list needs about one hundred
+
+101
+00:03:47.910 --> 00:03:49.395
+twenty-five thousand steps.
+
+102
+00:03:49.450 --> 00:03:51.703
+The heap needs about seven
+
+103
+00:03:51.790 --> 00:03:53.280
+thousand comparisons.
+
+104
+00:03:53.630 --> 00:03:55.260
+For four thousand entries
+
+105
+00:03:55.260 --> 00:03:57.655
+each list needs eight million steps.
+
+106
+00:03:57.720 --> 00:03:59.456
+The heap needs about eighty
+
+107
+00:03:59.520 --> 00:04:00.880
+thousand comparisons.
+
+108
+00:04:00.880 --> 00:04:02.750
+A hundred times less.
+
+109
+00:04:03.100 --> 00:04:05.270
+A step is not exactly a comparison
+
+110
+00:04:05.270 --> 00:04:07.870
+so don't read this as a precise ratio.
+
+111
+00:04:07.870 --> 00:04:09.490
+But the shape is clear
+
+112
+00:04:09.490 --> 00:04:11.850
+one grows with n squared
+
+113
+00:04:11.850 --> 00:04:13.900
+the other with n log n.
+
+114
+00:04:14.480 --> 00:04:15.690
+To sum up.
+
+115
+00:04:15.690 --> 00:04:18.689
+A priority queue promises one thing
+
+116
+00:04:18.770 --> 00:04:20.991
+remove min returns the entry
+
+117
+00:04:21.070 --> 00:04:22.760
+with the smallest key.
+
+118
+00:04:23.110 --> 00:04:26.726
+A sorted list and an unsorted list both pay about
+
+119
+00:04:26.800 --> 00:04:29.500
+n steps for one of the two operations.
+
+120
+00:04:29.500 --> 00:04:32.710
+A heap pays about log n for both.
+
+121
+00:04:33.060 --> 00:04:34.190
+Next time
+
+122
+00:04:34.190 --> 00:04:36.486
+how a heap is laid out in an array
+
+123
+00:04:36.550 --> 00:04:38.445
+and how up-heap and down-heap
+
+124
+00:04:38.510 --> 00:04:39.660
+keep it in shape.
+
+125
+00:04:40.287 --> 00:04:41.961
+Let's build the two list-based
+
+126
+00:04:42.017 --> 00:04:43.757
+priority queues in Python
+
+127
+00:04:43.757 --> 00:04:45.527
+and measure them against a heap.
+
+128
+00:04:46.107 --> 00:04:49.281
+An entry holds a key and a value.
+
+129
+00:04:49.377 --> 00:04:51.583
+We define less-than to compare
+
+130
+00:04:51.657 --> 00:04:53.267
+only the keys.
+
+131
+00:04:53.617 --> 00:04:54.687
+That matters.
+
+132
+00:04:54.687 --> 00:04:56.251
+The values can be anything
+
+133
+00:04:56.307 --> 00:04:57.741
+even objects that Python cannot
+
+134
+00:04:57.787 --> 00:04:59.007
+compare with each other.
+
+135
+00:04:59.007 --> 00:05:00.697
+The queue never needs to.
+
+136
+00:05:01.277 --> 00:05:05.207
+In the unsorted queue, insert is one append.
+
+137
+00:05:05.207 --> 00:05:08.647
+Remove min loops over every entry
+
+138
+00:05:08.647 --> 00:05:10.367
+remembering the smallest so far
+
+139
+00:05:10.367 --> 00:05:11.597
+then pops it.
+
+140
+00:05:11.947 --> 00:05:13.627
+The counter steps counts
+
+141
+00:05:13.697 --> 00:05:15.307
+each entry looked at.
+
+142
+00:05:15.887 --> 00:05:17.553
+The sorted queue keeps its
+
+143
+00:05:17.617 --> 00:05:19.348
+list in decreasing order
+
+144
+00:05:19.417 --> 00:05:21.708
+so the smallest is at the end and
+
+145
+00:05:21.777 --> 00:05:24.367
+remove min is a single pop.
+
+146
+00:05:24.717 --> 00:05:27.216
+Insert starts at the end and shifts
+
+147
+00:05:27.287 --> 00:05:29.486
+entries with a smaller key one place
+
+148
+00:05:29.547 --> 00:05:32.837
+over to make room, again counting steps.
+
+149
+00:05:33.417 --> 00:05:35.247
+Here are the real counts
+
+150
+00:05:35.247 --> 00:05:38.299
+for n entries inserted and then all removed.
+
+151
+00:05:38.367 --> 00:05:42.180
+With increasing keys both lists need exactly
+
+152
+00:05:42.267 --> 00:05:46.267
+n plus n times n minus one over two steps.
+
+153
+00:05:46.267 --> 00:05:49.667
+A thousand entries: five hundred thousand
+
+154
+00:05:49.667 --> 00:05:50.697
+five hundred.
+
+155
+00:05:51.047 --> 00:05:53.837
+The heap-based queue, on the same job
+
+156
+00:05:53.837 --> 00:05:57.087
+needs about sixteen thousand comparisons.
+
+157
+00:05:57.437 --> 00:05:59.838
+With random keys the sorted
+
+158
+00:05:59.927 --> 00:06:01.159
+list gets cheaper
+
+159
+00:06:01.227 --> 00:06:03.073
+about a quarter of a million steps
+
+160
+00:06:03.127 --> 00:06:04.392
+for a thousand entries
+
+161
+00:06:04.447 --> 00:06:06.607
+because inserts shift fewer
+
+162
+00:06:06.687 --> 00:06:08.147
+entries on average.
+
+163
+00:06:08.147 --> 00:06:10.346
+But it is still quadratic.
+
+164
+00:06:10.427 --> 00:06:12.360
+The unsorted list still needs
+
+165
+00:06:12.427 --> 00:06:13.479
+five hundred thousand
+
+166
+00:06:13.527 --> 00:06:15.304
+and the heap about seventeen
+
+167
+00:06:15.367 --> 00:06:16.997
+thousand comparisons.
+
+168
+00:06:17.577 --> 00:06:20.467
+Python ships a heap in the standard library
+
+169
+00:06:20.467 --> 00:06:21.967
+the heap Q module.
+
+170
+00:06:21.967 --> 00:06:24.168
+It does not define a class.
+
+171
+00:06:24.247 --> 00:06:25.385
+It gives you functions that
+
+172
+00:06:25.427 --> 00:06:26.857
+work on a plain list.
+
+173
+00:06:27.207 --> 00:06:29.797
+Heap push adds an item.
+
+174
+00:06:29.797 --> 00:06:33.257
+Heap pop removes and returns the smallest.
+
+175
+00:06:33.257 --> 00:06:36.088
+And the smallest is always at index zero
+
+176
+00:06:36.157 --> 00:06:37.775
+so peeking is just looking
+
+177
+00:06:37.837 --> 00:06:38.967
+at the first item.
+
+178
+00:06:39.317 --> 00:06:41.947
+Look at the list after the pushes.
+
+179
+00:06:41.947 --> 00:06:44.367
+It is not sorted.
+
+180
+00:06:44.367 --> 00:06:47.349
+It is a heap, and next time we'll see
+
+181
+00:06:47.427 --> 00:06:48.997
+why that layout works.
+
+182
+00:06:49.577 --> 00:06:52.387
+To attach a value to a priority
+
+183
+00:06:52.387 --> 00:06:53.547
+push tuples.
+
+184
+00:06:53.547 --> 00:06:56.047
+Python compares tuples item by item
+
+185
+00:06:56.047 --> 00:06:58.337
+so the priority decides.
+
+186
+00:06:58.687 --> 00:07:00.482
+There is no decrease key
+
+187
+00:07:00.557 --> 00:07:02.177
+operation in heap Q.
+
+188
+00:07:02.177 --> 00:07:03.691
+If a priority changes
+
+189
+00:07:03.757 --> 00:07:05.830
+you push a new entry and ignore
+
+190
+00:07:05.897 --> 00:07:07.127
+the stale one later.
+
+191
+00:07:07.707 --> 00:07:08.837
+Two traps.
+
+192
+00:07:08.837 --> 00:07:11.292
+If two priorities are equal
+
+193
+00:07:11.377 --> 00:07:12.858
+tuple comparison moves on
+
+194
+00:07:12.917 --> 00:07:14.177
+to the second item.
+
+195
+00:07:14.177 --> 00:07:16.477
+And if those are dictionaries
+
+196
+00:07:16.477 --> 00:07:18.387
+Python raises a TypeError.
+
+197
+00:07:18.737 --> 00:07:21.373
+And even when it works
+
+198
+00:07:21.487 --> 00:07:23.485
+equal priorities do not come out
+
+199
+00:07:23.547 --> 00:07:24.967
+in the order they went in.
+
+200
+00:07:24.967 --> 00:07:29.507
+Here, a, b, c, d, e came out as a, c, e, b
+
+201
+00:07:29.507 --> 00:07:30.057
+d.
+
+202
+00:07:30.407 --> 00:07:33.097
+If order among equals matters
+
+203
+00:07:33.097 --> 00:07:35.917
+add a counter as a tie-breaker: priority
+
+204
+00:07:35.917 --> 00:07:38.247
+then a counter, then the value.
+
+205
+00:07:38.597 --> 00:07:42.167
+Also, heap Q is a min-heap only.
+
+206
+00:07:42.167 --> 00:07:44.767
+For a max-heap, push the negated keys
+
+207
+00:07:44.767 --> 00:07:46.717
+and negate again when you pop.
+
+208
+00:07:47.297 --> 00:07:48.627
+So in Python
+
+209
+00:07:48.627 --> 00:07:51.087
+use the heap Q functions on a list
+
+210
+00:07:51.087 --> 00:07:54.147
+push tuples, add a counter for ties
+
+211
+00:07:54.147 --> 00:07:56.537
+and negate for a max-heap.
+
+212
+00:07:56.887 --> 00:08:00.607
+Next: how the heap works inside.
+

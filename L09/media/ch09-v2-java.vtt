@@ -1,0 +1,906 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:04.452
+A web crawler starts at one
+
+2
+00:00:04.510 --> 00:00:06.190
+page and follows links.
+
+3
+00:00:06.190 --> 00:00:09.500
+It wants every reachable page, once.
+
+4
+00:00:09.850 --> 00:00:12.760
+If it simply follows every link it sees
+
+5
+00:00:12.760 --> 00:00:15.420
+it will go round in circles forever
+
+6
+00:00:15.420 --> 00:00:18.650
+page A links to B, B links back to A.
+
+7
+00:00:19.000 --> 00:00:21.970
+So it must remember where it has been.
+
+8
+00:00:21.970 --> 00:00:24.850
+And it must decide, at each moment
+
+9
+00:00:24.850 --> 00:00:26.720
+which page to explore next.
+
+10
+00:00:27.070 --> 00:00:29.705
+That one decision, which page next
+
+11
+00:00:29.780 --> 00:00:30.921
+is the difference between the
+
+12
+00:00:30.960 --> 00:00:32.790
+two famous graph searches.
+
+13
+00:00:33.370 --> 00:00:35.515
+This video is about breadth-first
+
+14
+00:00:35.580 --> 00:00:37.770
+search and depth-first search.
+
+15
+00:00:38.120 --> 00:00:40.710
+We'll see the frontier idea they share
+
+16
+00:00:40.710 --> 00:00:43.110
+how a queue gives breadth-first search
+
+17
+00:00:43.110 --> 00:00:46.030
+and how a stack, or recursion
+
+18
+00:00:46.030 --> 00:00:47.960
+gives depth-first search.
+
+19
+00:00:48.540 --> 00:00:51.670
+Every search keeps three kinds of vertices.
+
+20
+00:00:51.670 --> 00:00:52.970
+Undiscovered ones.
+
+21
+00:00:52.970 --> 00:00:53.990
+Explored ones
+
+22
+00:00:53.990 --> 00:00:56.270
+whose neighbours we have all looked at.
+
+23
+00:00:56.270 --> 00:00:58.570
+And the frontier: discovered
+
+24
+00:00:58.570 --> 00:01:00.380
+but not yet explored.
+
+25
+00:01:00.730 --> 00:01:02.640
+The loop is always the same.
+
+26
+00:01:02.640 --> 00:01:04.560
+Take a vertex off the frontier.
+
+27
+00:01:04.560 --> 00:01:05.923
+Look at its neighbours.
+
+28
+00:01:05.980 --> 00:01:07.726
+Any neighbour we have never seen
+
+29
+00:01:07.780 --> 00:01:09.730
+goes onto the frontier.
+
+30
+00:01:10.080 --> 00:01:12.332
+The only free choice is which
+
+31
+00:01:12.410 --> 00:01:13.750
+vertex to take off.
+
+32
+00:01:13.750 --> 00:01:15.010
+Take the oldest
+
+33
+00:01:15.010 --> 00:01:16.870
+and the frontier is a queue.
+
+34
+00:01:16.870 --> 00:01:19.880
+Take the newest, and it is a stack.
+
+35
+00:01:20.460 --> 00:01:22.710
+Breadth-first search, from A
+
+36
+00:01:22.710 --> 00:01:23.950
+with the queue.
+
+37
+00:01:23.950 --> 00:01:25.190
+Take A off.
+
+38
+00:01:25.190 --> 00:01:28.060
+Its neighbours, B and D, go on the queue.
+
+39
+00:01:28.410 --> 00:01:29.720
+Take B off.
+
+40
+00:01:29.720 --> 00:01:33.640
+Its neighbours are A, C, D and E.
+
+41
+00:01:33.640 --> 00:01:36.080
+A and D are already known.
+
+42
+00:01:36.080 --> 00:01:39.010
+C and E are new, so they join the queue.
+
+43
+00:01:39.360 --> 00:01:40.890
+Take D off.
+
+44
+00:01:40.890 --> 00:01:42.270
+Only F is new.
+
+45
+00:01:42.270 --> 00:01:44.550
+Then C: nothing new.
+
+46
+00:01:44.550 --> 00:01:47.410
+Then E: G is new.
+
+47
+00:01:47.410 --> 00:01:49.320
+Then F, then G.
+
+48
+00:01:49.670 --> 00:01:57.240
+The order of visits: A, B, D, C, E, F, G.
+
+49
+00:01:57.240 --> 00:01:58.980
+Count the edges from A
+
+50
+00:01:58.980 --> 00:02:01.780
+B and D are one step away, C
+
+51
+00:02:01.780 --> 00:02:04.710
+E and F are two, and G is three.
+
+52
+00:02:05.060 --> 00:02:07.990
+Breadth-first search explores in rings
+
+53
+00:02:07.990 --> 00:02:10.370
+first everything one edge from A
+
+54
+00:02:10.370 --> 00:02:13.020
+then everything two edges away, and so on.
+
+55
+00:02:13.600 --> 00:02:15.358
+One detail matters.
+
+56
+00:02:15.450 --> 00:02:18.483
+We mark a vertex as seen the moment
+
+57
+00:02:18.570 --> 00:02:19.890
+we put it on the queue
+
+58
+00:02:19.890 --> 00:02:21.480
+not when we take it off.
+
+59
+00:02:21.830 --> 00:02:23.263
+Otherwise a vertex can be
+
+60
+00:02:23.320 --> 00:02:25.040
+queued again and again
+
+61
+00:02:25.040 --> 00:02:27.070
+by every neighbour that reaches it.
+
+62
+00:02:27.420 --> 00:02:29.190
+Try it on a triangle.
+
+63
+00:02:29.190 --> 00:02:33.490
+A is connected to B and to C, and B to C.
+
+64
+00:02:33.490 --> 00:02:35.050
+Without marking
+
+65
+00:02:35.050 --> 00:02:37.450
+every pop adds two more vertices.
+
+66
+00:02:37.450 --> 00:02:39.110
+After twenty pops
+
+67
+00:02:39.110 --> 00:02:41.410
+the queue is longer than when we began
+
+68
+00:02:41.410 --> 00:02:43.330
+A has been visited seven times
+
+69
+00:02:43.330 --> 00:02:45.620
+and the search never ends.
+
+70
+00:02:46.200 --> 00:02:48.790
+Each vertex remembers who discovered it
+
+71
+00:02:48.790 --> 00:02:49.990
+its parent.
+
+72
+00:02:49.990 --> 00:02:54.850
+Follow the parents back from G: E, then B
+
+73
+00:02:54.850 --> 00:02:56.040
+then A.
+
+74
+00:02:56.390 --> 00:03:01.980
+So the route from A to G is A, B, E, G.
+
+75
+00:03:01.980 --> 00:03:03.620
+Three edges.
+
+76
+00:03:03.620 --> 00:03:05.219
+No other route has fewer
+
+77
+00:03:05.280 --> 00:03:08.078
+because breadth-first search reaches a vertex
+
+78
+00:03:08.140 --> 00:03:10.590
+in the first ring that touches it.
+
+79
+00:03:11.170 --> 00:03:12.500
+Pause and predict.
+
+80
+00:03:12.500 --> 00:03:14.340
+Our edges have weights.
+
+81
+00:03:14.340 --> 00:03:16.860
+Is the route A, B, E
+
+82
+00:03:16.860 --> 00:03:19.810
+G also the cheapest route from A to G?
+
+83
+00:03:20.160 --> 00:03:23.970
+Add it up: six, plus seven, plus ten.
+
+84
+00:03:23.970 --> 00:03:25.160
+Twenty-three.
+
+85
+00:03:25.510 --> 00:03:27.627
+But there is a route with the same three
+
+86
+00:03:27.680 --> 00:03:33.100
+edges that costs only twenty: A, D, F, G.
+
+87
+00:03:33.100 --> 00:03:35.710
+Three, plus five, plus twelve.
+
+88
+00:03:36.060 --> 00:03:38.590
+Breadth-first search counts edges.
+
+89
+00:03:38.590 --> 00:03:40.465
+It does not look at weights.
+
+90
+00:03:40.530 --> 00:03:42.227
+For cheapest routes we need
+
+91
+00:03:42.290 --> 00:03:43.390
+another algorithm
+
+92
+00:03:43.390 --> 00:03:45.100
+and that is the next video.
+
+93
+00:03:45.680 --> 00:03:48.490
+Now take the newest vertex instead.
+
+94
+00:03:48.490 --> 00:03:50.610
+Depth-first search, from A.
+
+95
+00:03:50.610 --> 00:03:53.270
+We go to A's first neighbour, B
+
+96
+00:03:53.270 --> 00:03:54.480
+and keep going.
+
+97
+00:03:54.830 --> 00:03:56.920
+From B, to C.
+
+98
+00:03:56.920 --> 00:03:58.400
+From C, to E.
+
+99
+00:03:58.400 --> 00:04:00.340
+From E, to D.
+
+100
+00:04:00.340 --> 00:04:01.780
+From D, to F.
+
+101
+00:04:01.780 --> 00:04:03.721
+From F, to G.
+
+102
+00:04:03.860 --> 00:04:06.194
+We always continue from the
+
+103
+00:04:06.280 --> 00:04:08.230
+vertex we just found.
+
+104
+00:04:08.580 --> 00:04:11.090
+G has no unseen neighbour.
+
+105
+00:04:11.090 --> 00:04:16.190
+We are stuck, so we back up to F, then D
+
+106
+00:04:16.190 --> 00:04:19.250
+then E, all the way back to A
+
+107
+00:04:19.250 --> 00:04:21.980
+and check each one for anything we skipped.
+
+108
+00:04:22.330 --> 00:04:30.930
+The order of discovery: A, B, C, E, D, F, G.
+
+109
+00:04:31.510 --> 00:04:34.575
+Depth-first search can keep a clock.
+
+110
+00:04:34.660 --> 00:04:36.002
+Write down the time you
+
+111
+00:04:36.060 --> 00:04:37.560
+first reach a vertex
+
+112
+00:04:37.560 --> 00:04:39.740
+and the time you finish with it
+
+113
+00:04:39.740 --> 00:04:42.070
+when every neighbour has been handled.
+
+114
+00:04:42.420 --> 00:04:45.010
+A is discovered at time one
+
+115
+00:04:45.010 --> 00:04:47.745
+and finished last, at fourteen.
+
+116
+00:04:47.830 --> 00:04:50.307
+G is discovered at seven
+
+117
+00:04:50.410 --> 00:04:52.540
+and finished at eight, right away.
+
+118
+00:04:52.890 --> 00:04:53.952
+Look at the intervals.
+
+119
+00:04:54.000 --> 00:04:55.890
+Each vertex's interval sits
+
+120
+00:04:55.960 --> 00:04:57.340
+inside its parent's.
+
+121
+00:04:57.340 --> 00:04:59.920
+They are nested, like brackets.
+
+122
+00:05:00.000 --> 00:05:01.765
+That nesting is what depth-first
+
+123
+00:05:01.820 --> 00:05:03.130
+search computes.
+
+124
+00:05:03.710 --> 00:05:06.700
+Depth-first search is naturally recursive.
+
+125
+00:05:06.700 --> 00:05:09.100
+To visit a vertex, mark it
+
+126
+00:05:09.100 --> 00:05:11.470
+and then visit each unseen neighbour.
+
+127
+00:05:11.820 --> 00:05:15.190
+The call stack is the stack of the search.
+
+128
+00:05:15.190 --> 00:05:18.770
+Each call is a vertex still being explored.
+
+129
+00:05:18.770 --> 00:05:20.940
+Backing up is just returning.
+
+130
+00:05:21.290 --> 00:05:24.340
+You can do the same with an explicit stack
+
+131
+00:05:24.340 --> 00:05:26.480
+push the neighbours in reverse order
+
+132
+00:05:26.480 --> 00:05:28.460
+and pop the next vertex.
+
+133
+00:05:28.460 --> 00:05:31.330
+It visits in exactly the same order.
+
+134
+00:05:31.910 --> 00:05:34.520
+Depth-first search also finds cycles.
+
+135
+00:05:34.520 --> 00:05:36.037
+In an undirected graph
+
+136
+00:05:36.100 --> 00:05:38.292
+a cycle shows up as an edge to a
+
+137
+00:05:38.360 --> 00:05:40.220
+vertex we have already seen
+
+138
+00:05:40.220 --> 00:05:42.270
+other than the one we came from.
+
+139
+00:05:42.620 --> 00:05:45.950
+In our example, from E we look at B
+
+140
+00:05:45.950 --> 00:05:47.230
+which is already known
+
+141
+00:05:47.230 --> 00:05:49.350
+and it is not E's parent.
+
+142
+00:05:49.350 --> 00:05:52.940
+There is a cycle: B, C, E.
+
+143
+00:05:53.290 --> 00:05:56.188
+In a directed graph the test is sharper
+
+144
+00:05:56.260 --> 00:05:58.271
+an edge back to a vertex that
+
+145
+00:05:58.340 --> 00:06:00.100
+is still being explored
+
+146
+00:06:00.100 --> 00:06:02.650
+one that has started but not finished.
+
+147
+00:06:03.000 --> 00:06:06.440
+A tree, with no cycles, never triggers it.
+
+148
+00:06:07.020 --> 00:06:08.930
+What does a search cost?
+
+149
+00:06:08.930 --> 00:06:12.450
+Each vertex is taken off the frontier once.
+
+150
+00:06:12.530 --> 00:06:14.376
+And each vertex's list of
+
+151
+00:06:14.450 --> 00:06:16.420
+neighbours is read once.
+
+152
+00:06:16.770 --> 00:06:19.260
+The lists hold twice the number of edges.
+
+153
+00:06:19.260 --> 00:06:21.459
+In our example, twenty-two entries.
+
+154
+00:06:21.520 --> 00:06:24.242
+So the total work is proportional to the number
+
+155
+00:06:24.300 --> 00:06:27.140
+of vertices plus the number of edges.
+
+156
+00:06:27.140 --> 00:06:29.690
+We write it order V plus E.
+
+157
+00:06:30.040 --> 00:06:31.906
+Breadth-first and depth-first
+
+158
+00:06:31.970 --> 00:06:33.650
+search have the same cost.
+
+159
+00:06:33.650 --> 00:06:36.880
+They differ in the order, not in the effort.
+
+160
+00:06:37.460 --> 00:06:38.590
+To sum up.
+
+161
+00:06:38.590 --> 00:06:40.670
+Both searches keep a frontier.
+
+162
+00:06:40.670 --> 00:06:43.390
+A queue gives breadth-first search
+
+163
+00:06:43.390 --> 00:06:45.490
+with its rings and fewest edges.
+
+164
+00:06:45.490 --> 00:06:47.850
+A stack, or recursion
+
+165
+00:06:47.850 --> 00:06:50.830
+gives depth-first search, with its dives
+
+166
+00:06:50.830 --> 00:06:52.660
+its times, and its cycles.
+
+167
+00:06:53.010 --> 00:06:55.220
+Mark a vertex when you discover it
+
+168
+00:06:55.220 --> 00:06:58.290
+and the cost is order V plus E.
+
+169
+00:06:58.640 --> 00:07:01.390
+Next: edges with weights
+
+170
+00:07:01.390 --> 00:07:04.120
+and the question of the cheapest route.
+
+171
+00:07:04.747 --> 00:07:07.147
+Let's write both searches in Java.
+
+172
+00:07:07.727 --> 00:07:10.037
+The frontier is an ArrayDeque
+
+173
+00:07:10.117 --> 00:07:11.237
+used as a queue.
+
+174
+00:07:11.237 --> 00:07:14.419
+A HashMap holds the level of each vertex
+
+175
+00:07:14.497 --> 00:07:16.887
+and a vertex is in the map exactly
+
+176
+00:07:16.957 --> 00:07:18.287
+when we have seen it.
+
+177
+00:07:18.637 --> 00:07:21.007
+poll takes the oldest vertex.
+
+178
+00:07:21.007 --> 00:07:23.287
+For each neighbour not yet in the map
+
+179
+00:07:23.287 --> 00:07:25.987
+we record its level, remember its parent
+
+180
+00:07:25.987 --> 00:07:27.437
+and add it to the queue.
+
+181
+00:07:27.787 --> 00:07:31.057
+The start vertex has the parent null.
+
+182
+00:07:31.057 --> 00:07:33.517
+So later we test containsKey
+
+183
+00:07:33.517 --> 00:07:35.347
+not whether the value is null.
+
+184
+00:07:35.927 --> 00:07:37.817
+To recover a route
+
+185
+00:07:37.917 --> 00:07:39.388
+start at the target and follow
+
+186
+00:07:39.437 --> 00:07:42.287
+the parents back, then reverse the list.
+
+187
+00:07:42.637 --> 00:07:46.447
+For G we get A, B, E, G.
+
+188
+00:07:46.447 --> 00:07:48.757
+Three edges, cost twenty-three.
+
+189
+00:07:49.337 --> 00:07:52.127
+Depth-first search is a recursive method.
+
+190
+00:07:52.127 --> 00:07:54.808
+The clock is a one-element array
+
+191
+00:07:54.887 --> 00:07:56.904
+because a lambda or inner method
+
+192
+00:07:56.967 --> 00:07:58.854
+cannot change a plain int.
+
+193
+00:07:58.927 --> 00:08:00.684
+Here the helper receives the
+
+194
+00:08:00.747 --> 00:08:02.737
+array and increments it.
+
+195
+00:08:03.087 --> 00:08:05.670
+On entry we record the discovery
+
+196
+00:08:05.737 --> 00:08:07.177
+time and the order
+
+197
+00:08:07.177 --> 00:08:10.037
+visit each unseen neighbour
+
+198
+00:08:10.037 --> 00:08:12.767
+and on the way out record the finish time.
+
+199
+00:08:13.347 --> 00:08:16.157
+The same search with an explicit stack
+
+200
+00:08:16.157 --> 00:08:19.497
+an ArrayDeque used with push and pop.
+
+201
+00:08:19.497 --> 00:08:23.677
+We pop a vertex, skip it if we have seen it
+
+202
+00:08:23.677 --> 00:08:27.067
+mark it, and push its unseen neighbours.
+
+203
+00:08:27.417 --> 00:08:30.789
+Collections.reverse puts the alphabetically
+
+204
+00:08:30.867 --> 00:08:32.247
+first neighbour on top
+
+205
+00:08:32.247 --> 00:08:34.537
+so the order matches the recursive version.
+
+206
+00:08:35.117 --> 00:08:37.007
+Here is a real run.
+
+207
+00:08:37.007 --> 00:08:41.927
+Breadth-first order: A, B, D, C, E, F, G.
+
+208
+00:08:41.927 --> 00:08:46.987
+Depth-first order: A, B, C, E, D, F, G.
+
+209
+00:08:46.987 --> 00:08:48.477
+Same times as we drew.
+
+210
+00:08:49.057 --> 00:08:51.927
+The classic bug is forgetting to mark.
+
+211
+00:08:51.927 --> 00:08:53.090
+On a triangle
+
+212
+00:08:53.167 --> 00:08:55.069
+after twenty pops the queue holds
+
+213
+00:08:55.127 --> 00:08:57.420
+twenty-one vertices and A has been
+
+214
+00:08:57.487 --> 00:08:59.217
+visited seven times.
+
+215
+00:08:59.567 --> 00:09:01.132
+The other trap is depth.
+
+216
+00:09:01.197 --> 00:09:03.094
+A deep recursive search throws
+
+217
+00:09:03.157 --> 00:09:04.857
+a StackOverflowError.
+
+218
+00:09:04.857 --> 00:09:07.407
+Use the stack version for big graphs.
+
+219
+00:09:07.987 --> 00:09:10.877
+In Java, use ArrayDeque for both the
+
+220
+00:09:10.957 --> 00:09:12.257
+queue and the stack.
+
+221
+00:09:12.257 --> 00:09:14.237
+The old Stack class is legacy
+
+222
+00:09:14.237 --> 00:09:16.947
+and LinkedList is slower and heavier.
+
+223
+00:09:17.527 --> 00:09:21.288
+So in Java: ArrayDeque, mark on discovery
+
+224
+00:09:21.377 --> 00:09:22.930
+and prefer the explicit
+
+225
+00:09:22.997 --> 00:09:24.607
+stack on deep graphs.
+
+226
+00:09:24.957 --> 00:09:27.557
+Next: Dijkstra's algorithm.
+

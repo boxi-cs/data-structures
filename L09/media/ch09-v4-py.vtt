@@ -1,0 +1,954 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:04.091
+Seven towns.
+
+2
+00:00:04.190 --> 00:00:05.615
+A company wants to connect
+
+3
+00:00:05.670 --> 00:00:06.950
+them all with cable
+
+4
+00:00:06.950 --> 00:00:09.420
+so that any town can reach any other.
+
+5
+00:00:09.770 --> 00:00:12.180
+Each possible link has a price
+
+6
+00:00:12.180 --> 00:00:15.180
+depending on the distance and the terrain.
+
+7
+00:00:15.180 --> 00:00:16.940
+Eleven links are possible.
+
+8
+00:00:16.940 --> 00:00:19.410
+Building them all would be wasteful.
+
+9
+00:00:19.760 --> 00:00:21.510
+Which links should we build?
+
+10
+00:00:21.510 --> 00:00:23.130
+Enough to connect everyone
+
+11
+00:00:23.130 --> 00:00:24.960
+at the smallest total cost.
+
+12
+00:00:25.540 --> 00:00:28.310
+This is the last video of the chapter
+
+13
+00:00:28.310 --> 00:00:30.180
+minimum spanning trees.
+
+14
+00:00:30.530 --> 00:00:32.734
+We'll see what we are looking for
+
+15
+00:00:32.800 --> 00:00:34.169
+Kruskal's algorithm and the
+
+16
+00:00:34.220 --> 00:00:35.460
+data structure it needs
+
+17
+00:00:35.460 --> 00:00:37.010
+and Prim's algorithm.
+
+18
+00:00:37.590 --> 00:00:38.823
+What do we want?
+
+19
+00:00:38.900 --> 00:00:40.870
+A set of edges that connects
+
+20
+00:00:40.940 --> 00:00:42.280
+all the vertices
+
+21
+00:00:42.280 --> 00:00:44.470
+and has the least total weight.
+
+22
+00:00:44.820 --> 00:00:46.648
+If it has a cycle
+
+23
+00:00:46.750 --> 00:00:48.614
+we can drop one edge of the cycle
+
+24
+00:00:48.670 --> 00:00:51.290
+and still be connected, and cheaper.
+
+25
+00:00:51.290 --> 00:00:54.460
+So the best answer has no cycle.
+
+26
+00:00:54.810 --> 00:00:58.500
+A connected graph with no cycle is a tree.
+
+27
+00:00:58.500 --> 00:01:00.200
+With seven vertices
+
+28
+00:01:00.200 --> 00:01:03.277
+a tree has exactly six edges.
+
+29
+00:01:03.380 --> 00:01:05.528
+A tree that spans every vertex
+
+30
+00:01:05.600 --> 00:01:07.139
+is a spanning tree
+
+31
+00:01:07.220 --> 00:01:09.149
+and the cheapest one is the
+
+32
+00:01:09.220 --> 00:01:11.090
+minimum spanning tree.
+
+33
+00:01:11.670 --> 00:01:13.512
+Here is the idea that makes
+
+34
+00:01:13.580 --> 00:01:15.340
+a greedy algorithm safe.
+
+35
+00:01:15.340 --> 00:01:18.230
+Split the vertices into any two groups.
+
+36
+00:01:18.580 --> 00:01:20.496
+Look at all edges with one
+
+37
+00:01:20.570 --> 00:01:21.764
+end in each group.
+
+38
+00:01:21.830 --> 00:01:23.942
+The cheapest of them belongs to
+
+39
+00:01:24.010 --> 00:01:25.330
+the minimum spanning tree.
+
+40
+00:01:25.330 --> 00:01:27.340
+This is the cut property.
+
+41
+00:01:27.690 --> 00:01:31.540
+Take the group A, D, F, against the rest.
+
+42
+00:01:31.540 --> 00:01:35.200
+The edges between them cost six, eleven
+
+43
+00:01:35.200 --> 00:01:37.580
+thirteen, nine and twelve.
+
+44
+00:01:37.580 --> 00:01:40.640
+The cheapest is A to B, at six
+
+45
+00:01:40.640 --> 00:01:43.290
+and indeed it is in the tree.
+
+46
+00:01:43.640 --> 00:01:44.710
+Why?
+
+47
+00:01:44.710 --> 00:01:47.030
+If the tree did not use it
+
+48
+00:01:47.030 --> 00:01:48.659
+adding it would create a cycle
+
+49
+00:01:48.710 --> 00:01:50.672
+and that cycle must cross
+
+50
+00:01:50.750 --> 00:01:52.470
+the cut a second time
+
+51
+00:01:52.470 --> 00:01:54.770
+through a more expensive edge.
+
+52
+00:01:54.770 --> 00:01:56.880
+Swap them, and the tree gets cheaper.
+
+53
+00:01:57.460 --> 00:01:59.070
+Kruskal's algorithm.
+
+54
+00:01:59.070 --> 00:02:00.950
+Sort all edges by weight
+
+55
+00:02:00.950 --> 00:02:03.700
+and go through them from the cheapest.
+
+56
+00:02:04.050 --> 00:02:06.609
+Add an edge if it joins two vertices
+
+57
+00:02:06.680 --> 00:02:08.500
+that are not yet connected.
+
+58
+00:02:08.500 --> 00:02:10.060
+Skip it if they already are
+
+59
+00:02:10.060 --> 00:02:11.770
+because it would close a cycle.
+
+60
+00:02:12.120 --> 00:02:13.410
+Our edges.
+
+61
+00:02:13.410 --> 00:02:16.070
+A to D, three: accept.
+
+62
+00:02:16.070 --> 00:02:19.150
+C to E, four: accept.
+
+63
+00:02:19.150 --> 00:02:21.090
+D to F, five.
+
+64
+00:02:21.090 --> 00:02:23.410
+A to B, six.
+
+65
+00:02:23.410 --> 00:02:24.970
+B to E, seven.
+
+66
+00:02:24.970 --> 00:02:26.200
+All accepted.
+
+67
+00:02:26.550 --> 00:02:28.640
+B to C, eight
+
+68
+00:02:28.640 --> 00:02:31.700
+B and C are already connected, through E.
+
+69
+00:02:31.700 --> 00:02:32.900
+Reject.
+
+70
+00:02:32.900 --> 00:02:36.380
+E to F, nine: already connected.
+
+71
+00:02:36.380 --> 00:02:37.390
+Reject.
+
+72
+00:02:37.740 --> 00:02:40.910
+E to G, ten: G is new.
+
+73
+00:02:40.910 --> 00:02:41.923
+Accept.
+
+74
+00:02:42.050 --> 00:02:43.704
+The remaining three edges
+
+75
+00:02:43.770 --> 00:02:45.490
+would all close cycles.
+
+76
+00:02:45.490 --> 00:02:46.540
+Reject.
+
+77
+00:02:46.890 --> 00:02:50.420
+Six edges, total weight thirty-five.
+
+78
+00:02:50.420 --> 00:02:52.960
+We built the whole network for thirty-five
+
+79
+00:02:52.960 --> 00:02:54.770
+instead of eighty-eight.
+
+80
+00:02:55.350 --> 00:02:57.560
+Kruskal keeps asking one question
+
+81
+00:02:57.560 --> 00:03:00.803
+are these two vertices already connected?
+
+82
+00:03:00.880 --> 00:03:01.921
+Re-searching the graph each
+
+83
+00:03:01.960 --> 00:03:03.150
+time would be slow.
+
+84
+00:03:03.500 --> 00:03:06.670
+A data structure answers it: union-find
+
+85
+00:03:06.670 --> 00:03:08.888
+also called disjoint sets.
+
+86
+00:03:08.970 --> 00:03:11.026
+Each group of connected vertices
+
+87
+00:03:11.090 --> 00:03:12.470
+is a little tree
+
+88
+00:03:12.470 --> 00:03:15.340
+and the root is the group's name.
+
+89
+00:03:15.690 --> 00:03:17.990
+Union joins two groups by hanging
+
+90
+00:03:18.060 --> 00:03:19.618
+one root under the other.
+
+91
+00:03:19.680 --> 00:03:21.341
+Always hang the smaller tree
+
+92
+00:03:21.400 --> 00:03:22.580
+under the bigger one
+
+93
+00:03:22.580 --> 00:03:24.450
+and the trees stay shallow.
+
+94
+00:03:24.800 --> 00:03:28.224
+Find walks up from a vertex to its root.
+
+95
+00:03:28.310 --> 00:03:30.214
+Two vertices are in the same group
+
+96
+00:03:30.270 --> 00:03:31.880
+when their roots are equal.
+
+97
+00:03:32.460 --> 00:03:33.614
+How shallow?
+
+98
+00:03:33.710 --> 00:03:35.686
+Take a thousand and twenty-four
+
+99
+00:03:35.750 --> 00:03:36.730
+separate vertices
+
+100
+00:03:36.730 --> 00:03:40.150
+and merge them in the worst way: pairs
+
+101
+00:03:40.150 --> 00:03:42.540
+then pairs of pairs, and so on.
+
+102
+00:03:42.890 --> 00:03:44.992
+The deepest vertex ends up only
+
+103
+00:03:45.060 --> 00:03:46.780
+ten steps from its root.
+
+104
+00:03:46.780 --> 00:03:49.380
+Ten is the logarithm, base two
+
+105
+00:03:49.380 --> 00:03:50.850
+of a thousand and twenty-four.
+
+106
+00:03:51.200 --> 00:03:53.190
+There is a second trick.
+
+107
+00:03:53.190 --> 00:03:55.576
+When find walks up a long path
+
+108
+00:03:55.650 --> 00:03:57.863
+it can point every vertex on that
+
+109
+00:03:57.930 --> 00:03:59.790
+path straight at the root.
+
+110
+00:03:59.790 --> 00:04:01.760
+This is path compression.
+
+111
+00:04:02.110 --> 00:04:04.478
+A chain of ten vertices has its bottom
+
+112
+00:04:04.540 --> 00:04:06.900
+vertex nine steps from the root.
+
+113
+00:04:06.900 --> 00:04:08.800
+After one find
+
+114
+00:04:08.800 --> 00:04:11.430
+no vertex is more than one step away.
+
+115
+00:04:12.010 --> 00:04:14.780
+Prim's algorithm grows a single tree
+
+116
+00:04:14.780 --> 00:04:16.420
+starting from any vertex.
+
+117
+00:04:16.420 --> 00:04:17.770
+Say, A.
+
+118
+00:04:18.120 --> 00:04:19.370
+At each step
+
+119
+00:04:19.370 --> 00:04:21.470
+look at all edges leaving the tree
+
+120
+00:04:21.470 --> 00:04:23.030
+and add the cheapest one.
+
+121
+00:04:23.030 --> 00:04:25.040
+A priority queue finds it.
+
+122
+00:04:25.390 --> 00:04:27.980
+From A: A to D, three.
+
+123
+00:04:27.980 --> 00:04:30.460
+Then D to F, five.
+
+124
+00:04:30.460 --> 00:04:32.840
+Then A to B, six.
+
+125
+00:04:32.840 --> 00:04:35.140
+Then B to E, seven.
+
+126
+00:04:35.140 --> 00:04:37.500
+Then E to C, four.
+
+127
+00:04:37.500 --> 00:04:39.990
+Then E to G, ten.
+
+128
+00:04:40.340 --> 00:04:42.590
+The same total, thirty-five.
+
+129
+00:04:42.590 --> 00:04:43.565
+The same tree.
+
+130
+00:04:43.630 --> 00:04:45.610
+The two algorithms take different
+
+131
+00:04:45.670 --> 00:04:47.820
+paths to the same answer.
+
+132
+00:04:48.400 --> 00:04:49.717
+Pause and predict.
+
+133
+00:04:49.790 --> 00:04:51.389
+The cable network we built
+
+134
+00:04:51.450 --> 00:04:52.822
+is cheapest overall.
+
+135
+00:04:52.890 --> 00:04:54.768
+Does it also give the cheapest
+
+136
+00:04:54.830 --> 00:04:56.560
+route from A to G?
+
+137
+00:04:56.910 --> 00:04:58.200
+Inside the tree
+
+138
+00:04:58.200 --> 00:05:02.960
+the only route from A to G is A, B, E, G.
+
+139
+00:05:02.960 --> 00:05:05.460
+Six, plus seven, plus ten.
+
+140
+00:05:05.460 --> 00:05:06.630
+Twenty-three.
+
+141
+00:05:06.980 --> 00:05:09.510
+But the cheapest route in the whole graph
+
+142
+00:05:09.510 --> 00:05:13.900
+from last time, is A, D, F, G, at twenty.
+
+143
+00:05:14.250 --> 00:05:16.081
+And the tree of cheapest routes
+
+144
+00:05:16.140 --> 00:05:18.100
+from A costs forty-one
+
+145
+00:05:18.100 --> 00:05:20.380
+against thirty-five for the spanning tree.
+
+146
+00:05:20.380 --> 00:05:22.650
+Different questions, different trees.
+
+147
+00:05:23.230 --> 00:05:25.412
+The cost of Kruskal is dominated
+
+148
+00:05:25.480 --> 00:05:28.920
+by sorting the edges: order E log E.
+
+149
+00:05:28.920 --> 00:05:32.060
+Since E is at most V squared
+
+150
+00:05:32.060 --> 00:05:34.300
+that is order E log V.
+
+151
+00:05:34.300 --> 00:05:37.750
+The union-find steps are almost constant.
+
+152
+00:05:38.100 --> 00:05:41.940
+Prim with a heap also costs order E log V.
+
+153
+00:05:42.290 --> 00:05:44.420
+For a graph with lots of edges
+
+154
+00:05:44.420 --> 00:05:46.720
+Prim with a plain array can be better.
+
+155
+00:05:46.720 --> 00:05:49.410
+For most sparse graphs, either is fine.
+
+156
+00:05:49.990 --> 00:05:50.927
+To sum up.
+
+157
+00:05:51.020 --> 00:05:53.639
+A minimum spanning tree connects everything
+
+158
+00:05:53.700 --> 00:05:55.148
+with the least total weight
+
+159
+00:05:55.200 --> 00:05:57.316
+and by the cut property a
+
+160
+00:05:57.400 --> 00:05:59.350
+greedy choice is safe.
+
+161
+00:05:59.700 --> 00:06:02.037
+Kruskal sorts the edges and uses
+
+162
+00:06:02.110 --> 00:06:04.330
+union-find to skip cycles.
+
+163
+00:06:04.330 --> 00:06:07.780
+Prim grows one tree with a priority queue.
+
+164
+00:06:08.130 --> 00:06:10.200
+And that is the graph chapter
+
+165
+00:06:10.200 --> 00:06:12.820
+how to store a graph, how to search it
+
+166
+00:06:12.820 --> 00:06:14.340
+how to find cheapest routes
+
+167
+00:06:14.340 --> 00:06:16.810
+and how to connect everything cheaply.
+
+168
+00:06:17.160 --> 00:06:18.977
+It is also the end of our
+
+169
+00:06:19.050 --> 00:06:20.950
+tour of data structures.
+
+170
+00:06:20.950 --> 00:06:23.910
+Arrays, lists, stacks, trees
+
+171
+00:06:23.910 --> 00:06:26.410
+hash tables and heaps are the parts.
+
+172
+00:06:26.410 --> 00:06:28.840
+Graphs are what you can build out of them.
+
+173
+00:06:29.467 --> 00:06:31.517
+Let's write union-find
+
+174
+00:06:31.517 --> 00:06:33.827
+Kruskal and Prim in Python.
+
+175
+00:06:34.407 --> 00:06:37.377
+Two dictionaries: each vertex's parent
+
+176
+00:06:37.377 --> 00:06:39.277
+and the size of each set.
+
+177
+00:06:39.277 --> 00:06:41.567
+A root is its own parent.
+
+178
+00:06:41.917 --> 00:06:43.967
+Find walks up to the root.
+
+179
+00:06:43.967 --> 00:06:46.601
+A second loop walks the same path again
+
+180
+00:06:46.667 --> 00:06:48.497
+and points every vertex on
+
+181
+00:06:48.567 --> 00:06:50.107
+it straight at the root.
+
+182
+00:06:50.107 --> 00:06:52.117
+That is path compression.
+
+183
+00:06:52.467 --> 00:06:54.315
+The tuple assignment evaluates
+
+184
+00:06:54.377 --> 00:06:55.694
+the right side first
+
+185
+00:06:55.757 --> 00:06:57.520
+so the old parent is remembered
+
+186
+00:06:57.577 --> 00:06:59.387
+before we overwrite it.
+
+187
+00:06:59.967 --> 00:07:01.917
+Union finds both roots.
+
+188
+00:07:01.917 --> 00:07:03.157
+If they are equal
+
+189
+00:07:03.157 --> 00:07:05.097
+the vertices are already together
+
+190
+00:07:05.097 --> 00:07:06.847
+and we return False.
+
+191
+00:07:07.197 --> 00:07:09.418
+Otherwise the smaller tree hangs
+
+192
+00:07:09.487 --> 00:07:10.507
+under the bigger one
+
+193
+00:07:10.507 --> 00:07:12.167
+and the size is updated.
+
+194
+00:07:12.167 --> 00:07:13.557
+Return True.
+
+195
+00:07:14.137 --> 00:07:16.687
+Kruskal sorts the edges by weight
+
+196
+00:07:16.687 --> 00:07:19.587
+then by vertices, for a stable order.
+
+197
+00:07:19.587 --> 00:07:22.933
+For each edge, union does the cycle test and
+
+198
+00:07:23.007 --> 00:07:24.777
+the merge in one call.
+
+199
+00:07:25.127 --> 00:07:27.397
+The log records every decision
+
+200
+00:07:27.397 --> 00:07:29.047
+so we can print it.
+
+201
+00:07:29.627 --> 00:07:32.152
+Prim begins by putting the edges around
+
+202
+00:07:32.217 --> 00:07:34.357
+the start vertex into a heap
+
+203
+00:07:34.357 --> 00:07:36.947
+each as weight, from, to.
+
+204
+00:07:37.297 --> 00:07:38.967
+We pop the cheapest.
+
+205
+00:07:38.967 --> 00:07:41.427
+If its far end is already in the tree
+
+206
+00:07:41.427 --> 00:07:42.507
+skip it.
+
+207
+00:07:42.507 --> 00:07:44.367
+Otherwise add the vertex
+
+208
+00:07:44.367 --> 00:07:46.417
+and push the edges around it.
+
+209
+00:07:46.997 --> 00:07:48.387
+The real run.
+
+210
+00:07:48.387 --> 00:07:51.467
+Kruskal accepts the five cheapest edges
+
+211
+00:07:51.467 --> 00:07:55.467
+rejects B to C and E to F, accepts E to G
+
+212
+00:07:55.467 --> 00:07:56.547
+and rejects the rest.
+
+213
+00:07:56.547 --> 00:07:58.357
+Total thirty-five.
+
+214
+00:07:58.707 --> 00:08:04.277
+Prim adds D, F, B, E, C, G
+
+215
+00:08:04.277 --> 00:08:06.907
+and the total is thirty-five as well.
+
+216
+00:08:07.487 --> 00:08:09.277
+Merging a thousand twenty-four
+
+217
+00:08:09.337 --> 00:08:10.788
+singletons in blocks
+
+218
+00:08:10.857 --> 00:08:12.857
+the deepest vertex is ten
+
+219
+00:08:12.937 --> 00:08:14.217
+steps from its root.
+
+220
+00:08:14.217 --> 00:08:17.697
+A chain of ten: depth nine before find
+
+221
+00:08:17.697 --> 00:08:18.927
+one after.
+
+222
+00:08:19.507 --> 00:08:21.754
+Python has no union-find in
+
+223
+00:08:21.837 --> 00:08:23.137
+the standard library.
+
+224
+00:08:23.137 --> 00:08:24.057
+Sorting with a key
+
+225
+00:08:24.057 --> 00:08:25.417
+and the heap queue module
+
+226
+00:08:25.417 --> 00:08:26.947
+are the tools we used.
+
+227
+00:08:27.527 --> 00:08:29.557
+Three mistakes to avoid.
+
+228
+00:08:29.557 --> 00:08:32.377
+First, Kruskal without the cycle test
+
+229
+00:08:32.377 --> 00:08:34.967
+it would simply add every edge.
+
+230
+00:08:35.317 --> 00:08:38.704
+Second, Prim without skipping edges whose
+
+231
+00:08:38.787 --> 00:08:41.027
+far end is already in the tree
+
+232
+00:08:41.027 --> 00:08:43.917
+stale edges would add vertices twice.
+
+233
+00:08:44.267 --> 00:08:47.007
+Third, mixing up the two kinds of tree.
+
+234
+00:08:47.077 --> 00:08:49.269
+The minimum spanning tree is not
+
+235
+00:08:49.337 --> 00:08:51.267
+the tree of cheapest routes.
+
+236
+00:08:51.847 --> 00:08:55.697
+So in Python: union-find with compression
+
+237
+00:08:55.697 --> 00:08:59.407
+sort for Kruskal, heap queue for Prim.
+
+238
+00:08:59.757 --> 00:09:02.557
+And that completes the graph chapter.
+

@@ -1,0 +1,634 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:05.576
+Sorting a million items by comparing
+
+2
+00:00:05.650 --> 00:00:08.109
+every pair would take about five hundred
+
+3
+00:00:08.170 --> 00:00:10.100
+billion comparisons.
+
+4
+00:00:10.450 --> 00:00:12.374
+There is a way to do the same
+
+5
+00:00:12.440 --> 00:00:15.182
+job in about twenty million.
+
+6
+00:00:15.280 --> 00:00:18.835
+That is about twenty-five thousand
+
+7
+00:00:18.940 --> 00:00:20.810
+times less work.
+
+8
+00:00:21.160 --> 00:00:23.590
+The method is called merge sort
+
+9
+00:00:23.590 --> 00:00:26.690
+and it is a perfect example of recursion
+
+10
+00:00:26.690 --> 00:00:29.760
+divide, conquer, combine.
+
+11
+00:00:30.340 --> 00:00:31.980
+This is merge sort.
+
+12
+00:00:32.330 --> 00:00:35.260
+We'll see how to merge two sorted lists
+
+13
+00:00:35.260 --> 00:00:37.760
+how recursion turns that into a full sort
+
+14
+00:00:37.760 --> 00:00:41.010
+and why the total cost is n log n.
+
+15
+00:00:41.590 --> 00:00:43.340
+Start with an easier problem.
+
+16
+00:00:43.340 --> 00:00:45.480
+Two lists are already sorted
+
+17
+00:00:45.480 --> 00:00:48.230
+and we want one sorted list.
+
+18
+00:00:48.580 --> 00:00:51.530
+Put a finger at the front of each list.
+
+19
+00:00:51.530 --> 00:00:53.550
+Compare the two items under your fingers.
+
+20
+00:00:53.550 --> 00:00:55.470
+The smaller one goes to the output
+
+21
+00:00:55.470 --> 00:00:57.140
+and that finger moves on.
+
+22
+00:00:57.490 --> 00:01:03.800
+Two, five, nine, against one, six, seven.
+
+23
+00:01:03.800 --> 00:01:05.560
+One is smaller.
+
+24
+00:01:05.560 --> 00:01:07.060
+Then two.
+
+25
+00:01:07.060 --> 00:01:08.520
+Then five.
+
+26
+00:01:08.520 --> 00:01:11.970
+Then six, seven, and finally nine.
+
+27
+00:01:12.320 --> 00:01:15.398
+Each comparison puts one item in its place
+
+28
+00:01:15.470 --> 00:01:18.108
+so merging n items takes at most
+
+29
+00:01:18.190 --> 00:01:19.810
+n minus one comparisons.
+
+30
+00:01:19.810 --> 00:01:23.240
+Here, six items, five comparisons.
+
+31
+00:01:23.820 --> 00:01:25.570
+Now the recursion.
+
+32
+00:01:25.570 --> 00:01:28.370
+To sort a list, cut it in half
+
+33
+00:01:28.370 --> 00:01:29.610
+sort each half
+
+34
+00:01:29.610 --> 00:01:32.420
+and merge the two sorted halves.
+
+35
+00:01:32.770 --> 00:01:34.760
+And how do we sort a half?
+
+36
+00:01:34.760 --> 00:01:35.936
+The same way.
+
+37
+00:01:36.020 --> 00:01:38.131
+We keep cutting until each
+
+38
+00:01:38.220 --> 00:01:39.840
+piece has one item
+
+39
+00:01:39.840 --> 00:01:42.610
+because one item is already sorted.
+
+40
+00:01:42.960 --> 00:01:45.510
+Now all eight items are alone.
+
+41
+00:01:45.510 --> 00:01:49.110
+Merge them back up: pairs, then fours
+
+42
+00:01:49.110 --> 00:01:50.320
+then all eight.
+
+43
+00:01:50.900 --> 00:01:52.750
+Pause and predict.
+
+44
+00:01:52.750 --> 00:01:55.250
+Where does the actual sorting happen
+
+45
+00:01:55.250 --> 00:01:58.580
+when we split, or when we merge?
+
+46
+00:01:59.130 --> 00:02:01.500
+Splitting just computes a midpoint.
+
+47
+00:02:01.500 --> 00:02:04.290
+Nothing is compared, and nothing moves.
+
+48
+00:02:04.640 --> 00:02:07.245
+All the comparing happens in the merges.
+
+49
+00:02:07.310 --> 00:02:09.588
+The recursion is only the scaffolding
+
+50
+00:02:09.650 --> 00:02:11.750
+that tells us which merges to do
+
+51
+00:02:11.750 --> 00:02:13.400
+and in which order.
+
+52
+00:02:13.980 --> 00:02:15.870
+Now the cost.
+
+53
+00:02:15.870 --> 00:02:19.340
+Let T of n be the work to sort n items.
+
+54
+00:02:19.690 --> 00:02:22.600
+We sort two halves, and then merge
+
+55
+00:02:22.600 --> 00:02:24.500
+at most n comparisons.
+
+56
+00:02:24.500 --> 00:02:28.300
+So T of n equals two T of n over two
+
+57
+00:02:28.300 --> 00:02:29.290
+plus n.
+
+58
+00:02:29.640 --> 00:02:32.443
+Read it as a tree, like in the last video.
+
+59
+00:02:32.510 --> 00:02:34.407
+Every level of the tree merges
+
+60
+00:02:34.470 --> 00:02:36.390
+all n items once
+
+61
+00:02:36.390 --> 00:02:39.120
+so every level costs about n.
+
+62
+00:02:39.470 --> 00:02:41.829
+And there are log base two
+
+63
+00:02:41.920 --> 00:02:44.020
+of n levels of merging
+
+64
+00:02:44.020 --> 00:02:46.840
+because we halve until one item remains.
+
+65
+00:02:46.840 --> 00:02:50.950
+n per level, log n levels: n log n.
+
+66
+00:02:51.300 --> 00:02:53.190
+Unrolling confirms it.
+
+67
+00:02:53.190 --> 00:02:57.370
+T of n is two T of n over two, plus n.
+
+68
+00:02:57.370 --> 00:03:01.050
+Again: four T of n over four, plus two n.
+
+69
+00:03:01.050 --> 00:03:02.590
+After k steps
+
+70
+00:03:02.590 --> 00:03:05.690
+two to the k times T of n over two to the k
+
+71
+00:03:05.690 --> 00:03:06.970
+plus k n.
+
+72
+00:03:06.970 --> 00:03:11.210
+At k equals log n, that is n times T of one
+
+73
+00:03:11.210 --> 00:03:14.420
+plus n log n, which is order n log n.
+
+74
+00:03:15.000 --> 00:03:17.030
+Does the theory match the machine?
+
+75
+00:03:17.090 --> 00:03:20.315
+Sorting a thousand random items takes about
+
+76
+00:03:20.390 --> 00:03:23.000
+eight thousand seven hundred comparisons.
+
+77
+00:03:23.350 --> 00:03:25.600
+Compare that with n log n
+
+78
+00:03:25.600 --> 00:03:27.553
+which is about ten thousand
+
+79
+00:03:27.620 --> 00:03:29.097
+and with the five hundred thousand
+
+80
+00:03:29.140 --> 00:03:30.990
+of comparing every pair.
+
+81
+00:03:31.340 --> 00:03:34.749
+Merge sort is slightly under n log n here
+
+82
+00:03:34.830 --> 00:03:36.450
+because merging stops early
+
+83
+00:03:36.510 --> 00:03:38.340
+when one list runs out.
+
+84
+00:03:38.920 --> 00:03:41.426
+Merge sort has four properties
+
+85
+00:03:41.510 --> 00:03:42.640
+worth remembering.
+
+86
+00:03:42.990 --> 00:03:44.020
+First
+
+87
+00:03:44.020 --> 00:03:46.820
+it always takes time of order n log n
+
+88
+00:03:46.820 --> 00:03:48.260
+for any input.
+
+89
+00:03:48.260 --> 00:03:51.150
+There is no bad case to worry about.
+
+90
+00:03:51.500 --> 00:03:53.550
+Second, it needs extra memory
+
+91
+00:03:53.550 --> 00:03:56.700
+about n items, for the merged lists.
+
+92
+00:03:57.050 --> 00:04:00.440
+Third, it is stable: if two items are equal
+
+93
+00:04:00.440 --> 00:04:02.835
+the one that came first stays first
+
+94
+00:04:02.900 --> 00:04:04.522
+because the merge takes from
+
+95
+00:04:04.580 --> 00:04:06.417
+the left list on ties.
+
+96
+00:04:06.500 --> 00:04:08.268
+That matters when you sort records
+
+97
+00:04:08.320 --> 00:04:10.486
+by one field and want to keep an earlier
+
+98
+00:04:10.540 --> 00:04:11.930
+order for the others.
+
+99
+00:04:12.280 --> 00:04:13.330
+And fourth
+
+100
+00:04:13.330 --> 00:04:15.910
+the recursion is only log n levels deep
+
+101
+00:04:15.910 --> 00:04:18.210
+so the call stack stays tiny
+
+102
+00:04:18.210 --> 00:04:20.400
+even for a million items.
+
+103
+00:04:20.980 --> 00:04:22.170
+To sum up.
+
+104
+00:04:22.170 --> 00:04:25.390
+Merge sort splits in half, sorts each half
+
+105
+00:04:25.390 --> 00:04:26.430
+and merges.
+
+106
+00:04:26.430 --> 00:04:29.530
+All the work is in the merge: n per level
+
+107
+00:04:29.530 --> 00:04:31.180
+log n levels.
+
+108
+00:04:31.530 --> 00:04:33.220
+Next time: quicksort
+
+109
+00:04:33.220 --> 00:04:34.980
+which also divides and conquers
+
+110
+00:04:34.980 --> 00:04:37.300
+but does its work before the recursion
+
+111
+00:04:37.300 --> 00:04:38.210
+not after.
+
+112
+00:04:38.837 --> 00:04:41.127
+Let's write merge sort in Java
+
+113
+00:04:41.127 --> 00:04:42.997
+and count its comparisons.
+
+114
+00:04:43.577 --> 00:04:45.166
+An array of length zero or
+
+115
+00:04:45.227 --> 00:04:47.987
+one is already sorted: return it.
+
+116
+00:04:47.987 --> 00:04:49.827
+Otherwise find the middle.
+
+117
+00:04:49.827 --> 00:04:52.247
+Sort the left half and the right half
+
+118
+00:04:52.247 --> 00:04:55.327
+each copied out with Arrays dot copyOfRange
+
+119
+00:04:55.327 --> 00:04:58.807
+and each sorted by calling mergeSort again.
+
+120
+00:04:58.807 --> 00:05:01.497
+Then merge the two sorted results.
+
+121
+00:05:01.847 --> 00:05:04.377
+copyOfRange makes a new array
+
+122
+00:05:04.377 --> 00:05:07.637
+so every call works on its own small arrays
+
+123
+00:05:07.637 --> 00:05:10.287
+and the original array is never changed.
+
+124
+00:05:10.867 --> 00:05:13.797
+Merge allocates the result array in one go
+
+125
+00:05:13.797 --> 00:05:15.557
+with exactly the right length.
+
+126
+00:05:15.557 --> 00:05:18.437
+The indexes i and j are the fingers
+
+127
+00:05:18.437 --> 00:05:21.547
+and k is where the next item goes.
+
+128
+00:05:21.897 --> 00:05:23.887
+While both arrays have items
+
+129
+00:05:23.887 --> 00:05:25.927
+compare the two items under the fingers.
+
+130
+00:05:25.927 --> 00:05:28.337
+The comparison is the line we count.
+
+131
+00:05:28.687 --> 00:05:30.696
+The less-than-or-equal sign takes
+
+132
+00:05:30.757 --> 00:05:32.597
+the left item on ties.
+
+133
+00:05:32.597 --> 00:05:34.453
+For ints that does not show
+
+134
+00:05:34.517 --> 00:05:36.193
+but for objects it is what
+
+135
+00:05:36.257 --> 00:05:37.847
+makes the sort stable.
+
+136
+00:05:38.197 --> 00:05:40.063
+Two small loops copy whatever
+
+137
+00:05:40.127 --> 00:05:41.757
+is left of either array.
+
+138
+00:05:42.337 --> 00:05:45.227
+Here are real counts on random arrays.
+
+139
+00:05:45.227 --> 00:05:46.777
+For a thousand items
+
+140
+00:05:46.847 --> 00:05:47.887
+eight thousand six hundred
+
+141
+00:05:47.927 --> 00:05:49.127
+ninety comparisons.
+
+142
+00:05:49.127 --> 00:05:50.487
+For two thousand
+
+143
+00:05:50.487 --> 00:05:53.057
+about nineteen thousand four hundred.
+
+144
+00:05:53.407 --> 00:05:57.057
+Each row stays below n log base two of n.
+
+145
+00:05:57.057 --> 00:05:59.597
+Double the size and the work doubles
+
+146
+00:05:59.597 --> 00:06:00.687
+plus a little.
+
+147
+00:06:01.267 --> 00:06:04.357
+In real programs, call Arrays dot sort.
+
+148
+00:06:04.357 --> 00:06:06.577
+For primitive arrays like int
+
+149
+00:06:06.577 --> 00:06:08.797
+Java uses a quicksort variant.
+
+150
+00:06:08.797 --> 00:06:12.197
+For objects, it uses TimSort, a stable
+
+151
+00:06:12.197 --> 00:06:13.747
+merge-based sort.
+
+152
+00:06:14.097 --> 00:06:15.621
+Objects need stability
+
+153
+00:06:15.687 --> 00:06:17.543
+which is exactly the property
+
+154
+00:06:17.607 --> 00:06:18.897
+merge sort gives.
+
+155
+00:06:19.477 --> 00:06:22.127
+So in Java: copyOfRange
+
+156
+00:06:22.127 --> 00:06:23.687
+a merge with fingers
+
+157
+00:06:23.687 --> 00:06:26.397
+and a counter that confirms n log n.
+
+158
+00:06:26.747 --> 00:06:28.907
+Next: quicksort.
+

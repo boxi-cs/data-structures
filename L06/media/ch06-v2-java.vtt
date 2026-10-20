@@ -1,0 +1,890 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:05.425
+Last time, we kept a binary search tree
+
+2
+00:00:05.490 --> 00:00:08.290
+balanced by repairing it, with rotations
+
+3
+00:00:08.290 --> 00:00:10.260
+after each insertion.
+
+4
+00:00:10.610 --> 00:00:12.716
+Here is a different idea.
+
+5
+00:00:12.800 --> 00:00:15.183
+Build the tree so that it can never become
+
+6
+00:00:15.240 --> 00:00:17.450
+unbalanced in the first place.
+
+7
+00:00:17.800 --> 00:00:19.466
+The trick is to let a node
+
+8
+00:00:19.530 --> 00:00:21.160
+hold more than one key.
+
+9
+00:00:21.740 --> 00:00:24.100
+This is the two-four tree.
+
+10
+00:00:24.450 --> 00:00:26.472
+We'll see what a node can hold
+
+11
+00:00:26.540 --> 00:00:28.500
+and how search works
+
+12
+00:00:28.500 --> 00:00:31.020
+how an overfull node splits
+
+13
+00:00:31.020 --> 00:00:33.700
+how an empty node borrows or merges
+
+14
+00:00:33.700 --> 00:00:36.410
+and why the height is always logarithmic.
+
+15
+00:00:36.990 --> 00:00:39.771
+A node with two keys has three children.
+
+16
+00:00:39.840 --> 00:00:41.938
+The first child holds keys smaller
+
+17
+00:00:42.000 --> 00:00:43.060
+than the first key
+
+18
+00:00:43.060 --> 00:00:45.240
+the second holds keys between the two
+
+19
+00:00:45.240 --> 00:00:47.470
+and the third holds the rest.
+
+20
+00:00:47.820 --> 00:00:49.070
+In general
+
+21
+00:00:49.070 --> 00:00:53.030
+a node with k keys has k plus one children.
+
+22
+00:00:53.030 --> 00:00:54.513
+Searching is still simple.
+
+23
+00:00:54.570 --> 00:00:56.023
+Compare against the keys in the
+
+24
+00:00:56.070 --> 00:00:57.450
+node from left to right
+
+25
+00:00:57.450 --> 00:01:00.580
+and follow the child where your key falls.
+
+26
+00:01:00.930 --> 00:01:03.340
+A two-four tree has two rules.
+
+27
+00:01:03.340 --> 00:01:06.380
+Every node has two, three, or four children
+
+28
+00:01:06.380 --> 00:01:08.960
+which means one, two, or three keys.
+
+29
+00:01:08.960 --> 00:01:11.850
+And all the leaves are at the same depth.
+
+30
+00:01:12.430 --> 00:01:15.220
+To insert a key, search down to a leaf
+
+31
+00:01:15.220 --> 00:01:18.390
+and put the key into that leaf, in order.
+
+32
+00:01:18.740 --> 00:01:21.030
+A leaf can hold three keys.
+
+33
+00:01:21.030 --> 00:01:24.020
+Insert a fourth, and it is overfull.
+
+34
+00:01:24.370 --> 00:01:26.360
+The fix is a split.
+
+35
+00:01:26.360 --> 00:01:28.817
+The third key moves up into the parent.
+
+36
+00:01:28.880 --> 00:01:30.955
+The first two keys stay together
+
+37
+00:01:31.020 --> 00:01:32.200
+as a left node.
+
+38
+00:01:32.200 --> 00:01:34.570
+The last key becomes a right node.
+
+39
+00:01:34.920 --> 00:01:36.110
+Try it.
+
+40
+00:01:36.110 --> 00:01:39.090
+Insert four, six, twelve.
+
+41
+00:01:39.090 --> 00:01:41.510
+The leaf is full, with three keys.
+
+42
+00:01:41.510 --> 00:01:43.270
+Now insert fifteen.
+
+43
+00:01:43.270 --> 00:01:46.550
+The leaf splits, twelve moves up
+
+44
+00:01:46.550 --> 00:01:48.310
+and since there was no parent
+
+45
+00:01:48.310 --> 00:01:49.800
+twelve becomes a new root.
+
+46
+00:01:50.380 --> 00:01:52.630
+A split can overflow the parent
+
+47
+00:01:52.630 --> 00:01:54.110
+which then splits too
+
+48
+00:01:54.110 --> 00:01:55.460
+and so on up the tree.
+
+49
+00:01:55.810 --> 00:01:57.840
+If the root itself splits
+
+50
+00:01:57.840 --> 00:01:59.874
+we create a new root above it.
+
+51
+00:01:59.940 --> 00:02:02.420
+That is the only way a two-four
+
+52
+00:02:02.500 --> 00:02:03.770
+tree grows taller.
+
+53
+00:02:04.120 --> 00:02:06.330
+Insert the numbers one to thirteen
+
+54
+00:02:06.330 --> 00:02:07.370
+in order.
+
+55
+00:02:07.370 --> 00:02:10.490
+After twelve keys, the tree has two levels.
+
+56
+00:02:10.490 --> 00:02:12.830
+The thirteenth key splits a leaf
+
+57
+00:02:12.830 --> 00:02:16.160
+which overflows the root, which splits too.
+
+58
+00:02:16.510 --> 00:02:18.200
+A new root appears
+
+59
+00:02:18.200 --> 00:02:20.138
+and the tree has three levels.
+
+60
+00:02:20.200 --> 00:02:22.409
+Every leaf got one level deeper
+
+61
+00:02:22.480 --> 00:02:23.990
+at the same moment.
+
+62
+00:02:24.570 --> 00:02:26.100
+Pause and predict.
+
+63
+00:02:26.100 --> 00:02:29.220
+A binary search tree grows at the bottom
+
+64
+00:02:29.220 --> 00:02:31.620
+a new key becomes a new leaf
+
+65
+00:02:31.620 --> 00:02:33.250
+below the old ones.
+
+66
+00:02:33.600 --> 00:02:36.030
+Where does a two-four tree grow?
+
+67
+00:02:36.030 --> 00:02:38.010
+At the bottom, on one side?
+
+68
+00:02:38.010 --> 00:02:39.430
+At the bottom, everywhere?
+
+69
+00:02:39.430 --> 00:02:41.360
+Or at the top?
+
+70
+00:02:41.710 --> 00:02:43.080
+At the top.
+
+71
+00:02:43.080 --> 00:02:45.360
+Only a root split adds a level
+
+72
+00:02:45.360 --> 00:02:48.360
+and it adds one above every leaf at once.
+
+73
+00:02:48.360 --> 00:02:51.180
+So all the leaves stay at the same depth
+
+74
+00:02:51.180 --> 00:02:52.110
+always.
+
+75
+00:02:52.690 --> 00:02:58.100
+Let's insert eleven keys: four, six, twelve
+
+76
+00:02:58.100 --> 00:03:04.000
+fifteen, three, five, ten, eight, eleven
+
+77
+00:03:04.000 --> 00:03:06.170
+thirteen, eighteen.
+
+78
+00:03:06.520 --> 00:03:08.730
+Fifteen splits the first leaf.
+
+79
+00:03:08.730 --> 00:03:10.590
+Five splits the left leaf
+
+80
+00:03:10.590 --> 00:03:13.621
+and five moves up next to twelve.
+
+81
+00:03:13.710 --> 00:03:15.315
+Ten and eight fit into a leaf
+
+82
+00:03:15.370 --> 00:03:17.130
+with no split at all.
+
+83
+00:03:17.130 --> 00:03:18.550
+Eleven splits a leaf
+
+84
+00:03:18.550 --> 00:03:21.800
+and the root becomes full, with three keys.
+
+85
+00:03:22.150 --> 00:03:25.840
+In the end, eleven keys sit in two levels
+
+86
+00:03:25.840 --> 00:03:27.630
+after three splits.
+
+87
+00:03:28.210 --> 00:03:30.780
+To delete a key from an internal node
+
+88
+00:03:30.780 --> 00:03:33.520
+swap it with its in-order successor
+
+89
+00:03:33.520 --> 00:03:36.240
+the smallest key to its right.
+
+90
+00:03:36.240 --> 00:03:38.880
+That key always sits in a leaf.
+
+91
+00:03:38.880 --> 00:03:40.810
+Then delete it from the leaf.
+
+92
+00:03:41.160 --> 00:03:44.150
+If the leaf still has a key, we are done.
+
+93
+00:03:44.150 --> 00:03:47.560
+If it becomes empty, it has underflowed.
+
+94
+00:03:47.910 --> 00:03:49.880
+The first fix is a transfer.
+
+95
+00:03:49.880 --> 00:03:52.180
+If a sibling has two or more keys
+
+96
+00:03:52.180 --> 00:03:54.365
+it gives its nearest key to the parent
+
+97
+00:03:54.420 --> 00:03:55.768
+and the parent gives a key
+
+98
+00:03:55.820 --> 00:03:57.390
+down to the empty node.
+
+99
+00:03:57.740 --> 00:04:01.050
+If no sibling can spare a key, we fuse.
+
+100
+00:04:01.050 --> 00:04:03.133
+The empty node, a sibling
+
+101
+00:04:03.210 --> 00:04:04.683
+and the key between them in the
+
+102
+00:04:04.730 --> 00:04:07.110
+parent merge into one node.
+
+103
+00:04:07.110 --> 00:04:09.630
+The parent now has one key fewer
+
+104
+00:04:09.630 --> 00:04:11.460
+so it might underflow too.
+
+105
+00:04:12.040 --> 00:04:14.270
+Why is the height logarithmic?
+
+106
+00:04:14.270 --> 00:04:16.190
+All leaves are at the same depth
+
+107
+00:04:16.190 --> 00:04:18.480
+so count the keys by levels.
+
+108
+00:04:18.830 --> 00:04:22.200
+If every node is a two-node, with one key
+
+109
+00:04:22.200 --> 00:04:25.260
+a tree with h levels holds two to the h
+
+110
+00:04:25.260 --> 00:04:26.820
+minus one keys.
+
+111
+00:04:26.820 --> 00:04:28.700
+If every node is a four-node
+
+112
+00:04:28.700 --> 00:04:31.680
+with three keys, it holds four to the h
+
+113
+00:04:31.680 --> 00:04:32.720
+minus one.
+
+114
+00:04:32.720 --> 00:04:35.390
+Every real tree is somewhere in between.
+
+115
+00:04:35.740 --> 00:04:37.606
+So with n keys
+
+116
+00:04:37.730 --> 00:04:39.629
+the number of levels is between
+
+117
+00:04:39.690 --> 00:04:42.450
+log base four of n plus one
+
+118
+00:04:42.450 --> 00:04:45.020
+and log base two of n plus one.
+
+119
+00:04:45.370 --> 00:04:46.880
+For a thousand keys
+
+120
+00:04:46.880 --> 00:04:49.180
+that is between five and nine levels.
+
+121
+00:04:49.180 --> 00:04:51.500
+For a million keys
+
+122
+00:04:51.500 --> 00:04:53.170
+between ten and nineteen.
+
+123
+00:04:53.520 --> 00:04:54.563
+In practice
+
+124
+00:04:54.650 --> 00:04:56.696
+we measured six levels for the numbers
+
+125
+00:04:56.750 --> 00:04:59.260
+one to a thousand inserted in order
+
+126
+00:04:59.330 --> 00:05:01.208
+and eleven levels for a
+
+127
+00:05:01.290 --> 00:05:02.450
+hundred thousand keys
+
+128
+00:05:02.450 --> 00:05:04.360
+in order or at random.
+
+129
+00:05:04.940 --> 00:05:05.822
+To sum up.
+
+130
+00:05:05.910 --> 00:05:07.704
+A two-four tree lets a node
+
+131
+00:05:07.770 --> 00:05:09.790
+hold one to three keys
+
+132
+00:05:09.790 --> 00:05:12.500
+and keeps every leaf at the same depth.
+
+133
+00:05:12.850 --> 00:05:16.460
+An overfull node splits and pushes a key up.
+
+134
+00:05:16.460 --> 00:05:19.400
+An empty node borrows with a transfer
+
+135
+00:05:19.400 --> 00:05:21.810
+or merges with a fuse.
+
+136
+00:05:22.160 --> 00:05:25.210
+The tree grows and shrinks only at the root
+
+137
+00:05:25.210 --> 00:05:27.280
+so it is always balanced.
+
+138
+00:05:27.630 --> 00:05:28.928
+In the next video
+
+139
+00:05:29.000 --> 00:05:30.784
+you'll see that a red-black tree
+
+140
+00:05:30.840 --> 00:05:33.220
+is a two-four tree in disguise.
+
+141
+00:05:33.220 --> 00:05:34.870
+First, the code.
+
+142
+00:05:35.497 --> 00:05:37.867
+Here is the two-four tree in Java.
+
+143
+00:05:37.867 --> 00:05:40.787
+A node holds two lists: its keys
+
+144
+00:05:40.787 --> 00:05:42.297
+and its children.
+
+145
+00:05:42.877 --> 00:05:46.067
+The tree is generic over any comparable key.
+
+146
+00:05:46.067 --> 00:05:48.361
+A leaf has an empty children list
+
+147
+00:05:48.427 --> 00:05:50.358
+and an internal node has one
+
+148
+00:05:50.427 --> 00:05:52.037
+more child than keys.
+
+149
+00:05:52.387 --> 00:05:54.557
+A small record, Split
+
+150
+00:05:54.557 --> 00:05:56.777
+carries the answer of a split
+
+151
+00:05:56.777 --> 00:05:59.387
+the middle key, and the new right node.
+
+152
+00:05:59.967 --> 00:06:02.177
+Insert checks that the key is new
+
+153
+00:06:02.177 --> 00:06:03.477
+and recurses.
+
+154
+00:06:03.477 --> 00:06:06.877
+A non-null Split means the root overflowed
+
+155
+00:06:06.877 --> 00:06:09.327
+so we build a new root above it.
+
+156
+00:06:09.677 --> 00:06:11.564
+lowerBound finds where the key
+
+157
+00:06:11.627 --> 00:06:13.187
+belongs inside a node.
+
+158
+00:06:13.187 --> 00:06:16.327
+In a leaf we add the key at that index.
+
+159
+00:06:16.327 --> 00:06:18.687
+In an internal node we recurse
+
+160
+00:06:18.687 --> 00:06:20.877
+and absorb a split from the child.
+
+161
+00:06:21.227 --> 00:06:23.977
+If the node now has more than three keys
+
+162
+00:06:23.977 --> 00:06:24.937
+it splits
+
+163
+00:06:24.937 --> 00:06:27.267
+and returns the Split to its caller.
+
+164
+00:06:27.847 --> 00:06:30.907
+The split keeps the first two keys and sends
+
+165
+00:06:30.977 --> 00:06:33.345
+the last key to a new right node.
+
+166
+00:06:33.417 --> 00:06:34.979
+The third key is the middle
+
+167
+00:06:35.037 --> 00:06:36.207
+one that goes up.
+
+168
+00:06:36.557 --> 00:06:40.187
+Here is a classic Java trap.
+
+169
+00:06:40.187 --> 00:06:42.167
+subList does not copy.
+
+170
+00:06:42.167 --> 00:06:44.427
+It returns a view of the same list.
+
+171
+00:06:44.427 --> 00:06:48.207
+So we wrap the slices in new ArrayList
+
+172
+00:06:48.207 --> 00:06:49.637
+to cut the connection.
+
+173
+00:06:50.217 --> 00:06:52.607
+Remove mirrors insert
+
+174
+00:06:52.607 --> 00:06:54.847
+replace the key with its successor
+
+175
+00:06:54.847 --> 00:06:56.407
+delete from the leaf
+
+176
+00:06:56.407 --> 00:06:59.457
+and on the way back call fixUnderflow.
+
+177
+00:06:59.807 --> 00:07:02.101
+An empty node tries a transfer
+
+178
+00:07:02.177 --> 00:07:03.577
+from the left sibling
+
+179
+00:07:03.577 --> 00:07:05.437
+then from the right sibling.
+
+180
+00:07:05.437 --> 00:07:08.647
+If neither can spare a key, it fuses.
+
+181
+00:07:08.997 --> 00:07:10.350
+One more trap.
+
+182
+00:07:10.447 --> 00:07:12.748
+keys.remove with an int index
+
+183
+00:07:12.827 --> 00:07:14.447
+removes by position.
+
+184
+00:07:14.447 --> 00:07:16.327
+With an Integer object
+
+185
+00:07:16.327 --> 00:07:18.007
+it would remove by value.
+
+186
+00:07:18.007 --> 00:07:20.677
+Our code always passes an int index.
+
+187
+00:07:21.257 --> 00:07:22.687
+Run the demo.
+
+188
+00:07:22.687 --> 00:07:27.307
+Splits at fifteen, five, and eleven.
+
+189
+00:07:27.307 --> 00:07:30.567
+Then removing four is a transfer
+
+190
+00:07:30.567 --> 00:07:33.297
+and removing eight is a fuse.
+
+191
+00:07:33.647 --> 00:07:35.437
+The output is identical
+
+192
+00:07:35.437 --> 00:07:36.737
+character for character
+
+193
+00:07:36.737 --> 00:07:38.007
+to the Python output.
+
+194
+00:07:38.587 --> 00:07:40.462
+The main test inserts and
+
+195
+00:07:40.537 --> 00:07:41.794
+removes random keys
+
+196
+00:07:41.857 --> 00:07:43.383
+two hundred fifty operations
+
+197
+00:07:43.437 --> 00:07:45.537
+on each of forty trees
+
+198
+00:07:45.537 --> 00:07:47.067
+compared with a TreeSet.
+
+199
+00:07:47.417 --> 00:07:50.687
+checkInvariants runs after every operation.
+
+200
+00:07:50.687 --> 00:07:54.091
+A second test removes every key, one by one
+
+201
+00:07:54.167 --> 00:07:56.016
+and checks that the tree stays valid
+
+202
+00:07:56.067 --> 00:07:57.697
+all the way down to empty.
+
+203
+00:07:58.277 --> 00:07:59.924
+Common mistakes.
+
+204
+00:08:00.027 --> 00:08:01.817
+Forgetting to move the children when
+
+205
+00:08:01.867 --> 00:08:03.987
+splitting an internal node.
+
+206
+00:08:03.987 --> 00:08:05.837
+Forgetting the root split.
+
+207
+00:08:06.187 --> 00:08:09.077
+Forgetting that subList is only a view.
+
+208
+00:08:09.077 --> 00:08:11.377
+And moving a key in a transfer
+
+209
+00:08:11.377 --> 00:08:13.547
+but not the child that goes with it.
+
+210
+00:08:13.897 --> 00:08:16.566
+Our checkInvariants throws an AssertionError
+
+211
+00:08:16.627 --> 00:08:20.107
+when node sizes, child counts, key order
+
+212
+00:08:20.107 --> 00:08:21.453
+or leaf depth are wrong.
+
+213
+00:08:21.507 --> 00:08:23.711
+We call it after every random
+
+214
+00:08:23.787 --> 00:08:25.337
+operation in the tests.
+
+215
+00:08:25.917 --> 00:08:27.847
+In the standard library
+
+216
+00:08:27.847 --> 00:08:30.807
+Java has no two-four tree.
+
+217
+00:08:30.807 --> 00:08:33.267
+TreeMap, which we'll meet in video three
+
+218
+00:08:33.267 --> 00:08:34.565
+is a red-black tree
+
+219
+00:08:34.627 --> 00:08:36.991
+and a red-black tree is exactly
+
+220
+00:08:37.067 --> 00:08:39.317
+a two-four tree in disguise.
+
+221
+00:08:39.667 --> 00:08:41.717
+Next video: the same tree
+
+222
+00:08:41.717 --> 00:08:44.387
+drawn with red and black binary nodes.
+

@@ -1,0 +1,774 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:04.679
+Last time we turned a key
+
+2
+00:00:04.750 --> 00:00:06.422
+into a table index
+
+3
+00:00:06.510 --> 00:00:08.557
+and we saw that two keys can
+
+4
+00:00:08.630 --> 00:00:10.660
+land in the same slot.
+
+5
+00:00:11.010 --> 00:00:12.760
+Today's question is simple
+
+6
+00:00:12.760 --> 00:00:14.200
+when that happens
+
+7
+00:00:14.200 --> 00:00:16.040
+where does the second key go?
+
+8
+00:00:16.040 --> 00:00:18.180
+We must not overwrite the first
+
+9
+00:00:18.180 --> 00:00:20.570
+and we must not lose either one.
+
+10
+00:00:21.150 --> 00:00:24.140
+The oldest answer is also the simplest
+
+11
+00:00:24.140 --> 00:00:25.790
+separate chaining.
+
+12
+00:00:26.140 --> 00:00:28.458
+In this video we'll see how a chain
+
+13
+00:00:28.530 --> 00:00:30.459
+per slot solves collisions
+
+14
+00:00:30.530 --> 00:00:32.411
+how the cost of a lookup depends
+
+15
+00:00:32.470 --> 00:00:33.630
+on the load factor
+
+16
+00:00:33.630 --> 00:00:36.140
+and what can still go wrong.
+
+17
+00:00:36.720 --> 00:00:39.050
+Instead of holding one entry
+
+18
+00:00:39.050 --> 00:00:41.072
+every slot holds a chain
+
+19
+00:00:41.150 --> 00:00:43.204
+a list of all the entries whose
+
+20
+00:00:43.270 --> 00:00:45.320
+keys hash to that slot.
+
+21
+00:00:45.670 --> 00:00:48.060
+To insert, compute the index
+
+22
+00:00:48.060 --> 00:00:50.140
+and look along that chain.
+
+23
+00:00:50.140 --> 00:00:51.960
+If the key is already there
+
+24
+00:00:51.960 --> 00:00:53.200
+replace its value.
+
+25
+00:00:53.200 --> 00:00:54.740
+If not
+
+26
+00:00:54.740 --> 00:00:57.790
+add a new entry at the end of the chain.
+
+27
+00:00:58.140 --> 00:01:00.510
+To look up, compute the same index
+
+28
+00:01:00.510 --> 00:01:02.910
+and walk along that one chain
+
+29
+00:01:02.910 --> 00:01:04.410
+comparing keys.
+
+30
+00:01:04.410 --> 00:01:05.690
+To remove
+
+31
+00:01:05.690 --> 00:01:08.740
+find the entry in the chain and take it out.
+
+32
+00:01:09.090 --> 00:01:11.194
+We never look at any other slot.
+
+33
+00:01:11.260 --> 00:01:12.566
+Everything about one key
+
+34
+00:01:12.620 --> 00:01:14.370
+happens in one chain.
+
+35
+00:01:14.950 --> 00:01:16.400
+Let's watch it work.
+
+36
+00:01:16.400 --> 00:01:19.151
+Seven slots, and the hash of an integer
+
+37
+00:01:19.220 --> 00:01:21.140
+is the integer itself
+
+38
+00:01:21.140 --> 00:01:24.150
+so the index is the key modulo seven.
+
+39
+00:01:24.500 --> 00:01:26.710
+Twelve goes to slot five.
+
+40
+00:01:26.710 --> 00:01:29.690
+Forty-four goes to slot two.
+
+41
+00:01:29.690 --> 00:01:31.870
+Thirteen to slot six.
+
+42
+00:01:31.870 --> 00:01:33.700
+Eighty-eight to slot four.
+
+43
+00:01:34.050 --> 00:01:37.040
+Twenty-three also belongs in slot two.
+
+44
+00:01:37.040 --> 00:01:39.420
+It joins the chain behind forty-four
+
+45
+00:01:39.420 --> 00:01:42.370
+slot two now holds a chain of length two.
+
+46
+00:01:42.720 --> 00:01:45.790
+Ninety-four goes to slot three.
+
+47
+00:01:45.790 --> 00:01:49.410
+Eleven joins eighty-eight in slot four.
+
+48
+00:01:49.410 --> 00:01:51.030
+Thirty-nine joins them too
+
+49
+00:01:51.030 --> 00:01:52.440
+a chain of three.
+
+50
+00:01:52.790 --> 00:01:55.240
+Twenty goes behind thirteen
+
+51
+00:01:55.240 --> 00:01:57.880
+and sixteen goes to the end of slot two
+
+52
+00:01:57.880 --> 00:02:00.820
+which now has three entries: forty-four
+
+53
+00:02:00.820 --> 00:02:02.430
+twenty-three and sixteen.
+
+54
+00:02:02.780 --> 00:02:05.090
+Ten keys in seven slots.
+
+55
+00:02:05.090 --> 00:02:07.270
+The load factor is ten over seven
+
+56
+00:02:07.270 --> 00:02:08.890
+about one point four three
+
+57
+00:02:08.890 --> 00:02:11.420
+and the longest chain has three entries.
+
+58
+00:02:12.000 --> 00:02:13.710
+Now look things up.
+
+59
+00:02:13.710 --> 00:02:15.990
+Twelve is alone in slot five
+
+60
+00:02:15.990 --> 00:02:17.560
+one comparison.
+
+61
+00:02:17.910 --> 00:02:20.700
+Sixteen is the last in slot two
+
+62
+00:02:20.700 --> 00:02:22.960
+we compare with forty-four
+
+63
+00:02:22.960 --> 00:02:25.180
+then twenty-three, then sixteen.
+
+64
+00:02:25.180 --> 00:02:26.470
+Three comparisons.
+
+65
+00:02:26.820 --> 00:02:29.010
+Nine is not in the table.
+
+66
+00:02:29.010 --> 00:02:30.950
+Its slot is two as well
+
+67
+00:02:30.950 --> 00:02:32.850
+so we walk the whole chain
+
+68
+00:02:32.850 --> 00:02:33.910
+three comparisons
+
+69
+00:02:33.910 --> 00:02:37.020
+and only then can we say it is missing.
+
+70
+00:02:37.370 --> 00:02:39.789
+Finding each of the ten keys costs
+
+71
+00:02:39.860 --> 00:02:42.260
+seventeen comparisons in all
+
+72
+00:02:42.260 --> 00:02:43.850
+one point seven on average.
+
+73
+00:02:44.430 --> 00:02:46.440
+How long are the chains?
+
+74
+00:02:46.440 --> 00:02:49.859
+If the hash function spreads keys evenly
+
+75
+00:02:49.940 --> 00:02:52.395
+n keys in m slots give chains
+
+76
+00:02:52.480 --> 00:02:54.620
+of average length n over m.
+
+77
+00:02:54.620 --> 00:02:57.790
+That ratio is the load factor, alpha.
+
+78
+00:02:58.140 --> 00:03:01.523
+A lookup costs one hash, one remainder
+
+79
+00:03:01.610 --> 00:03:03.429
+and then a walk of about alpha
+
+80
+00:03:03.490 --> 00:03:04.973
+entries for a missing key
+
+81
+00:03:05.030 --> 00:03:07.493
+or about one plus alpha over two
+
+82
+00:03:07.570 --> 00:03:09.470
+for a key that is there.
+
+83
+00:03:09.470 --> 00:03:12.050
+With alpha a small constant
+
+84
+00:03:12.050 --> 00:03:13.580
+that is constant time.
+
+85
+00:03:13.930 --> 00:03:16.086
+Check it against our example
+
+86
+00:03:16.160 --> 00:03:18.958
+one plus one point four three over
+
+87
+00:03:19.040 --> 00:03:21.900
+two is about one point seven one.
+
+88
+00:03:21.900 --> 00:03:24.330
+We measured one point seven zero.
+
+89
+00:03:24.680 --> 00:03:26.610
+But notice the condition
+
+90
+00:03:26.610 --> 00:03:29.890
+if the hash function spreads keys evenly.
+
+91
+00:03:29.890 --> 00:03:32.510
+Hash tables are constant time on average
+
+92
+00:03:32.510 --> 00:03:34.200
+not always.
+
+93
+00:03:34.550 --> 00:03:36.604
+In the worst case every key
+
+94
+00:03:36.680 --> 00:03:38.220
+lands in one chain
+
+95
+00:03:38.220 --> 00:03:40.153
+and a lookup walks them all.
+
+96
+00:03:40.220 --> 00:03:41.795
+With the add-the-letters
+
+97
+00:03:41.860 --> 00:03:43.193
+hash from last time
+
+98
+00:03:43.260 --> 00:03:45.341
+seven hundred twenty anagrams meant
+
+99
+00:03:45.400 --> 00:03:47.260
+a chain of seven hundred twenty.
+
+100
+00:03:47.260 --> 00:03:49.260
+With a polynomial hash
+
+101
+00:03:49.260 --> 00:03:51.110
+the longest chain was four.
+
+102
+00:03:51.690 --> 00:03:53.274
+Two things can go wrong.
+
+103
+00:03:53.340 --> 00:03:55.426
+The first is a hash function
+
+104
+00:03:55.500 --> 00:03:56.960
+that does not spread
+
+105
+00:03:56.960 --> 00:03:58.930
+you have seen what that does.
+
+106
+00:03:59.280 --> 00:04:02.510
+The second is a table that is too small.
+
+107
+00:04:02.510 --> 00:04:05.430
+The load factor grows with every insertion
+
+108
+00:04:05.430 --> 00:04:07.366
+and so does the chain length.
+
+109
+00:04:07.430 --> 00:04:09.772
+Next time we'll look at how a table that
+
+110
+00:04:09.830 --> 00:04:12.160
+has filled up makes itself bigger.
+
+111
+00:04:12.510 --> 00:04:14.660
+Chains do have one advantage
+
+112
+00:04:14.660 --> 00:04:17.260
+the load factor can go above one
+
+113
+00:04:17.260 --> 00:04:18.600
+and nothing breaks.
+
+114
+00:04:18.600 --> 00:04:20.910
+The cost just grows gently.
+
+115
+00:04:21.490 --> 00:04:22.740
+To sum up.
+
+116
+00:04:22.740 --> 00:04:24.900
+Each slot holds a chain
+
+117
+00:04:24.900 --> 00:04:27.890
+and every operation touches one chain.
+
+118
+00:04:28.240 --> 00:04:32.562
+The expected cost is constant if the hash spreads
+
+119
+00:04:32.650 --> 00:04:35.000
+keys and the load factor stays small.
+
+120
+00:04:35.350 --> 00:04:38.620
+Next, a different idea: no chains at all.
+
+121
+00:04:38.620 --> 00:04:41.550
+If a slot is taken, look in the next one.
+
+122
+00:04:42.177 --> 00:04:44.617
+Now the chained map in Java.
+
+123
+00:04:45.197 --> 00:04:48.287
+A chain in Java is a singly linked list
+
+124
+00:04:48.287 --> 00:04:49.587
+the one from Chapter two.
+
+125
+00:04:49.587 --> 00:04:52.207
+Each node holds a key, a value
+
+126
+00:04:52.207 --> 00:04:53.317
+and the next node.
+
+127
+00:04:53.667 --> 00:04:56.897
+The table is an array of first nodes.
+
+128
+00:04:56.897 --> 00:05:00.360
+A null means that the slot has no chain yet.
+
+129
+00:05:00.437 --> 00:05:02.061
+Java will not create an array
+
+130
+00:05:02.117 --> 00:05:04.997
+of generic nodes directly, so we cast it
+
+131
+00:05:04.997 --> 00:05:06.707
+and silence the warning.
+
+132
+00:05:07.287 --> 00:05:09.257
+Put computes the hash code
+
+133
+00:05:09.257 --> 00:05:10.897
+compresses it with floor mod
+
+134
+00:05:10.897 --> 00:05:12.377
+and walks down the chain
+
+135
+00:05:12.377 --> 00:05:15.047
+counting comparisons with equals.
+
+136
+00:05:15.397 --> 00:05:18.787
+If a node has the key, we replace its value.
+
+137
+00:05:18.787 --> 00:05:20.347
+If we reach the end
+
+138
+00:05:20.347 --> 00:05:22.797
+we add a new node after the last one.
+
+139
+00:05:23.147 --> 00:05:26.707
+Get is the same walk, without the add.
+
+140
+00:05:27.287 --> 00:05:30.237
+The output is exactly the same as in Python
+
+141
+00:05:30.237 --> 00:05:31.557
+line by line
+
+142
+00:05:31.557 --> 00:05:34.357
+because both maps use the same hash codes
+
+143
+00:05:34.357 --> 00:05:36.727
+an integer hashes to itself.
+
+144
+00:05:37.077 --> 00:05:40.787
+Slot two holds forty-four, twenty-three
+
+145
+00:05:40.787 --> 00:05:41.787
+sixteen.
+
+146
+00:05:41.787 --> 00:05:45.067
+Load factor one point four three.
+
+147
+00:05:45.067 --> 00:05:47.437
+Seventeen comparisons to find every key.
+
+148
+00:05:47.787 --> 00:05:49.361
+The anagram experiment gives
+
+149
+00:05:49.417 --> 00:05:50.792
+the same numbers too
+
+150
+00:05:50.857 --> 00:05:52.340
+one chain of seven hundred
+
+151
+00:05:52.397 --> 00:05:53.971
+twenty for the sum hash
+
+152
+00:05:54.037 --> 00:05:56.371
+a longest chain of four for
+
+153
+00:05:56.457 --> 00:05:57.827
+the polynomial one.
+
+154
+00:05:58.407 --> 00:06:00.010
+In the standard library
+
+155
+00:06:00.077 --> 00:06:01.701
+Java's hash map is a separate
+
+156
+00:06:01.757 --> 00:06:02.777
+chaining table.
+
+157
+00:06:02.777 --> 00:06:04.537
+It is an array of nodes
+
+158
+00:06:04.537 --> 00:06:08.077
+and each node holds the hash code, the key
+
+159
+00:06:08.077 --> 00:06:11.367
+the value and the next node, just like ours.
+
+160
+00:06:11.717 --> 00:06:14.387
+One difference: since Java eight
+
+161
+00:06:14.387 --> 00:06:16.047
+when a chain gets long
+
+162
+00:06:16.047 --> 00:06:18.543
+the map turns it into a balanced tree.
+
+163
+00:06:18.607 --> 00:06:20.075
+We will come back to this in
+
+164
+00:06:20.127 --> 00:06:21.917
+the video on load factors.
+
+165
+00:06:22.497 --> 00:06:24.867
+Get walks the chain with equals
+
+166
+00:06:24.867 --> 00:06:26.977
+and returns the value, or null.
+
+167
+00:06:27.327 --> 00:06:29.497
+Null is ambiguous in Java
+
+168
+00:06:29.497 --> 00:06:30.897
+it can mean missing
+
+169
+00:06:30.897 --> 00:06:33.597
+or a key stored with a null value.
+
+170
+00:06:33.597 --> 00:06:36.096
+The standard map has the same ambiguity
+
+171
+00:06:36.157 --> 00:06:38.393
+and offers a method called contains
+
+172
+00:06:38.457 --> 00:06:40.247
+key to tell them apart.
+
+173
+00:06:40.827 --> 00:06:42.567
+Remove keeps the previous
+
+174
+00:06:42.637 --> 00:06:43.957
+node while it walks
+
+175
+00:06:43.957 --> 00:06:46.456
+so that it can unlink the node it finds
+
+176
+00:06:46.517 --> 00:06:48.980
+the previous node's next becomes
+
+177
+00:06:49.057 --> 00:06:51.187
+the next of the removed node.
+
+178
+00:06:51.537 --> 00:06:53.867
+If the node is first in the chain
+
+179
+00:06:53.867 --> 00:06:56.367
+the table slot itself is updated.
+
+180
+00:06:56.367 --> 00:06:59.367
+This is the pointer rewiring of Chapter two
+
+181
+00:06:59.367 --> 00:07:01.217
+and no other chain is touched.
+
+182
+00:07:01.797 --> 00:07:03.487
+Two mistakes to avoid.
+
+183
+00:07:03.487 --> 00:07:05.747
+Compare keys with equals
+
+184
+00:07:05.747 --> 00:07:07.688
+not with the double equals sign
+
+185
+00:07:07.747 --> 00:07:09.537
+two equal strings built at different
+
+186
+00:07:09.587 --> 00:07:11.517
+times are different objects.
+
+187
+00:07:11.867 --> 00:07:14.426
+And update, do not add
+
+188
+00:07:14.537 --> 00:07:16.444
+putting a key that is already in the
+
+189
+00:07:16.497 --> 00:07:18.677
+chain must replace its value
+
+190
+00:07:18.677 --> 00:07:20.107
+and leave the size alone.
+
+191
+00:07:20.687 --> 00:07:23.437
+To recap: an array of linked lists
+
+192
+00:07:23.437 --> 00:07:26.377
+and every operation touches only one chain.
+
+193
+00:07:26.377 --> 00:07:28.647
+Next, open addressing.
+

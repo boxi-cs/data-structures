@@ -1,0 +1,818 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:05.470
+Every insertion makes the table fuller.
+
+2
+00:00:05.470 --> 00:00:07.090
+Chains get longer.
+
+3
+00:00:07.090 --> 00:00:09.137
+Probe sequences get longer.
+
+4
+00:00:09.210 --> 00:00:10.909
+Sooner or later the table is
+
+5
+00:00:10.970 --> 00:00:12.500
+too small for its keys.
+
+6
+00:00:12.850 --> 00:00:14.120
+What should it do?
+
+7
+00:00:14.120 --> 00:00:16.500
+The same thing a dynamic array does
+
+8
+00:00:16.500 --> 00:00:17.660
+build a bigger one
+
+9
+00:00:17.660 --> 00:00:19.250
+and move everything over.
+
+10
+00:00:19.830 --> 00:00:21.901
+In this last video on hashing we'll
+
+11
+00:00:21.960 --> 00:00:23.708
+see what the load factor measures
+
+12
+00:00:23.760 --> 00:00:25.164
+how a table grows without
+
+13
+00:00:25.220 --> 00:00:26.725
+losing a single key
+
+14
+00:00:26.800 --> 00:00:29.076
+and why a put is still constant
+
+15
+00:00:29.140 --> 00:00:30.270
+time on average.
+
+16
+00:00:30.850 --> 00:00:33.377
+The load factor is the number of entries
+
+17
+00:00:33.440 --> 00:00:35.940
+divided by the number of slots.
+
+18
+00:00:35.940 --> 00:00:38.620
+Ten keys in seven slots
+
+19
+00:00:38.620 --> 00:00:40.290
+one point four three.
+
+20
+00:00:40.640 --> 00:00:44.310
+It is the number that controls the cost.
+
+21
+00:00:44.310 --> 00:00:45.250
+For chaining
+
+22
+00:00:45.250 --> 00:00:47.490
+it is the average length of a chain.
+
+23
+00:00:47.490 --> 00:00:49.070
+For open addressing
+
+24
+00:00:49.070 --> 00:00:51.152
+it is the fraction of slots in use
+
+25
+00:00:51.210 --> 00:00:53.347
+and we saw that the cost of a miss
+
+26
+00:00:53.410 --> 00:00:56.040
+explodes as it nears one.
+
+27
+00:00:56.390 --> 00:00:59.220
+So every hash table has a threshold
+
+28
+00:00:59.220 --> 00:01:01.620
+the largest load factor it allows.
+
+29
+00:01:01.620 --> 00:01:04.020
+When an insertion crosses it
+
+30
+00:01:04.020 --> 00:01:05.510
+the table grows.
+
+31
+00:01:06.090 --> 00:01:08.657
+Our chained map starts with seven buckets
+
+32
+00:01:08.720 --> 00:01:10.850
+and a threshold of three quarters.
+
+33
+00:01:11.200 --> 00:01:13.870
+Insert keys one by one.
+
+34
+00:01:13.870 --> 00:01:15.950
+At the sixth key
+
+35
+00:01:15.950 --> 00:01:18.622
+six over seven crosses three quarters
+
+36
+00:01:18.690 --> 00:01:20.896
+and the table grows from seven
+
+37
+00:01:20.970 --> 00:01:23.150
+slots to seventeen
+
+38
+00:01:23.150 --> 00:01:26.200
+the next prime after twice seven.
+
+39
+00:01:26.550 --> 00:01:29.200
+At thirteen entries it grows again
+
+40
+00:01:29.200 --> 00:01:30.360
+to thirty-seven.
+
+41
+00:01:30.360 --> 00:01:33.120
+At twenty-eight, to seventy-nine.
+
+42
+00:01:33.120 --> 00:01:36.030
+At sixty, to one hundred sixty-three.
+
+43
+00:01:36.380 --> 00:01:39.036
+Each time, the size roughly doubles
+
+44
+00:01:39.110 --> 00:01:40.550
+so the load factor drops
+
+45
+00:01:40.610 --> 00:01:41.850
+back to about a third
+
+46
+00:01:41.850 --> 00:01:43.700
+and the cycle starts again.
+
+47
+00:01:44.280 --> 00:01:46.790
+Growing is not just copying.
+
+48
+00:01:46.790 --> 00:01:49.400
+Every entry has to be hashed again.
+
+49
+00:01:49.750 --> 00:01:52.960
+Remember: the index of a key is its hash
+
+50
+00:01:53.040 --> 00:01:55.540
+code modulo the table size.
+
+51
+00:01:55.540 --> 00:01:58.460
+Forty-four is in slot two of seven.
+
+52
+00:01:58.460 --> 00:02:00.560
+In seventeen slots
+
+53
+00:02:00.560 --> 00:02:02.430
+forty-four belongs in slot ten.
+
+54
+00:02:02.780 --> 00:02:04.650
+If we copied the old array into
+
+55
+00:02:04.710 --> 00:02:06.070
+the new one as it is
+
+56
+00:02:06.070 --> 00:02:09.430
+a lookup would go to slot ten, find nothing
+
+57
+00:02:09.430 --> 00:02:11.890
+and report that forty-four is missing.
+
+58
+00:02:11.890 --> 00:02:13.650
+The entry would be there
+
+59
+00:02:13.650 --> 00:02:15.540
+in the wrong place, for ever.
+
+60
+00:02:15.890 --> 00:02:18.960
+So a rehash visits every entry
+
+61
+00:02:18.960 --> 00:02:21.140
+computes its index in the new table
+
+62
+00:02:21.140 --> 00:02:22.340
+and inserts it.
+
+63
+00:02:22.340 --> 00:02:24.930
+That is why it is called rehashing.
+
+64
+00:02:25.510 --> 00:02:28.080
+A rehash touches every entry
+
+65
+00:02:28.080 --> 00:02:30.420
+so one put can cost a lot.
+
+66
+00:02:30.420 --> 00:02:33.920
+Yet puts are constant time on average.
+
+67
+00:02:33.920 --> 00:02:36.150
+You have seen this argument before.
+
+68
+00:02:36.500 --> 00:02:38.736
+The table grows geometrically.
+
+69
+00:02:38.810 --> 00:02:40.898
+Each rehash moves at most the
+
+70
+00:02:40.970 --> 00:02:42.028
+entries that are present
+
+71
+00:02:42.070 --> 00:02:44.017
+and the previous rehash happened when
+
+72
+00:02:44.070 --> 00:02:46.390
+the table was less than half as big.
+
+73
+00:02:46.390 --> 00:02:47.610
+Add them all up
+
+74
+00:02:47.610 --> 00:02:50.740
+fewer than two moves per entry, in total.
+
+75
+00:02:51.090 --> 00:02:52.320
+We counted it.
+
+76
+00:02:52.320 --> 00:02:54.979
+A thousand puts, seven rehashes
+
+77
+00:02:55.060 --> 00:02:56.308
+nine hundred eighty-four
+
+78
+00:02:56.360 --> 00:02:57.800
+entries moved in total.
+
+79
+00:02:57.800 --> 00:02:59.730
+Not even one move per put.
+
+80
+00:03:00.080 --> 00:03:02.529
+This is the same argument as the dynamic
+
+81
+00:03:02.590 --> 00:03:04.350
+array in the first chapter
+
+82
+00:03:04.350 --> 00:03:06.550
+occasional expensive operations
+
+83
+00:03:06.550 --> 00:03:09.120
+paid for by the many cheap ones.
+
+84
+00:03:09.700 --> 00:03:11.350
+Where should the threshold be?
+
+85
+00:03:11.350 --> 00:03:12.456
+It is a trade.
+
+86
+00:03:12.530 --> 00:03:15.036
+A low threshold keeps lookups fast
+
+87
+00:03:15.110 --> 00:03:17.870
+but wastes memory on empty slots
+
+88
+00:03:17.870 --> 00:03:19.660
+and rehashes more often.
+
+89
+00:03:20.010 --> 00:03:22.699
+A high threshold saves memory but
+
+90
+00:03:22.780 --> 00:03:24.900
+makes every operation slower
+
+91
+00:03:24.900 --> 00:03:28.063
+and for open addressing it is dangerous.
+
+92
+00:03:28.140 --> 00:03:30.493
+That is why chaining tables usually
+
+93
+00:03:30.560 --> 00:03:32.000
+use about three quarters
+
+94
+00:03:32.000 --> 00:03:34.890
+and probing tables stay below a half.
+
+95
+00:03:35.470 --> 00:03:37.880
+Three mistakes to avoid.
+
+96
+00:03:37.880 --> 00:03:40.750
+Copying instead of rehashing, as we saw.
+
+97
+00:03:40.820 --> 00:03:42.925
+Growing by a constant amount
+
+98
+00:03:43.000 --> 00:03:44.220
+instead of a factor
+
+99
+00:03:44.220 --> 00:03:46.240
+which makes puts linear on average
+
+100
+00:03:46.240 --> 00:03:48.070
+as in the first chapter.
+
+101
+00:03:48.420 --> 00:03:50.669
+And forgetting that tombstones count
+
+102
+00:03:50.730 --> 00:03:52.848
+a table full of tombstones needs a
+
+103
+00:03:52.910 --> 00:03:55.220
+rebuild even if few keys remain.
+
+104
+00:03:55.800 --> 00:03:56.890
+To sum up.
+
+105
+00:03:56.890 --> 00:03:59.930
+The load factor is entries over slots.
+
+106
+00:03:59.930 --> 00:04:01.770
+When it crosses the threshold
+
+107
+00:04:01.770 --> 00:04:05.200
+build a bigger table and rehash every entry.
+
+108
+00:04:05.550 --> 00:04:07.996
+Because the table grows geometrically
+
+109
+00:04:08.060 --> 00:04:09.447
+the rebuilds cost constant
+
+110
+00:04:09.500 --> 00:04:11.430
+time per put on average.
+
+111
+00:04:11.780 --> 00:04:13.530
+That completes maps.
+
+112
+00:04:13.530 --> 00:04:15.810
+Hashing gives constant time on average
+
+113
+00:04:15.810 --> 00:04:17.135
+but no order
+
+114
+00:04:17.230 --> 00:04:18.823
+the balanced trees of the previous
+
+115
+00:04:18.870 --> 00:04:20.770
+chapter kept the keys sorted
+
+116
+00:04:20.770 --> 00:04:23.090
+at a cost of log n.
+
+117
+00:04:23.090 --> 00:04:26.370
+Next, a structure for finding the smallest
+
+118
+00:04:26.370 --> 00:04:27.380
+the heap.
+
+119
+00:04:28.007 --> 00:04:30.487
+Now rehashing in Python.
+
+120
+00:04:31.067 --> 00:04:33.937
+At the end of every put that added a key
+
+121
+00:04:33.937 --> 00:04:35.497
+we check the load factor.
+
+122
+00:04:35.557 --> 00:04:37.442
+If the size is above the threshold
+
+123
+00:04:37.497 --> 00:04:38.827
+times the capacity
+
+124
+00:04:38.897 --> 00:04:41.082
+we rehash into the next prime
+
+125
+00:04:41.157 --> 00:04:43.347
+after twice the capacity.
+
+126
+00:04:43.697 --> 00:04:46.632
+A threshold of none turns resizing off.
+
+127
+00:04:46.707 --> 00:04:48.653
+We used that to show the long chains
+
+128
+00:04:48.707 --> 00:04:50.217
+in the earlier videos.
+
+129
+00:04:50.797 --> 00:04:52.323
+The rehash first records
+
+130
+00:04:52.387 --> 00:04:53.947
+what it is about to do
+
+131
+00:04:53.947 --> 00:04:55.627
+how many entries there are
+
+132
+00:04:55.627 --> 00:04:57.327
+what the old capacity was
+
+133
+00:04:57.327 --> 00:04:59.557
+and what the new capacity is.
+
+134
+00:04:59.907 --> 00:05:01.944
+Then it makes empty buckets
+
+135
+00:05:02.017 --> 00:05:04.131
+and for every old entry computes
+
+136
+00:05:04.197 --> 00:05:06.897
+the index again, with the new capacity
+
+137
+00:05:06.897 --> 00:05:07.757
+and appends it.
+
+138
+00:05:07.757 --> 00:05:11.107
+A counter keeps the number of entries moved.
+
+139
+00:05:11.687 --> 00:05:12.977
+A thousand puts
+
+140
+00:05:12.977 --> 00:05:15.117
+starting from seven buckets.
+
+141
+00:05:15.117 --> 00:05:18.477
+The first rehash happens at six entries
+
+142
+00:05:18.477 --> 00:05:20.237
+seven to seventeen.
+
+143
+00:05:20.237 --> 00:05:23.617
+Then thirteen entries, to thirty-seven.
+
+144
+00:05:23.617 --> 00:05:25.607
+Twenty-eight, to seventy-nine.
+
+145
+00:05:25.957 --> 00:05:27.899
+Seven rehashes in all
+
+146
+00:05:27.987 --> 00:05:29.416
+ending at one thousand three
+
+147
+00:05:29.467 --> 00:05:31.067
+hundred sixty-one buckets.
+
+148
+00:05:31.067 --> 00:05:33.287
+Nine hundred eighty-four entries moved
+
+149
+00:05:33.287 --> 00:05:35.487
+which is point nine eight per put.
+
+150
+00:05:35.487 --> 00:05:38.437
+The final load factor is point seven three.
+
+151
+00:05:38.787 --> 00:05:40.588
+A test pins these numbers
+
+152
+00:05:40.657 --> 00:05:42.570
+and also checks that the work stays below
+
+153
+00:05:42.617 --> 00:05:44.507
+one and a half moves per put.
+
+154
+00:05:45.087 --> 00:05:47.357
+Python's own dictionary does the same
+
+155
+00:05:47.357 --> 00:05:48.497
+with its own numbers.
+
+156
+00:05:48.497 --> 00:05:50.237
+Add keys one at a time
+
+157
+00:05:50.237 --> 00:05:52.557
+and watch the dictionary's memory size
+
+158
+00:05:52.557 --> 00:05:56.517
+it changes when the first, sixth, eleventh
+
+159
+00:05:56.517 --> 00:05:57.237
+twenty-second
+
+160
+00:05:57.237 --> 00:05:59.927
+forty-third and eighty-sixth key arrives.
+
+161
+00:06:00.277 --> 00:06:02.547
+The table has eight slots at first
+
+162
+00:06:02.547 --> 00:06:05.487
+and five of them are usable, two thirds.
+
+163
+00:06:05.487 --> 00:06:08.587
+When the sixth key comes, it grows
+
+164
+00:06:08.587 --> 00:06:10.927
+sixteen slots, ten usable.
+
+165
+00:06:10.927 --> 00:06:13.465
+Then thirty-two, with twenty-one usable.
+
+166
+00:06:13.527 --> 00:06:15.444
+Then sixty-four and one
+
+167
+00:06:15.527 --> 00:06:16.517
+hundred twenty-eight.
+
+168
+00:06:16.867 --> 00:06:19.088
+So CPython keeps its load
+
+169
+00:06:19.177 --> 00:06:22.558
+factor below two thirds, and when it grows
+
+170
+00:06:22.637 --> 00:06:24.068
+it roughly triples the number
+
+171
+00:06:24.117 --> 00:06:25.417
+of used entries
+
+172
+00:06:25.417 --> 00:06:27.347
+rounded up to a power of two.
+
+173
+00:06:27.697 --> 00:06:29.741
+Since Python three point seven
+
+174
+00:06:29.807 --> 00:06:31.446
+a dictionary also keeps its
+
+175
+00:06:31.507 --> 00:06:33.087
+keys in insertion order.
+
+176
+00:06:33.087 --> 00:06:35.627
+It stores the entries in a compact array
+
+177
+00:06:35.687 --> 00:06:37.322
+and the sparse table only
+
+178
+00:06:37.387 --> 00:06:39.097
+holds indexes into it.
+
+179
+00:06:39.677 --> 00:06:41.707
+If you know the final size
+
+180
+00:06:41.707 --> 00:06:43.674
+you can skip every rehash.
+
+181
+00:06:43.747 --> 00:06:45.546
+Start with a table big enough for the number
+
+182
+00:06:45.587 --> 00:06:47.847
+of entries divided by the threshold
+
+183
+00:06:47.847 --> 00:06:49.557
+rounded up to a prime.
+
+184
+00:06:49.907 --> 00:06:52.119
+For a thousand entries and a threshold
+
+185
+00:06:52.177 --> 00:06:53.655
+of three quarters
+
+186
+00:06:53.737 --> 00:06:55.874
+that is one thousand three hundred
+
+187
+00:06:55.937 --> 00:06:57.017
+sixty-one buckets.
+
+188
+00:06:57.077 --> 00:06:58.791
+The same thousand puts now
+
+189
+00:06:58.857 --> 00:07:00.957
+trigger no rehash at all
+
+190
+00:07:00.957 --> 00:07:02.707
+and move no entries.
+
+191
+00:07:03.287 --> 00:07:05.210
+Mistakes to avoid.
+
+192
+00:07:05.317 --> 00:07:07.297
+Forgetting to recompute the index
+
+193
+00:07:07.357 --> 00:07:09.447
+of each entry during a rehash.
+
+194
+00:07:09.517 --> 00:07:11.460
+Growing by a fixed number of slots
+
+195
+00:07:11.517 --> 00:07:13.477
+instead of by a factor.
+
+196
+00:07:13.477 --> 00:07:16.177
+And counting only live entries
+
+197
+00:07:16.177 --> 00:07:18.287
+when tombstones fill the table.
+
+198
+00:07:18.867 --> 00:07:19.977
+To recap
+
+199
+00:07:19.977 --> 00:07:22.737
+check the load factor after every put
+
+200
+00:07:22.737 --> 00:07:25.508
+rehash every entry into a bigger table
+
+201
+00:07:25.577 --> 00:07:27.599
+and the cost per put stays
+
+202
+00:07:27.677 --> 00:07:29.517
+constant on average.
+
+203
+00:07:29.517 --> 00:07:31.557
+That ends the hash tables.
+
+204
+00:07:31.557 --> 00:07:33.707
+Next: heaps.
+

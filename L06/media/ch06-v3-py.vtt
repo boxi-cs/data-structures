@@ -1,0 +1,970 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:04.845
+A two-four tree stays balanced
+
+2
+00:00:04.910 --> 00:00:06.270
+without rotations.
+
+3
+00:00:06.270 --> 00:00:09.630
+But a node with one, two, or three keys
+
+4
+00:00:09.630 --> 00:00:10.830
+and up to four children
+
+5
+00:00:10.830 --> 00:00:12.350
+is awkward to store.
+
+6
+00:00:12.350 --> 00:00:14.590
+It is a list of variable length
+
+7
+00:00:14.590 --> 00:00:15.940
+in every node.
+
+8
+00:00:16.290 --> 00:00:17.953
+What if we could draw the same tree
+
+9
+00:00:18.000 --> 00:00:20.240
+with ordinary binary nodes
+
+10
+00:00:20.240 --> 00:00:22.660
+each with one key and two children?
+
+11
+00:00:22.660 --> 00:00:25.170
+We can, with a colour.
+
+12
+00:00:25.750 --> 00:00:27.910
+This is the red-black tree.
+
+13
+00:00:28.260 --> 00:00:29.815
+We'll see how a two-four tree
+
+14
+00:00:29.870 --> 00:00:31.670
+becomes a binary tree
+
+15
+00:00:31.670 --> 00:00:34.130
+where the three red-black rules come from
+
+16
+00:00:34.130 --> 00:00:35.970
+how insertion works in this picture
+
+17
+00:00:35.970 --> 00:00:38.180
+and how tall the tree can get.
+
+18
+00:00:38.760 --> 00:00:41.030
+A two-node has one key.
+
+19
+00:00:41.030 --> 00:00:43.480
+It is simply one black node.
+
+20
+00:00:43.830 --> 00:00:46.100
+A three-node has two keys.
+
+21
+00:00:46.100 --> 00:00:49.140
+Write it as a black node with one red child
+
+22
+00:00:49.140 --> 00:00:51.230
+on the left or on the right.
+
+23
+00:00:51.580 --> 00:00:53.910
+A four-node has three keys.
+
+24
+00:00:53.910 --> 00:00:55.850
+Write it as a black node
+
+25
+00:00:55.850 --> 00:00:57.820
+with a red child on each side.
+
+26
+00:00:58.170 --> 00:01:00.080
+So a red node means
+
+27
+00:01:00.080 --> 00:01:03.460
+I am a key that shares my parent's node.
+
+28
+00:01:03.460 --> 00:01:06.610
+Everything black is the top of a node.
+
+29
+00:01:07.190 --> 00:01:08.880
+Now a whole tree.
+
+30
+00:01:08.880 --> 00:01:10.580
+Take this two-four tree
+
+31
+00:01:10.580 --> 00:01:13.540
+twenty alone on top, ten on the left
+
+32
+00:01:13.540 --> 00:01:16.350
+and thirty and forty together on the right.
+
+33
+00:01:16.700 --> 00:01:18.750
+Switch to the binary picture.
+
+34
+00:01:18.750 --> 00:01:20.530
+Twenty, black.
+
+35
+00:01:20.530 --> 00:01:22.730
+Ten, black.
+
+36
+00:01:22.730 --> 00:01:26.340
+Thirty, black, with forty as its red child.
+
+37
+00:01:26.920 --> 00:01:29.205
+The red-black rules can now be read
+
+38
+00:01:29.270 --> 00:01:30.950
+straight off the picture.
+
+39
+00:01:30.950 --> 00:01:32.257
+The root is black
+
+40
+00:01:32.330 --> 00:01:33.778
+because the root of the tree
+
+41
+00:01:33.830 --> 00:01:35.880
+is the top of a node.
+
+42
+00:01:36.230 --> 00:01:39.171
+A red node never has a red child.
+
+43
+00:01:39.260 --> 00:01:41.513
+A red node is a key inside
+
+44
+00:01:41.600 --> 00:01:42.680
+its parent's node
+
+45
+00:01:42.680 --> 00:01:45.350
+and a node has at most three keys.
+
+46
+00:01:45.700 --> 00:01:47.882
+Every path from the root down to
+
+47
+00:01:47.950 --> 00:01:49.738
+a missing child passes through the
+
+48
+00:01:49.790 --> 00:01:51.468
+same number of black nodes.
+
+49
+00:01:51.530 --> 00:01:53.519
+Each black node is one level
+
+50
+00:01:53.590 --> 00:01:54.640
+of the two-four tree
+
+51
+00:01:54.690 --> 00:01:56.707
+and all the leaves of a two-four
+
+52
+00:01:56.770 --> 00:01:58.700
+tree are at the same depth.
+
+53
+00:01:59.280 --> 00:02:00.370
+To insert
+
+54
+00:02:00.370 --> 00:02:03.210
+do an ordinary binary search tree insertion
+
+55
+00:02:03.210 --> 00:02:05.210
+and paint the new node red.
+
+56
+00:02:05.210 --> 00:02:07.200
+It joins its parent's node.
+
+57
+00:02:07.550 --> 00:02:10.820
+If the parent is black, the node had room
+
+58
+00:02:10.820 --> 00:02:12.510
+and we are done.
+
+59
+00:02:12.860 --> 00:02:14.850
+If the parent is red
+
+60
+00:02:14.850 --> 00:02:16.990
+we have two reds in a row
+
+61
+00:02:16.990 --> 00:02:18.710
+and we look at the uncle
+
+62
+00:02:18.710 --> 00:02:20.060
+the parent's sibling.
+
+63
+00:02:20.410 --> 00:02:22.336
+A red uncle means the two-four
+
+64
+00:02:22.400 --> 00:02:24.900
+node now has four keys.
+
+65
+00:02:24.900 --> 00:02:27.300
+Recolour the parent and the uncle black
+
+66
+00:02:27.300 --> 00:02:28.940
+and the grandparent red.
+
+67
+00:02:28.940 --> 00:02:31.380
+That is exactly a split
+
+68
+00:02:31.380 --> 00:02:34.330
+the middle key moves up into the next node.
+
+69
+00:02:34.680 --> 00:02:37.213
+A black uncle means the node is a three-node
+
+70
+00:02:37.270 --> 00:02:38.969
+written the wrong way round.
+
+71
+00:02:39.030 --> 00:02:41.008
+One or two rotations rewrite the
+
+72
+00:02:41.070 --> 00:02:42.990
+same node in the right shape.
+
+73
+00:02:42.990 --> 00:02:45.720
+The two-four tree does not change at all.
+
+74
+00:02:46.300 --> 00:02:50.390
+Insert ten, twenty, thirty.
+
+75
+00:02:50.390 --> 00:02:53.830
+Twenty is black, ten and thirty are red.
+
+76
+00:02:53.830 --> 00:02:56.450
+Thirty makes a red-red line
+
+77
+00:02:56.450 --> 00:02:59.070
+and one rotation rewrites it.
+
+78
+00:02:59.070 --> 00:03:00.590
+In the two-four tree
+
+79
+00:03:00.590 --> 00:03:03.180
+that was one four-node all along.
+
+80
+00:03:03.530 --> 00:03:05.080
+Insert forty.
+
+81
+00:03:05.080 --> 00:03:07.440
+The uncle is red.
+
+82
+00:03:07.440 --> 00:03:10.380
+Recolour, and the four-node splits.
+
+83
+00:03:10.380 --> 00:03:14.240
+Insert fifty, and a rotation.
+
+84
+00:03:14.240 --> 00:03:18.050
+Insert twenty-five, and another recolouring.
+
+85
+00:03:18.400 --> 00:03:23.370
+Six keys, two recolourings, two rotations
+
+86
+00:03:23.370 --> 00:03:25.880
+and a tree of four levels.
+
+87
+00:03:26.460 --> 00:03:28.198
+Deletion is the two-four
+
+88
+00:03:28.270 --> 00:03:29.830
+deletion in disguise.
+
+89
+00:03:29.830 --> 00:03:31.770
+Removing a red leaf is free
+
+90
+00:03:31.770 --> 00:03:34.820
+it was only one key inside a bigger node.
+
+91
+00:03:35.170 --> 00:03:36.776
+Removing a black node can
+
+92
+00:03:36.840 --> 00:03:39.640
+leave a node empty, an underflow.
+
+93
+00:03:39.640 --> 00:03:41.471
+Then there are the same two repairs.
+
+94
+00:03:41.520 --> 00:03:43.881
+A transfer from a sibling is a
+
+95
+00:03:43.960 --> 00:03:45.780
+recolouring and a rotation.
+
+96
+00:03:45.780 --> 00:03:48.120
+A fuse is a recolouring
+
+97
+00:03:48.120 --> 00:03:51.250
+and it may push the shortage one level up.
+
+98
+00:03:51.830 --> 00:03:53.400
+Pause and predict.
+
+99
+00:03:53.400 --> 00:03:55.229
+In the first video of this chapter
+
+100
+00:03:55.280 --> 00:03:57.291
+we inserted the numbers one to a thousand
+
+101
+00:03:57.340 --> 00:03:59.740
+in order into an AVL tree
+
+102
+00:03:59.740 --> 00:04:01.910
+and got ten levels.
+
+103
+00:04:02.260 --> 00:04:05.390
+How many levels will a red-black tree have?
+
+104
+00:04:05.390 --> 00:04:06.850
+Ten, again?
+
+105
+00:04:06.850 --> 00:04:07.830
+Seventeen?
+
+106
+00:04:07.830 --> 00:04:09.500
+Or a thousand?
+
+107
+00:04:09.850 --> 00:04:11.140
+Seventeen.
+
+108
+00:04:11.140 --> 00:04:13.060
+Taller than the AVL tree
+
+109
+00:04:13.060 --> 00:04:14.651
+but still logarithmic.
+
+110
+00:04:14.720 --> 00:04:17.730
+A red-black tree promises at most two times
+
+111
+00:04:17.800 --> 00:04:20.520
+log base two of n plus one levels
+
+112
+00:04:20.520 --> 00:04:23.210
+and the AVL tree promises less.
+
+113
+00:04:23.790 --> 00:04:25.980
+Where does that bound come from?
+
+114
+00:04:25.980 --> 00:04:28.411
+Count the black nodes on any path.
+
+115
+00:04:28.480 --> 00:04:30.044
+That is the number of levels
+
+116
+00:04:30.100 --> 00:04:31.265
+of the two-four tree
+
+117
+00:04:31.320 --> 00:04:34.858
+and a two-four tree with n keys has at most
+
+118
+00:04:34.940 --> 00:04:37.910
+log base two of n plus one levels.
+
+119
+00:04:38.260 --> 00:04:40.010
+Between two black nodes there
+
+120
+00:04:40.070 --> 00:04:42.250
+can be at most one red node
+
+121
+00:04:42.250 --> 00:04:44.713
+because two reds in a row are not allowed.
+
+122
+00:04:44.770 --> 00:04:47.399
+So a path is at most twice as
+
+123
+00:04:47.490 --> 00:04:48.700
+long as its black count.
+
+124
+00:04:48.750 --> 00:04:51.133
+The height is at most two times
+
+125
+00:04:51.210 --> 00:04:53.980
+log base two of n plus one.
+
+126
+00:04:54.330 --> 00:04:57.280
+For a hundred thousand keys, in order
+
+127
+00:04:57.280 --> 00:04:59.860
+the AVL tree has seventeen levels
+
+128
+00:04:59.860 --> 00:05:02.300
+and the red-black tree thirty-one
+
+129
+00:05:02.300 --> 00:05:04.290
+below the limit of thirty-three.
+
+130
+00:05:04.640 --> 00:05:07.550
+What does the red-black tree get in return?
+
+131
+00:05:07.550 --> 00:05:08.650
+Cheaper updates.
+
+132
+00:05:08.650 --> 00:05:11.370
+An insertion needs at most two rotations
+
+133
+00:05:11.370 --> 00:05:13.520
+and a deletion at most three.
+
+134
+00:05:14.100 --> 00:05:15.091
+To sum up.
+
+135
+00:05:15.190 --> 00:05:17.465
+A red-black tree is a two-four tree
+
+136
+00:05:17.530 --> 00:05:19.379
+written with binary nodes.
+
+137
+00:05:19.450 --> 00:05:21.044
+A black node and its red
+
+138
+00:05:21.110 --> 00:05:23.260
+children form one node.
+
+139
+00:05:23.610 --> 00:05:27.460
+Red uncle: a split, done with a recolouring.
+
+140
+00:05:27.460 --> 00:05:30.160
+Black uncle: rewrite the node
+
+141
+00:05:30.160 --> 00:05:31.690
+with rotations.
+
+142
+00:05:32.040 --> 00:05:35.950
+The height is at most twice log n.
+
+143
+00:05:35.950 --> 00:05:38.610
+And Java's tree map is a red-black tree.
+
+144
+00:05:38.610 --> 00:05:40.040
+Let's see the code.
+
+145
+00:05:40.667 --> 00:05:43.057
+Here is the red-black tree in Python
+
+146
+00:05:43.057 --> 00:05:44.848
+with insertion, deletion
+
+147
+00:05:44.917 --> 00:05:46.404
+and a function that converts
+
+148
+00:05:46.457 --> 00:05:48.467
+it back to a two-four tree.
+
+149
+00:05:49.047 --> 00:05:53.097
+A node has a key, a colour, two children
+
+150
+00:05:53.097 --> 00:05:54.497
+and a link to its parent.
+
+151
+00:05:54.497 --> 00:05:57.057
+A missing child counts as black
+
+152
+00:05:57.057 --> 00:05:59.207
+so color of handles None.
+
+153
+00:05:59.557 --> 00:06:02.287
+The tree counts rotations and recolourings
+
+154
+00:06:02.287 --> 00:06:04.077
+so the demo can report them.
+
+155
+00:06:04.657 --> 00:06:07.647
+Insert walks down like any search tree
+
+156
+00:06:07.647 --> 00:06:09.727
+and attaches a new node, red.
+
+157
+00:06:09.727 --> 00:06:12.617
+Then fix insert repairs it.
+
+158
+00:06:12.967 --> 00:06:14.797
+While the parent is red
+
+159
+00:06:14.797 --> 00:06:15.857
+we look at the uncle.
+
+160
+00:06:15.857 --> 00:06:18.297
+A red uncle: recolour
+
+161
+00:06:18.297 --> 00:06:20.287
+and continue from the grandparent.
+
+162
+00:06:20.637 --> 00:06:22.247
+A black uncle
+
+163
+00:06:22.247 --> 00:06:25.267
+if the new node is on the inside
+
+164
+00:06:25.267 --> 00:06:27.387
+rotate the parent first
+
+165
+00:06:27.387 --> 00:06:29.287
+then rotate the grandparent
+
+166
+00:06:29.287 --> 00:06:30.527
+and swap two colours.
+
+167
+00:06:30.527 --> 00:06:31.677
+We are done.
+
+168
+00:06:32.027 --> 00:06:34.827
+In the end, the root is painted black.
+
+169
+00:06:35.407 --> 00:06:37.608
+Deletion first removes the node
+
+170
+00:06:37.677 --> 00:06:39.338
+using the successor if there
+
+171
+00:06:39.397 --> 00:06:40.357
+are two children.
+
+172
+00:06:40.357 --> 00:06:43.657
+If a black node left, fix remove runs
+
+173
+00:06:43.657 --> 00:06:46.447
+because one black is missing on that path.
+
+174
+00:06:46.797 --> 00:06:49.227
+Its cases are the two-four repairs.
+
+175
+00:06:49.227 --> 00:06:52.207
+A black sibling with a red child: rotate
+
+176
+00:06:52.207 --> 00:06:53.267
+which is a transfer.
+
+177
+00:06:53.267 --> 00:06:55.927
+A black sibling with no red child
+
+178
+00:06:55.927 --> 00:06:58.067
+recolour it red, and push the shortage up
+
+179
+00:06:58.067 --> 00:06:58.987
+which is a fuse.
+
+180
+00:06:58.987 --> 00:07:02.197
+A red sibling: rotate it away first.
+
+181
+00:07:02.777 --> 00:07:04.366
+to two four reads the tree
+
+182
+00:07:04.427 --> 00:07:05.795
+as a two-four tree.
+
+183
+00:07:05.867 --> 00:07:07.586
+A black node gathers its red
+
+184
+00:07:07.647 --> 00:07:09.065
+children into one node
+
+185
+00:07:09.127 --> 00:07:10.487
+and the black trees hanging
+
+186
+00:07:10.527 --> 00:07:12.657
+below become its children.
+
+187
+00:07:13.007 --> 00:07:15.027
+Our tests convert hundreds of
+
+188
+00:07:15.097 --> 00:07:16.439
+random red-black trees
+
+189
+00:07:16.497 --> 00:07:17.789
+and check that every result
+
+190
+00:07:17.837 --> 00:07:19.297
+is a valid two-four tree
+
+191
+00:07:19.297 --> 00:07:20.607
+with the same keys.
+
+192
+00:07:21.187 --> 00:07:29.697
+Insert ten, twenty, thirty, forty, fifty
+
+193
+00:07:29.697 --> 00:07:30.817
+twenty-five.
+
+194
+00:07:30.817 --> 00:07:34.057
+Thirty and fifty are rotations.
+
+195
+00:07:34.057 --> 00:07:37.187
+Forty and twenty-five are recolourings.
+
+196
+00:07:37.537 --> 00:07:39.287
+Next to each shape
+
+197
+00:07:39.287 --> 00:07:42.147
+the same tree as a two-four tree.
+
+198
+00:07:42.147 --> 00:07:45.137
+Notice that a rotation leaves it unchanged.
+
+199
+00:07:45.487 --> 00:07:48.597
+And a thousand twenty-three keys, in order
+
+200
+00:07:48.597 --> 00:07:50.287
+give a height of eighteen.
+
+201
+00:07:50.867 --> 00:07:54.137
+Now remove ten, and then twenty
+
+202
+00:07:54.137 --> 00:07:55.657
+from the six-key tree.
+
+203
+00:07:55.657 --> 00:07:57.437
+In the two-four view
+
+204
+00:07:57.437 --> 00:07:59.417
+removing ten empties a leaf
+
+205
+00:07:59.417 --> 00:08:01.737
+and its sibling has two keys.
+
+206
+00:08:01.737 --> 00:08:04.277
+That is a transfer: twenty comes down
+
+207
+00:08:04.277 --> 00:08:05.707
+and twenty-five goes up.
+
+208
+00:08:06.057 --> 00:08:08.987
+Removing twenty empties a leaf again
+
+209
+00:08:08.987 --> 00:08:11.867
+but now the sibling has one key only.
+
+210
+00:08:11.867 --> 00:08:13.787
+That is a fuse
+
+211
+00:08:13.787 --> 00:08:16.337
+twenty-five comes down to join thirty.
+
+212
+00:08:16.687 --> 00:08:18.342
+The red-black tree did it with
+
+213
+00:08:18.397 --> 00:08:20.257
+rotations and recolourings.
+
+214
+00:08:20.257 --> 00:08:22.607
+The two-four picture tells you why.
+
+215
+00:08:23.187 --> 00:08:25.177
+Two tests matter most.
+
+216
+00:08:25.177 --> 00:08:28.196
+One runs random inserts and removes
+
+217
+00:08:28.277 --> 00:08:29.640
+three hundred operations
+
+218
+00:08:29.697 --> 00:08:31.477
+on each of forty trees
+
+219
+00:08:31.477 --> 00:08:34.347
+and calls check invariants after every step.
+
+220
+00:08:34.697 --> 00:08:37.040
+The other converts random red-black
+
+221
+00:08:37.107 --> 00:08:39.187
+trees into two-four trees
+
+222
+00:08:39.187 --> 00:08:42.407
+and checks every result: node sizes
+
+223
+00:08:42.407 --> 00:08:44.687
+child counts, leaf depth
+
+224
+00:08:44.687 --> 00:08:46.327
+and the keys in order.
+
+225
+00:08:46.327 --> 00:08:49.097
+That is the correspondence, tested.
+
+226
+00:08:49.677 --> 00:08:51.494
+Common mistakes.
+
+227
+00:08:51.607 --> 00:08:53.200
+Forgetting to paint the root black
+
+228
+00:08:53.247 --> 00:08:55.277
+at the end of fix insert.
+
+229
+00:08:55.627 --> 00:08:58.777
+Forgetting that a missing child is black
+
+230
+00:08:58.777 --> 00:09:01.347
+and calling dot color on None.
+
+231
+00:09:01.697 --> 00:09:03.586
+Forgetting to update the parent
+
+232
+00:09:03.647 --> 00:09:05.587
+links in a rotation.
+
+233
+00:09:05.587 --> 00:09:08.097
+Every rotation changes three links
+
+234
+00:09:08.167 --> 00:09:09.442
+and the parent of the lifted
+
+235
+00:09:09.487 --> 00:09:11.337
+node must be updated too.
+
+236
+00:09:11.687 --> 00:09:14.697
+Test the three rules after every operation.
+
+237
+00:09:14.697 --> 00:09:18.327
+Our check invariants does exactly that.
+
+238
+00:09:18.907 --> 00:09:20.577
+In the standard library
+
+239
+00:09:20.577 --> 00:09:22.597
+Python has no red-black tree.
+
+240
+00:09:22.597 --> 00:09:24.987
+We'll see what it offers in the next video.
+
+241
+00:09:25.337 --> 00:09:27.367
+Java's tree map is one.
+
+242
+00:09:27.367 --> 00:09:29.257
+The next video looks at both.
+

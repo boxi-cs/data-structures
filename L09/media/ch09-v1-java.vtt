@@ -1,0 +1,874 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:04.790
+Look at a subway map.
+
+2
+00:00:04.790 --> 00:00:07.660
+Stations, and the lines between them.
+
+3
+00:00:08.010 --> 00:00:10.540
+Now a social network: people
+
+4
+00:00:10.540 --> 00:00:11.980
+and the friendships between them.
+
+5
+00:00:11.980 --> 00:00:13.900
+And the web: pages
+
+6
+00:00:13.900 --> 00:00:15.650
+and the links between them.
+
+7
+00:00:16.000 --> 00:00:17.990
+Three very different things
+
+8
+00:00:17.990 --> 00:00:21.290
+and one picture: dots and lines.
+
+9
+00:00:21.290 --> 00:00:23.000
+Mathematicians call it a graph.
+
+10
+00:00:23.350 --> 00:00:26.219
+A lot of the most useful questions in computing
+
+11
+00:00:26.280 --> 00:00:28.540
+are questions about graphs.
+
+12
+00:00:28.540 --> 00:00:30.140
+What is the fastest route?
+
+13
+00:00:30.140 --> 00:00:32.280
+Who is connected to whom?
+
+14
+00:00:32.280 --> 00:00:34.190
+Which pages matter?
+
+15
+00:00:34.540 --> 00:00:36.790
+But before we can answer any of them
+
+16
+00:00:36.790 --> 00:00:39.530
+a program has to store the graph somewhere.
+
+17
+00:00:39.530 --> 00:00:40.500
+How?
+
+18
+00:00:41.080 --> 00:00:42.450
+This is the first video
+
+19
+00:00:42.510 --> 00:00:43.960
+of the graph chapter.
+
+20
+00:00:44.310 --> 00:00:45.709
+We'll see the words we use
+
+21
+00:00:45.760 --> 00:00:47.160
+to talk about graphs
+
+22
+00:00:47.160 --> 00:00:48.700
+three ways to store one
+
+23
+00:00:48.700 --> 00:00:50.470
+and how to choose between them.
+
+24
+00:00:51.050 --> 00:00:55.060
+A graph has vertices, the dots, and edges
+
+25
+00:00:55.060 --> 00:00:57.450
+the lines between two vertices.
+
+26
+00:00:57.800 --> 00:00:59.730
+An edge can be undirected
+
+27
+00:00:59.730 --> 00:01:02.210
+like a friendship that goes both ways.
+
+28
+00:01:02.210 --> 00:01:03.430
+Or directed
+
+29
+00:01:03.430 --> 00:01:06.170
+like a link from one page to another
+
+30
+00:01:06.170 --> 00:01:08.000
+which only goes one way.
+
+31
+00:01:08.350 --> 00:01:12.180
+An edge can also carry a number, a weight
+
+32
+00:01:12.180 --> 00:01:15.830
+a distance, a price, a travel time.
+
+33
+00:01:16.180 --> 00:01:18.151
+The degree of a vertex is
+
+34
+00:01:18.230 --> 00:01:19.980
+how many edges touch it.
+
+35
+00:01:20.330 --> 00:01:23.452
+A path is a walk along edges.
+
+36
+00:01:23.560 --> 00:01:25.433
+A cycle is a path that comes
+
+37
+00:01:25.500 --> 00:01:26.827
+back to where it started.
+
+38
+00:01:26.880 --> 00:01:28.807
+A graph is connected when there is a
+
+39
+00:01:28.860 --> 00:01:31.130
+path between every two vertices.
+
+40
+00:01:31.710 --> 00:01:33.286
+Here is the graph we will use
+
+41
+00:01:33.340 --> 00:01:34.640
+in this whole chapter.
+
+42
+00:01:34.640 --> 00:01:36.880
+Seven vertices, A to G
+
+43
+00:01:36.880 --> 00:01:39.320
+and eleven undirected edges
+
+44
+00:01:39.320 --> 00:01:40.510
+each with a weight.
+
+45
+00:01:40.860 --> 00:01:42.050
+Count the degrees.
+
+46
+00:01:42.050 --> 00:01:48.590
+A has two, B four, C two, D four, E five
+
+47
+00:01:48.590 --> 00:01:50.740
+F three, G two.
+
+48
+00:01:51.090 --> 00:01:53.440
+Add them up: twenty-two.
+
+49
+00:01:53.440 --> 00:01:56.580
+That is exactly twice the number of edges
+
+50
+00:01:56.580 --> 00:01:57.330
+eleven.
+
+51
+00:01:57.680 --> 00:01:59.030
+Not a coincidence.
+
+52
+00:01:59.030 --> 00:02:01.049
+Every edge has two ends
+
+53
+00:02:01.130 --> 00:02:03.168
+so every edge adds one to
+
+54
+00:02:03.250 --> 00:02:04.513
+two different degrees.
+
+55
+00:02:04.570 --> 00:02:06.975
+The sum of the degrees is always
+
+56
+00:02:07.050 --> 00:02:08.760
+twice the number of edges.
+
+57
+00:02:09.340 --> 00:02:11.450
+The simplest way to store a graph
+
+58
+00:02:11.450 --> 00:02:13.110
+a list of its edges.
+
+59
+00:02:13.110 --> 00:02:17.140
+Each entry says: from, to, and the weight.
+
+60
+00:02:17.490 --> 00:02:20.200
+Eleven edges, eleven entries.
+
+61
+00:02:20.200 --> 00:02:21.530
+Very compact.
+
+62
+00:02:21.880 --> 00:02:23.730
+But ask it a question.
+
+63
+00:02:23.730 --> 00:02:26.590
+Is there an edge between A and G?
+
+64
+00:02:26.590 --> 00:02:29.050
+You have to read the whole list to be sure.
+
+65
+00:02:29.050 --> 00:02:31.350
+And who are the neighbours of E?
+
+66
+00:02:31.350 --> 00:02:33.520
+Again, the whole list.
+
+67
+00:02:34.100 --> 00:02:36.990
+A better idea: for every vertex
+
+68
+00:02:36.990 --> 00:02:38.670
+keep a list of its neighbours.
+
+69
+00:02:38.670 --> 00:02:40.900
+This is the adjacency list.
+
+70
+00:02:41.250 --> 00:02:43.020
+A has B and D.
+
+71
+00:02:43.020 --> 00:02:45.903
+B has A, C, D and E.
+
+72
+00:02:46.040 --> 00:02:47.809
+Notice that an undirected
+
+73
+00:02:47.880 --> 00:02:51.570
+edge appears twice: once in each end's list.
+
+74
+00:02:51.920 --> 00:02:54.310
+The neighbours of a vertex are right there
+
+75
+00:02:54.310 --> 00:02:55.632
+in its own list.
+
+76
+00:02:55.710 --> 00:02:58.257
+Looking at them costs as many steps
+
+77
+00:02:58.330 --> 00:03:01.000
+as the vertex has neighbours, no more.
+
+78
+00:03:01.350 --> 00:03:03.920
+Is there an edge from A to G?
+
+79
+00:03:03.920 --> 00:03:06.220
+Look through A's short list.
+
+80
+00:03:06.220 --> 00:03:09.150
+Two entries, and G is not there.
+
+81
+00:03:09.500 --> 00:03:12.430
+The lists hold twenty-two entries in all.
+
+82
+00:03:12.430 --> 00:03:14.260
+Twice the number of edges.
+
+83
+00:03:14.840 --> 00:03:17.861
+A third way: a table with a row and a column
+
+84
+00:03:17.930 --> 00:03:19.082
+for every vertex.
+
+85
+00:03:19.150 --> 00:03:21.855
+The cell in row u and column v holds
+
+86
+00:03:21.930 --> 00:03:23.950
+the weight of the edge from u to v
+
+87
+00:03:23.950 --> 00:03:25.850
+or stays empty if there is none.
+
+88
+00:03:25.850 --> 00:03:28.640
+This is the adjacency matrix.
+
+89
+00:03:28.990 --> 00:03:31.480
+Is there an edge from A to G?
+
+90
+00:03:31.480 --> 00:03:33.220
+Go straight to that cell.
+
+91
+00:03:33.220 --> 00:03:36.110
+One step, however big the graph is.
+
+92
+00:03:36.460 --> 00:03:38.830
+Because the edge is undirected
+
+93
+00:03:38.830 --> 00:03:40.232
+the table is symmetric
+
+94
+00:03:40.290 --> 00:03:42.627
+the cell for B and A matches
+
+95
+00:03:42.710 --> 00:03:44.660
+the cell for A and B.
+
+96
+00:03:45.010 --> 00:03:48.340
+The price: seven rows of seven cells
+
+97
+00:03:48.340 --> 00:03:49.540
+forty-nine cells
+
+98
+00:03:49.540 --> 00:03:51.880
+even though there are only eleven edges.
+
+99
+00:03:51.880 --> 00:03:54.860
+And to list the neighbours of one vertex
+
+100
+00:03:54.860 --> 00:03:56.380
+you must scan its whole row
+
+101
+00:03:56.380 --> 00:03:57.850
+all seven cells.
+
+102
+00:03:58.430 --> 00:04:00.360
+Let's put the three side by side
+
+103
+00:04:00.360 --> 00:04:02.460
+for our small graph.
+
+104
+00:04:02.460 --> 00:04:05.940
+Entries stored: eleven, twenty-two
+
+105
+00:04:05.940 --> 00:04:07.190
+forty-nine.
+
+106
+00:04:07.540 --> 00:04:09.790
+Is there an edge from u to v?
+
+107
+00:04:09.790 --> 00:04:12.070
+The matrix: one step.
+
+108
+00:04:12.070 --> 00:04:15.710
+The list: as many steps as u has neighbours.
+
+109
+00:04:15.710 --> 00:04:18.460
+The edge list: every edge.
+
+110
+00:04:18.810 --> 00:04:20.540
+Who are the neighbours of v?
+
+111
+00:04:20.540 --> 00:04:23.040
+The list: exactly its neighbours.
+
+112
+00:04:23.040 --> 00:04:25.460
+The matrix: the whole row.
+
+113
+00:04:25.460 --> 00:04:27.970
+The edge list: every edge.
+
+114
+00:04:28.550 --> 00:04:30.380
+Pause and predict.
+
+115
+00:04:30.380 --> 00:04:32.900
+A social network has a thousand people
+
+116
+00:04:32.900 --> 00:04:35.380
+and each follows about six others.
+
+117
+00:04:35.380 --> 00:04:37.070
+About three thousand friendships.
+
+118
+00:04:37.420 --> 00:04:39.040
+How many cells does the
+
+119
+00:04:39.110 --> 00:04:40.908
+adjacency matrix need?
+
+120
+00:04:40.990 --> 00:04:43.067
+And how many entries does
+
+121
+00:04:43.150 --> 00:04:44.980
+the adjacency list need?
+
+122
+00:04:45.330 --> 00:04:47.720
+The matrix needs a million cells
+
+123
+00:04:47.720 --> 00:04:49.460
+nearly all of them empty.
+
+124
+00:04:49.460 --> 00:04:52.770
+The list needs only six thousand entries.
+
+125
+00:04:53.120 --> 00:04:56.250
+So the matrix is not the safe choice.
+
+126
+00:04:56.250 --> 00:04:57.610
+For a graph like this
+
+127
+00:04:57.610 --> 00:04:59.520
+it wastes almost everything.
+
+128
+00:05:00.100 --> 00:05:02.769
+Here are real counts, for that sparse graph.
+
+129
+00:05:02.830 --> 00:05:05.263
+The list stores six thousand entries
+
+130
+00:05:05.330 --> 00:05:08.450
+and answers has-edge in six steps.
+
+131
+00:05:08.450 --> 00:05:11.350
+The matrix stores a million cells
+
+132
+00:05:11.350 --> 00:05:13.650
+it answers has-edge in one step
+
+133
+00:05:13.650 --> 00:05:16.380
+but listing neighbours costs a thousand.
+
+134
+00:05:16.730 --> 00:05:18.634
+Now a dense graph
+
+135
+00:05:18.740 --> 00:05:21.019
+a thousand vertices where half of all
+
+136
+00:05:21.080 --> 00:05:22.780
+possible pairs are connected
+
+137
+00:05:22.780 --> 00:05:25.610
+about two hundred fifty thousand edges.
+
+138
+00:05:25.960 --> 00:05:27.808
+The list now holds nearly five
+
+139
+00:05:27.870 --> 00:05:29.190
+hundred thousand entries
+
+140
+00:05:29.190 --> 00:05:30.950
+and its lists are long.
+
+141
+00:05:30.950 --> 00:05:34.110
+The matrix still holds a million cells
+
+142
+00:05:34.110 --> 00:05:35.650
+but now half of them are full
+
+143
+00:05:35.650 --> 00:05:37.640
+so it is not wasteful any more.
+
+144
+00:05:37.990 --> 00:05:40.360
+The rule: for a sparse graph
+
+145
+00:05:40.360 --> 00:05:41.720
+use adjacency lists.
+
+146
+00:05:41.720 --> 00:05:43.160
+For a dense graph
+
+147
+00:05:43.160 --> 00:05:46.160
+or when you must test edges constantly
+
+148
+00:05:46.160 --> 00:05:47.720
+the matrix can win.
+
+149
+00:05:47.720 --> 00:05:49.830
+Most real graphs are sparse.
+
+150
+00:05:50.410 --> 00:05:51.620
+To sum up.
+
+151
+00:05:51.620 --> 00:05:54.220
+A graph is vertices and edges
+
+152
+00:05:54.220 --> 00:05:57.340
+directed or not, with or without weights.
+
+153
+00:05:57.340 --> 00:06:00.170
+The degrees add up to twice the edges.
+
+154
+00:06:00.520 --> 00:06:04.490
+Edge list, adjacency list, adjacency matrix
+
+155
+00:06:04.490 --> 00:06:06.001
+they differ in space
+
+156
+00:06:06.070 --> 00:06:09.179
+and in how fast they answer is-there-an-edge
+
+157
+00:06:09.250 --> 00:06:11.200
+and who-are-the-neighbours.
+
+158
+00:06:11.550 --> 00:06:13.980
+We will use adjacency lists.
+
+159
+00:06:13.980 --> 00:06:16.960
+Next: how to walk through a graph
+
+160
+00:06:16.960 --> 00:06:19.910
+with breadth-first and depth-first search.
+
+161
+00:06:20.537 --> 00:06:22.747
+Let's build a graph class in Java
+
+162
+00:06:22.747 --> 00:06:24.097
+and count the steps.
+
+163
+00:06:24.677 --> 00:06:26.775
+The graph is a map from each
+
+164
+00:06:26.847 --> 00:06:28.807
+vertex to a list of edges.
+
+165
+00:06:28.807 --> 00:06:30.687
+An edge is a small record
+
+166
+00:06:30.687 --> 00:06:33.207
+the vertex it goes to, and its weight.
+
+167
+00:06:33.207 --> 00:06:36.067
+The class is generic in the vertex type
+
+168
+00:06:36.067 --> 00:06:38.917
+so we can use strings, or integers.
+
+169
+00:06:39.267 --> 00:06:42.317
+Adding an edge appends to the list of u.
+
+170
+00:06:42.317 --> 00:06:44.357
+And if the graph is not directed
+
+171
+00:06:44.357 --> 00:06:46.667
+it also appends to the list of v.
+
+172
+00:06:47.017 --> 00:06:48.543
+Forget that second line
+
+173
+00:06:48.607 --> 00:06:50.684
+and your undirected graph quietly
+
+174
+00:06:50.747 --> 00:06:52.627
+becomes a directed one.
+
+175
+00:06:52.627 --> 00:06:55.067
+The adjacency map is a TreeMap
+
+176
+00:06:55.067 --> 00:06:57.457
+so vertices come out in sorted order.
+
+177
+00:06:58.037 --> 00:06:59.027
+Neighbours
+
+178
+00:06:59.027 --> 00:07:01.422
+we return a sorted copy of the list
+
+179
+00:07:01.487 --> 00:07:03.515
+so that every traversal in this chapter
+
+180
+00:07:03.567 --> 00:07:05.117
+visits in the same order.
+
+181
+00:07:05.467 --> 00:07:07.775
+hasEdge scans the list of u.
+
+182
+00:07:07.857 --> 00:07:10.425
+The field steps goes up once
+
+183
+00:07:10.517 --> 00:07:11.697
+per entry looked at
+
+184
+00:07:11.697 --> 00:07:13.347
+which is the cost we talked about.
+
+185
+00:07:13.697 --> 00:07:16.817
+Degree is the size of the list.
+
+186
+00:07:17.397 --> 00:07:19.719
+The matrix version keeps a two-dimensional
+
+187
+00:07:19.767 --> 00:07:23.607
+array of Integer, where null means no edge.
+
+188
+00:07:23.607 --> 00:07:25.557
+hasEdge is one lookup.
+
+189
+00:07:25.907 --> 00:07:27.872
+Neighbours scan the whole row
+
+190
+00:07:27.937 --> 00:07:29.610
+so the counter goes up by
+
+191
+00:07:29.677 --> 00:07:31.267
+the number of vertices.
+
+192
+00:07:31.847 --> 00:07:33.346
+Here are real counts.
+
+193
+00:07:33.417 --> 00:07:35.498
+On the sparse graph with a thousand
+
+194
+00:07:35.557 --> 00:07:37.717
+vertices and three thousand edges
+
+195
+00:07:37.717 --> 00:07:40.537
+the list holds six thousand entries
+
+196
+00:07:40.537 --> 00:07:42.537
+the matrix a million
+
+197
+00:07:42.537 --> 00:07:44.927
+the edge list three thousand.
+
+198
+00:07:45.277 --> 00:07:48.407
+Has-edge: six steps for the list
+
+199
+00:07:48.407 --> 00:07:50.007
+one for the matrix
+
+200
+00:07:50.007 --> 00:07:52.427
+three thousand for the edge list.
+
+201
+00:07:52.427 --> 00:07:56.747
+Neighbours of one vertex: six, a thousand
+
+202
+00:07:56.747 --> 00:07:57.677
+three thousand.
+
+203
+00:07:58.027 --> 00:08:00.568
+On the dense graph, the list is long
+
+204
+00:08:00.637 --> 00:08:02.914
+so it needs four hundred ninety-nine
+
+205
+00:08:02.977 --> 00:08:04.997
+steps for has-edge.
+
+206
+00:08:04.997 --> 00:08:07.387
+The matrix is still one.
+
+207
+00:08:07.967 --> 00:08:10.067
+Java has no graph class in the
+
+208
+00:08:10.137 --> 00:08:11.673
+standard library either.
+
+209
+00:08:11.737 --> 00:08:14.383
+A Map from vertex to List of
+
+210
+00:08:14.477 --> 00:08:16.076
+edges is the usual answer
+
+211
+00:08:16.137 --> 00:08:18.592
+and computeIfAbsent creates a
+
+212
+00:08:18.677 --> 00:08:20.663
+vertex's list on first use.
+
+213
+00:08:20.737 --> 00:08:22.728
+Third-party libraries such as
+
+214
+00:08:22.797 --> 00:08:25.167
+JGraphT wrap the same idea.
+
+215
+00:08:25.747 --> 00:08:28.237
+So in Java: a map of lists
+
+216
+00:08:28.237 --> 00:08:30.657
+store undirected edges twice
+
+217
+00:08:30.657 --> 00:08:32.867
+the counter confirms the costs.
+
+218
+00:08:33.217 --> 00:08:37.297
+Next: walking the graph with BFS and DFS.
+

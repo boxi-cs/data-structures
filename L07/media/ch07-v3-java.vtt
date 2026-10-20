@@ -1,0 +1,918 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:04.870
+Chaining needs extra structure
+
+2
+00:00:04.870 --> 00:00:06.830
+a list for every slot.
+
+3
+00:00:06.830 --> 00:00:08.550
+There is another way
+
+4
+00:00:08.550 --> 00:00:10.820
+with nothing but the table itself.
+
+5
+00:00:11.170 --> 00:00:13.820
+Every entry lives in the table array
+
+6
+00:00:13.820 --> 00:00:15.060
+in a slot.
+
+7
+00:00:15.060 --> 00:00:17.680
+If the slot you want is taken
+
+8
+00:00:17.680 --> 00:00:19.520
+you do not build a chain.
+
+9
+00:00:19.520 --> 00:00:21.610
+You look for another slot.
+
+10
+00:00:22.190 --> 00:00:24.408
+This is called open addressing
+
+11
+00:00:24.480 --> 00:00:26.287
+because the address of an entry is
+
+12
+00:00:26.340 --> 00:00:28.310
+not fixed by its hash alone.
+
+13
+00:00:28.660 --> 00:00:30.903
+In this video we'll see three ways
+
+14
+00:00:30.970 --> 00:00:32.510
+to choose the next slot
+
+15
+00:00:32.510 --> 00:00:35.510
+what happens to the cost as the table fills
+
+16
+00:00:35.510 --> 00:00:38.660
+and why deleting is the tricky part.
+
+17
+00:00:39.240 --> 00:00:42.110
+The simplest rule is linear probing.
+
+18
+00:00:42.110 --> 00:00:44.170
+Try the slot the hash gives you.
+
+19
+00:00:44.170 --> 00:00:46.430
+If it is taken, try the next one
+
+20
+00:00:46.430 --> 00:00:49.280
+then the next, wrapping around at the end.
+
+21
+00:00:49.630 --> 00:00:52.540
+Thirteen slots, and the keys eighteen
+
+22
+00:00:52.540 --> 00:00:53.920
+forty-one, twenty-two.
+
+23
+00:00:53.920 --> 00:00:57.020
+Their remainders are five, two and nine
+
+24
+00:00:57.020 --> 00:00:58.750
+and all three slots are free.
+
+25
+00:00:59.100 --> 00:01:01.870
+Forty-four also wants slot five.
+
+26
+00:01:01.870 --> 00:01:03.710
+It is taken by eighteen
+
+27
+00:01:03.710 --> 00:01:05.810
+so it goes to slot six.
+
+28
+00:01:05.810 --> 00:01:06.980
+Two probes.
+
+29
+00:01:07.330 --> 00:01:09.700
+Fifty-nine goes to slot seven.
+
+30
+00:01:09.700 --> 00:01:13.960
+Thirty-two wants slot six, finds forty-four
+
+31
+00:01:13.960 --> 00:01:17.380
+finds fifty-nine, and settles in slot eight.
+
+32
+00:01:17.380 --> 00:01:18.810
+Three probes.
+
+33
+00:01:19.160 --> 00:01:21.384
+Thirty-one wants slot five
+
+34
+00:01:21.470 --> 00:01:23.090
+and finds it taken.
+
+35
+00:01:23.090 --> 00:01:27.690
+Six, seven, eight, nine, all taken.
+
+36
+00:01:27.690 --> 00:01:31.640
+It lands in slot ten, after six probes.
+
+37
+00:01:31.990 --> 00:01:34.540
+And seventy-three wants slot eight
+
+38
+00:01:34.540 --> 00:01:36.240
+and ends in slot eleven.
+
+39
+00:01:36.240 --> 00:01:37.716
+Look at the table now
+
+40
+00:01:37.780 --> 00:01:40.859
+slots five to eleven form one unbroken
+
+41
+00:01:40.940 --> 00:01:42.550
+run of seven entries.
+
+42
+00:01:43.130 --> 00:01:45.380
+That run is called a cluster
+
+43
+00:01:45.380 --> 00:01:48.130
+and it is the weakness of linear probing.
+
+44
+00:01:48.480 --> 00:01:50.250
+The bigger a cluster is
+
+45
+00:01:50.250 --> 00:01:52.710
+the more likely the next key falls into it
+
+46
+00:01:52.710 --> 00:01:54.330
+and the bigger it gets.
+
+47
+00:01:54.330 --> 00:01:56.440
+Clusters feed themselves.
+
+48
+00:01:56.790 --> 00:01:59.200
+Nineteen probes for eight keys.
+
+49
+00:01:59.200 --> 00:02:02.430
+Two better rules spread the probes out.
+
+50
+00:02:03.010 --> 00:02:06.080
+Quadratic probing jumps by growing steps
+
+51
+00:02:06.080 --> 00:02:08.560
+the first slot, then one further
+
+52
+00:02:08.560 --> 00:02:11.810
+then four further, then nine, and so on.
+
+53
+00:02:12.160 --> 00:02:16.070
+Thirty-one now probes five, six, nine
+
+54
+00:02:16.070 --> 00:02:18.650
+and one, and stops in slot one
+
+55
+00:02:18.650 --> 00:02:20.090
+far from the others.
+
+56
+00:02:20.090 --> 00:02:22.890
+Seventy-three finds its own slot, eight
+
+57
+00:02:22.890 --> 00:02:23.600
+free.
+
+58
+00:02:23.950 --> 00:02:27.080
+Fourteen probes in all, instead of nineteen.
+
+59
+00:02:27.080 --> 00:02:30.400
+The price is a guarantee that is weaker
+
+60
+00:02:30.400 --> 00:02:32.727
+with a prime table size
+
+61
+00:02:32.820 --> 00:02:34.641
+quadratic probing only promises
+
+62
+00:02:34.700 --> 00:02:36.586
+to find a free slot while the table
+
+63
+00:02:36.640 --> 00:02:38.430
+is less than half full.
+
+64
+00:02:39.010 --> 00:02:41.582
+Double hashing uses a second hash
+
+65
+00:02:41.660 --> 00:02:43.804
+function to decide the step.
+
+66
+00:02:43.880 --> 00:02:45.664
+Different keys that start at the
+
+67
+00:02:45.720 --> 00:02:47.540
+same slot take different steps
+
+68
+00:02:47.540 --> 00:02:49.610
+so they separate at once.
+
+69
+00:02:49.960 --> 00:02:52.618
+Here the step is eleven minus
+
+70
+00:02:52.710 --> 00:02:54.870
+the key modulo eleven.
+
+71
+00:02:54.870 --> 00:02:56.690
+Forty-four takes a step of eleven
+
+72
+00:02:56.690 --> 00:02:58.630
+and lands in slot three.
+
+73
+00:02:58.630 --> 00:03:03.750
+Thirty-one takes steps of two: five, seven
+
+74
+00:03:03.750 --> 00:03:05.640
+nine, eleven.
+
+75
+00:03:05.990 --> 00:03:07.760
+Twelve probes in all.
+
+76
+00:03:07.760 --> 00:03:09.760
+With a prime table size
+
+77
+00:03:09.760 --> 00:03:12.056
+every slot is eventually reachable
+
+78
+00:03:12.120 --> 00:03:14.464
+because no step shares a factor
+
+79
+00:03:14.540 --> 00:03:16.110
+with the table size.
+
+80
+00:03:16.690 --> 00:03:19.180
+How much does a lookup cost?
+
+81
+00:03:19.180 --> 00:03:22.220
+That depends on one number: the load factor
+
+82
+00:03:22.220 --> 00:03:24.370
+the fraction of slots in use.
+
+83
+00:03:24.720 --> 00:03:26.155
+For linear probing
+
+84
+00:03:26.230 --> 00:03:28.616
+a successful search needs about a half times
+
+85
+00:03:28.670 --> 00:03:31.286
+one plus one over one minus alpha probes
+
+86
+00:03:31.350 --> 00:03:33.929
+and an unsuccessful one needs about a half
+
+87
+00:03:33.990 --> 00:03:36.480
+times one plus the square of that.
+
+88
+00:03:36.830 --> 00:03:38.359
+We measured it on a table
+
+89
+00:03:38.420 --> 00:03:40.380
+of ten thousand slots.
+
+90
+00:03:40.380 --> 00:03:42.067
+At a load of one half
+
+91
+00:03:42.140 --> 00:03:44.415
+one point five probes to find a key
+
+92
+00:03:44.480 --> 00:03:46.660
+and two point four to miss one.
+
+93
+00:03:46.660 --> 00:03:49.160
+At three quarters, two and a half
+
+94
+00:03:49.160 --> 00:03:50.390
+and eight and a half.
+
+95
+00:03:50.740 --> 00:03:52.150
+At nine tenths
+
+96
+00:03:52.150 --> 00:03:54.310
+a hit costs five and a half probes
+
+97
+00:03:54.310 --> 00:03:57.270
+but a miss costs about fifty.
+
+98
+00:03:57.270 --> 00:03:59.901
+The cost explodes as the table fills
+
+99
+00:03:59.970 --> 00:04:01.602
+so open addressing keeps
+
+100
+00:04:01.670 --> 00:04:03.140
+its load factor low.
+
+101
+00:04:03.720 --> 00:04:05.050
+Now deleting.
+
+102
+00:04:05.050 --> 00:04:07.850
+The obvious way is to empty the slot.
+
+103
+00:04:07.850 --> 00:04:09.110
+Let's try it
+
+104
+00:04:09.110 --> 00:04:11.970
+remove forty-four from the linear table
+
+105
+00:04:11.970 --> 00:04:13.200
+slot six.
+
+106
+00:04:13.550 --> 00:04:15.840
+Then look for thirty-two.
+
+107
+00:04:15.840 --> 00:04:17.780
+Its hash says slot six.
+
+108
+00:04:17.780 --> 00:04:19.640
+Slot six is empty.
+
+109
+00:04:19.640 --> 00:04:22.280
+A lookup stops at the first empty slot
+
+110
+00:04:22.280 --> 00:04:24.260
+so it reports: missing.
+
+111
+00:04:24.260 --> 00:04:27.070
+But thirty-two is in slot eight.
+
+112
+00:04:27.420 --> 00:04:29.590
+By emptying slot six
+
+113
+00:04:29.590 --> 00:04:32.290
+we cut the probe sequence that thirty-two
+
+114
+00:04:32.290 --> 00:04:33.810
+and thirty-one, and seventy-three
+
+115
+00:04:33.810 --> 00:04:34.670
+depend on.
+
+116
+00:04:34.670 --> 00:04:36.550
+They are still stored
+
+117
+00:04:36.550 --> 00:04:38.300
+but nobody can reach them.
+
+118
+00:04:38.650 --> 00:04:42.300
+The fix is a tombstone: a marker that means
+
+119
+00:04:42.300 --> 00:04:44.850
+something was here, keep going.
+
+120
+00:04:45.200 --> 00:04:48.050
+With a tombstone in slot six
+
+121
+00:04:48.050 --> 00:04:50.630
+looking for thirty-two probes six, seven
+
+122
+00:04:50.630 --> 00:04:52.000
+eight, and finds it.
+
+123
+00:04:52.580 --> 00:04:54.530
+Tombstones need three rules.
+
+124
+00:04:54.530 --> 00:04:57.630
+A lookup skips them and keeps probing.
+
+125
+00:04:57.630 --> 00:05:00.270
+An insert may reuse a tombstone
+
+126
+00:05:00.350 --> 00:05:02.223
+but only after the probe has
+
+127
+00:05:02.290 --> 00:05:03.476
+reached an empty slot
+
+128
+00:05:03.530 --> 00:05:04.761
+to be sure the key is not
+
+129
+00:05:04.810 --> 00:05:06.580
+stored further along.
+
+130
+00:05:06.930 --> 00:05:10.140
+And tombstones count toward the load factor
+
+131
+00:05:10.140 --> 00:05:13.380
+so a table full of tombstones is rebuilt
+
+132
+00:05:13.380 --> 00:05:15.050
+next time we'll see how.
+
+133
+00:05:15.630 --> 00:05:16.930
+To sum up.
+
+134
+00:05:17.060 --> 00:05:19.655
+Open addressing keeps every entry in the
+
+135
+00:05:19.720 --> 00:05:22.560
+array and probes when a slot is taken
+
+136
+00:05:22.560 --> 00:05:25.910
+linear, quadratic or double hashing.
+
+137
+00:05:26.260 --> 00:05:28.870
+Keep the table less than about half full
+
+138
+00:05:28.870 --> 00:05:31.140
+and delete with tombstones.
+
+139
+00:05:31.490 --> 00:05:32.520
+Next
+
+140
+00:05:32.520 --> 00:05:34.650
+what to do when the table does fill up.
+
+141
+00:05:35.277 --> 00:05:37.837
+Now open addressing in Java.
+
+142
+00:05:38.417 --> 00:05:40.256
+The slot of the i-th probe
+
+143
+00:05:40.327 --> 00:05:41.967
+is a switch on the mode.
+
+144
+00:05:41.967 --> 00:05:44.627
+We compress the hash code with floor mod
+
+145
+00:05:44.627 --> 00:05:49.657
+and add i, or i squared, or i times a step.
+
+146
+00:05:50.007 --> 00:05:51.801
+The squares and the products are
+
+147
+00:05:51.857 --> 00:05:54.897
+computed as long values: with a big table
+
+148
+00:05:54.897 --> 00:05:56.967
+i squared can overflow an int.
+
+149
+00:05:57.317 --> 00:05:59.730
+For double hashing the step is the largest
+
+150
+00:05:59.787 --> 00:06:01.607
+prime below the table size
+
+151
+00:06:01.607 --> 00:06:04.387
+minus the hash code modulo that prime
+
+152
+00:06:04.387 --> 00:06:07.437
+again with floor mod, so it is never zero.
+
+153
+00:06:08.017 --> 00:06:10.407
+A tombstone is a private object
+
+154
+00:06:10.407 --> 00:06:12.427
+and an empty slot is a null.
+
+155
+00:06:12.427 --> 00:06:14.087
+The search stops at null
+
+156
+00:06:14.087 --> 00:06:16.027
+remembers the first tombstone
+
+157
+00:06:16.027 --> 00:06:18.137
+and compares keys with equals.
+
+158
+00:06:18.487 --> 00:06:20.697
+A small record carries the result
+
+159
+00:06:20.697 --> 00:06:23.517
+the slot found, the first tombstone
+
+160
+00:06:23.517 --> 00:06:24.677
+the slots visited
+
+161
+00:06:24.677 --> 00:06:26.967
+and the number of comparisons.
+
+162
+00:06:27.547 --> 00:06:30.797
+The output is identical to the Python run
+
+163
+00:06:30.797 --> 00:06:33.477
+because a Java integer hashes to itself
+
+164
+00:06:33.477 --> 00:06:33.977
+too.
+
+165
+00:06:34.257 --> 00:06:37.267
+Nineteen probes for linear probing
+
+166
+00:06:37.267 --> 00:06:39.387
+fourteen for quadratic
+
+167
+00:06:39.387 --> 00:06:40.817
+twelve for double hashing.
+
+168
+00:06:41.167 --> 00:06:43.937
+Deleting forty-four with a tombstone
+
+169
+00:06:43.937 --> 00:06:47.837
+the lookup for thirty-two probes six, seven
+
+170
+00:06:47.837 --> 00:06:49.557
+eight, and finds it.
+
+171
+00:06:49.557 --> 00:06:51.517
+With a null in its place
+
+172
+00:06:51.517 --> 00:06:54.767
+the lookup stops at six, and returns null.
+
+173
+00:06:55.347 --> 00:06:57.316
+The experiment uses the same key
+
+174
+00:06:57.377 --> 00:06:59.017
+generator as the Python one
+
+175
+00:06:59.017 --> 00:07:00.617
+so the table is the same
+
+176
+00:07:00.617 --> 00:07:02.257
+at a load of a half
+
+177
+00:07:02.257 --> 00:07:05.257
+one point four eight probes to find a key
+
+178
+00:07:05.257 --> 00:07:08.987
+at nine tenths, a miss costs fifty-one.
+
+179
+00:07:09.337 --> 00:07:10.927
+The formulas hold in Java
+
+180
+00:07:10.927 --> 00:07:12.907
+because they are mathematics
+
+181
+00:07:12.907 --> 00:07:14.777
+not a property of the language.
+
+182
+00:07:15.357 --> 00:07:16.987
+In the standard library
+
+183
+00:07:16.987 --> 00:07:20.077
+the main hash map uses chaining, as we saw.
+
+184
+00:07:20.147 --> 00:07:22.208
+Open addressing with linear probing
+
+185
+00:07:22.267 --> 00:07:24.847
+appears in the identity hash map
+
+186
+00:07:24.847 --> 00:07:27.037
+which compares keys by reference.
+
+187
+00:07:27.617 --> 00:07:29.527
+Remove is the same in Java.
+
+188
+00:07:29.527 --> 00:07:32.347
+We find the slot, and if tombstones are on
+
+189
+00:07:32.347 --> 00:07:34.287
+we write the tombstone object there
+
+190
+00:07:34.287 --> 00:07:35.227
+and count it.
+
+191
+00:07:35.227 --> 00:07:37.967
+If they are off, which is only for the demo
+
+192
+00:07:37.967 --> 00:07:38.977
+we write null.
+
+193
+00:07:39.327 --> 00:07:40.957
+The value is cleared
+
+194
+00:07:40.957 --> 00:07:42.737
+the size goes down by one
+
+195
+00:07:42.737 --> 00:07:45.207
+and the tombstone count goes up by one.
+
+196
+00:07:45.787 --> 00:07:48.035
+A parameterized test runs three
+
+197
+00:07:48.117 --> 00:07:49.740
+thousand random puts
+
+198
+00:07:49.817 --> 00:07:51.583
+gets and removes against
+
+199
+00:07:51.657 --> 00:07:53.057
+Java's own hash map
+
+200
+00:07:53.057 --> 00:07:55.137
+once for each of the three probing modes.
+
+201
+00:07:55.137 --> 00:07:57.777
+It checks the size, every answer
+
+202
+00:07:57.857 --> 00:07:59.163
+and that the table never
+
+203
+00:07:59.217 --> 00:08:01.947
+goes above half full, tombstones included.
+
+204
+00:08:02.297 --> 00:08:03.867
+Another test checks that
+
+205
+00:08:03.867 --> 00:08:06.676
+for a table of thirteen slots
+
+206
+00:08:06.767 --> 00:08:08.592
+linear probing and double hashing
+
+207
+00:08:08.647 --> 00:08:09.932
+visit every slot
+
+208
+00:08:10.007 --> 00:08:11.849
+and quadratic probing visits
+
+209
+00:08:11.907 --> 00:08:13.457
+at least seven of them.
+
+210
+00:08:14.037 --> 00:08:15.667
+Mistakes to avoid.
+
+211
+00:08:15.667 --> 00:08:18.167
+A table size that is not prime
+
+212
+00:08:18.167 --> 00:08:19.523
+with double hashing
+
+213
+00:08:19.587 --> 00:08:21.304
+the step may share a factor
+
+214
+00:08:21.367 --> 00:08:22.567
+with the table size
+
+215
+00:08:22.627 --> 00:08:24.251
+and the probe sequence visits
+
+216
+00:08:24.307 --> 00:08:25.997
+only part of the table.
+
+217
+00:08:26.347 --> 00:08:28.167
+Treating a tombstone as an
+
+218
+00:08:28.237 --> 00:08:29.962
+empty slot in a search.
+
+219
+00:08:30.037 --> 00:08:32.190
+And inserting into the first tombstone without
+
+220
+00:08:32.237 --> 00:08:34.317
+checking the rest of the probe sequence
+
+221
+00:08:34.317 --> 00:08:36.947
+you may create a duplicate key.
+
+222
+00:08:37.297 --> 00:08:38.796
+The tests cover both.
+
+223
+00:08:38.867 --> 00:08:41.509
+Putting a key again after deleting
+
+224
+00:08:41.587 --> 00:08:43.926
+an entry earlier in its probe sequence
+
+225
+00:08:43.987 --> 00:08:47.577
+must update the key, not add a second copy.
+
+226
+00:08:48.157 --> 00:08:50.447
+To recap: switch on the mode
+
+227
+00:08:50.447 --> 00:08:52.447
+search that skips tombstones
+
+228
+00:08:52.447 --> 00:08:55.447
+and a load factor kept low.
+
+229
+00:08:55.447 --> 00:08:57.437
+Next: when the table fills.
+

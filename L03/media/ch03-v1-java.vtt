@@ -1,0 +1,786 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:05.039
+You press the Back button in your browser
+
+2
+00:00:05.090 --> 00:00:06.307
+and you land on the page you
+
+3
+00:00:06.350 --> 00:00:07.510
+were on a moment ago.
+
+4
+00:00:07.510 --> 00:00:08.610
+Press it again
+
+5
+00:00:08.610 --> 00:00:10.580
+and you go one page further back.
+
+6
+00:00:10.930 --> 00:00:13.380
+In a text editor, you press Undo
+
+7
+00:00:13.380 --> 00:00:15.480
+and your most recent change disappears.
+
+8
+00:00:15.480 --> 00:00:16.360
+Press it again
+
+9
+00:00:16.360 --> 00:00:19.090
+and the change before that one disappears.
+
+10
+00:00:19.440 --> 00:00:21.430
+Both of these remember a history
+
+11
+00:00:21.430 --> 00:00:24.130
+and both give it back in the same order
+
+12
+00:00:24.130 --> 00:00:26.360
+the most recent thing first.
+
+13
+00:00:26.710 --> 00:00:29.286
+What is the simplest data structure
+
+14
+00:00:29.360 --> 00:00:31.390
+that behaves exactly like that?
+
+15
+00:00:31.970 --> 00:00:33.717
+It is called a stack
+
+16
+00:00:33.800 --> 00:00:35.385
+and it is the first structure
+
+17
+00:00:35.440 --> 00:00:36.450
+in this chapter.
+
+18
+00:00:36.800 --> 00:00:38.132
+In this video we'll see
+
+19
+00:00:38.190 --> 00:00:40.910
+what a stack promises, what it costs
+
+20
+00:00:40.910 --> 00:00:42.600
+and the two ways to build one.
+
+21
+00:00:43.180 --> 00:00:45.112
+A stack is a collection where you
+
+22
+00:00:45.170 --> 00:00:47.090
+can only work with one end.
+
+23
+00:00:47.090 --> 00:00:48.690
+You add an item on top.
+
+24
+00:00:48.690 --> 00:00:50.030
+You look at the top.
+
+25
+00:00:50.030 --> 00:00:51.700
+You remove the top.
+
+26
+00:00:52.050 --> 00:00:53.900
+Think of a pile of plates.
+
+27
+00:00:53.900 --> 00:00:55.360
+You put a plate on top
+
+28
+00:00:55.360 --> 00:00:56.820
+and when you want one
+
+29
+00:00:56.820 --> 00:00:58.500
+you take it from the top.
+
+30
+00:00:58.500 --> 00:01:00.730
+Nobody pulls a plate out of the middle.
+
+31
+00:01:01.080 --> 00:01:04.934
+The rule has a name: last in, first out.
+
+32
+00:01:05.030 --> 00:01:07.107
+The last item that went in is the
+
+33
+00:01:07.170 --> 00:01:09.050
+first item that comes out.
+
+34
+00:01:09.050 --> 00:01:11.880
+People often write it L I F O.
+
+35
+00:01:12.460 --> 00:01:15.510
+A stack supports a handful of operations.
+
+36
+00:01:15.510 --> 00:01:17.950
+Push adds an item on top.
+
+37
+00:01:17.950 --> 00:01:21.735
+Pop removes the top item and returns it.
+
+38
+00:01:21.830 --> 00:01:23.635
+Top returns the top item
+
+39
+00:01:23.710 --> 00:01:25.140
+without removing it.
+
+40
+00:01:25.490 --> 00:01:27.640
+Two more questions are handy
+
+41
+00:01:27.640 --> 00:01:29.080
+how many items are there
+
+42
+00:01:29.080 --> 00:01:31.250
+and is the stack empty?
+
+43
+00:01:31.600 --> 00:01:34.190
+That is the whole interface.
+
+44
+00:01:34.190 --> 00:01:36.498
+Pop and top both need an item to work with
+
+45
+00:01:36.550 --> 00:01:38.621
+so asking for them on an empty
+
+46
+00:01:38.690 --> 00:01:40.360
+stack is an error.
+
+47
+00:01:40.940 --> 00:01:42.830
+Let's run a small example.
+
+48
+00:01:42.830 --> 00:01:46.070
+Start with an empty stack and push three
+
+49
+00:01:46.070 --> 00:01:48.500
+then seven, then one.
+
+50
+00:01:48.850 --> 00:01:50.560
+Now the top is one.
+
+51
+00:01:50.560 --> 00:01:52.920
+If we pop, we get one back
+
+52
+00:01:52.920 --> 00:01:55.410
+and the stack is down to three and seven.
+
+53
+00:01:55.760 --> 00:01:58.510
+Pop again and we get seven.
+
+54
+00:01:58.510 --> 00:02:01.270
+Pop again, and we get three.
+
+55
+00:02:01.270 --> 00:02:03.690
+We pushed three, seven, one
+
+56
+00:02:03.690 --> 00:02:07.050
+and we got them back as one, seven, three
+
+57
+00:02:07.050 --> 00:02:08.440
+exactly reversed.
+
+58
+00:02:08.790 --> 00:02:11.020
+That reversal is not an accident.
+
+59
+00:02:11.020 --> 00:02:13.078
+It's the whole point of a stack
+
+60
+00:02:13.140 --> 00:02:14.906
+and it is why stacks are
+
+61
+00:02:14.980 --> 00:02:16.550
+good at undoing things.
+
+62
+00:02:17.130 --> 00:02:18.540
+You may be thinking
+
+63
+00:02:18.540 --> 00:02:20.440
+a list can do all of this and more.
+
+64
+00:02:20.440 --> 00:02:22.170
+Why restrict ourselves?
+
+65
+00:02:22.720 --> 00:02:25.250
+Because the restriction is a promise.
+
+66
+00:02:25.250 --> 00:02:26.950
+If you hand someone a stack
+
+67
+00:02:26.950 --> 00:02:29.688
+they can't peek at the middle or reorder it
+
+68
+00:02:29.750 --> 00:02:31.621
+so the structure never has to maintain
+
+69
+00:02:31.670 --> 00:02:33.840
+anything except the top.
+
+70
+00:02:34.190 --> 00:02:36.780
+A smaller promise is easier to keep
+
+71
+00:02:36.780 --> 00:02:38.420
+and as we'll see
+
+72
+00:02:38.420 --> 00:02:40.469
+it can be kept very cheaply.
+
+73
+00:02:40.540 --> 00:02:41.817
+Choosing the right restriction
+
+74
+00:02:41.860 --> 00:02:43.950
+is a design skill in itself.
+
+75
+00:02:44.530 --> 00:02:47.780
+How much work does each operation take?
+
+76
+00:02:47.780 --> 00:02:48.600
+Push
+
+77
+00:02:48.600 --> 00:02:52.360
+pop and top only ever touch the top item.
+
+78
+00:02:52.360 --> 00:02:54.570
+They don't look at the other items at all.
+
+79
+00:02:54.920 --> 00:02:57.878
+So each takes a constant number of steps
+
+80
+00:02:57.950 --> 00:02:59.639
+no matter whether the stack holds
+
+81
+00:02:59.690 --> 00:03:01.930
+ten items or ten million.
+
+82
+00:03:01.930 --> 00:03:04.960
+In Big-O terms, that's O of one.
+
+83
+00:03:05.310 --> 00:03:07.120
+There's one footnote
+
+84
+00:03:07.120 --> 00:03:09.160
+for one of the two implementations
+
+85
+00:03:09.160 --> 00:03:10.870
+and we'll meet it in the code.
+
+86
+00:03:11.450 --> 00:03:13.980
+Stacks show up everywhere.
+
+87
+00:03:13.980 --> 00:03:16.307
+Undo and Back, as we saw.
+
+88
+00:03:16.400 --> 00:03:17.594
+Checking that the brackets
+
+89
+00:03:17.640 --> 00:03:18.880
+in a program match
+
+90
+00:03:18.880 --> 00:03:20.770
+which we'll do in video four.
+
+91
+00:03:21.120 --> 00:03:23.670
+And the one every program relies on
+
+92
+00:03:23.670 --> 00:03:24.670
+the call stack.
+
+93
+00:03:24.670 --> 00:03:26.970
+Each function call pushes a frame
+
+94
+00:03:26.970 --> 00:03:28.532
+each return pops it.
+
+95
+00:03:28.610 --> 00:03:30.555
+In Chapter four we'll see recursion
+
+96
+00:03:30.610 --> 00:03:32.320
+through exactly this lens.
+
+97
+00:03:32.900 --> 00:03:35.590
+There are two natural ways to build a stack.
+
+98
+00:03:35.590 --> 00:03:37.070
+Keep the items in an array
+
+99
+00:03:37.070 --> 00:03:38.690
+with the top at the end.
+
+100
+00:03:38.690 --> 00:03:41.190
+Or link the items together in a chain
+
+101
+00:03:41.190 --> 00:03:42.900
+with the top at the front.
+
+102
+00:03:43.250 --> 00:03:45.600
+The array is compact and fast
+
+103
+00:03:45.600 --> 00:03:47.160
+but it has a fixed size
+
+104
+00:03:47.160 --> 00:03:48.940
+so it sometimes has to grow.
+
+105
+00:03:48.940 --> 00:03:51.980
+The chain grows one item at a time
+
+106
+00:03:51.980 --> 00:03:54.450
+but every item carries a pointer.
+
+107
+00:03:54.800 --> 00:03:56.724
+Both give the same behaviour.
+
+108
+00:03:56.790 --> 00:03:58.576
+Which one is better is a
+
+109
+00:03:58.650 --> 00:03:59.850
+question of trade-offs
+
+110
+00:03:59.850 --> 00:04:01.600
+and we'll look at both next.
+
+111
+00:04:02.180 --> 00:04:03.530
+To sum up.
+
+112
+00:04:03.530 --> 00:04:06.870
+A stack is last in, first out.
+
+113
+00:04:06.870 --> 00:04:09.570
+You can push, pop, and look at the top
+
+114
+00:04:09.570 --> 00:04:10.820
+and nothing else.
+
+115
+00:04:11.170 --> 00:04:13.748
+Every operation takes constant time
+
+116
+00:04:13.820 --> 00:04:15.093
+and the restriction is what
+
+117
+00:04:15.140 --> 00:04:16.330
+makes that possible.
+
+118
+00:04:16.680 --> 00:04:17.950
+In the next part
+
+119
+00:04:17.950 --> 00:04:21.000
+we write both versions in code and run them.
+
+120
+00:04:21.627 --> 00:04:24.187
+Now let's build both stacks in Java.
+
+121
+00:04:24.767 --> 00:04:26.977
+Here is the array-based stack.
+
+122
+00:04:26.977 --> 00:04:30.760
+It is generic, so ArrayStack of E works
+
+123
+00:04:30.857 --> 00:04:32.251
+for any element type.
+
+124
+00:04:32.317 --> 00:04:34.267
+We keep an array called data
+
+125
+00:04:34.337 --> 00:04:36.484
+and an int called size.
+
+126
+00:04:36.577 --> 00:04:38.442
+The top item always lives
+
+127
+00:04:38.517 --> 00:04:41.247
+at index size minus one.
+
+128
+00:04:41.597 --> 00:04:43.786
+Java does not let us create an array
+
+129
+00:04:43.847 --> 00:04:45.607
+of a generic type directly
+
+130
+00:04:45.607 --> 00:04:48.987
+so we create an array of Object and cast it.
+
+131
+00:04:48.987 --> 00:04:51.359
+That is the one ugly line
+
+132
+00:04:51.447 --> 00:04:53.009
+and the compiler warning is
+
+133
+00:04:53.067 --> 00:04:54.237
+safe to suppress here.
+
+134
+00:04:54.587 --> 00:04:56.984
+Push stores the new item at index
+
+135
+00:04:57.057 --> 00:04:59.737
+size and increments size.
+
+136
+00:04:59.737 --> 00:05:02.677
+Pop decrements size, reads the item
+
+137
+00:05:02.677 --> 00:05:04.260
+and sets that slot to null
+
+138
+00:05:04.317 --> 00:05:05.953
+so the array doesn't keep a reference
+
+139
+00:05:05.997 --> 00:05:08.194
+to an object the stack has dropped.
+
+140
+00:05:08.257 --> 00:05:11.899
+Both pop and top throw a NoSuchElementException
+
+141
+00:05:11.977 --> 00:05:13.427
+when the stack is empty.
+
+142
+00:05:14.007 --> 00:05:15.897
+When the array is full
+
+143
+00:05:15.897 --> 00:05:19.217
+push calls resize with twice the length
+
+144
+00:05:19.217 --> 00:05:21.017
+it allocates a new array
+
+145
+00:05:21.017 --> 00:05:23.057
+copies every item across
+
+146
+00:05:23.057 --> 00:05:25.327
+and replaces the old one.
+
+147
+00:05:25.677 --> 00:05:27.287
+We start with a capacity of
+
+148
+00:05:27.347 --> 00:05:29.593
+two and push five items.
+
+149
+00:05:29.687 --> 00:05:31.736
+The capacity stays at two for
+
+150
+00:05:31.807 --> 00:05:32.967
+the first two pushes
+
+151
+00:05:32.967 --> 00:05:36.827
+doubles to four at the third, stays at four
+
+152
+00:05:36.827 --> 00:05:38.837
+and doubles to eight at the fifth.
+
+153
+00:05:39.187 --> 00:05:42.317
+Copying takes time proportional to the size
+
+154
+00:05:42.317 --> 00:05:43.757
+but it happens rarely.
+
+155
+00:05:43.757 --> 00:05:45.217
+Because we double
+
+156
+00:05:45.217 --> 00:05:47.589
+most pushes cost one step.
+
+157
+00:05:47.677 --> 00:05:50.231
+The amortized analysis video in Chapter
+
+158
+00:05:50.297 --> 00:05:52.691
+one showed that the average cost per
+
+159
+00:05:52.757 --> 00:05:54.827
+push is still constant.
+
+160
+00:05:55.407 --> 00:05:58.119
+The linked stack needs no capacity.
+
+161
+00:05:58.197 --> 00:06:01.321
+Each item lives in a small private static
+
+162
+00:06:01.397 --> 00:06:04.180
+Node class holding the element and a
+
+163
+00:06:04.257 --> 00:06:05.684
+reference to the next node.
+
+164
+00:06:05.737 --> 00:06:07.666
+The stack keeps just a head
+
+165
+00:06:07.737 --> 00:06:09.487
+reference and a size.
+
+166
+00:06:09.837 --> 00:06:11.712
+Push creates a node whose
+
+167
+00:06:11.787 --> 00:06:13.467
+next is the old head
+
+168
+00:06:13.467 --> 00:06:15.878
+then makes that node the new head.
+
+169
+00:06:15.947 --> 00:06:17.983
+Pop reads the head's element and
+
+170
+00:06:18.047 --> 00:06:19.837
+moves head to the next node.
+
+171
+00:06:20.187 --> 00:06:21.689
+No copying, ever
+
+172
+00:06:21.777 --> 00:06:23.652
+and every call takes constant
+
+173
+00:06:23.717 --> 00:06:26.777
+time in the worst case, not only on average.
+
+174
+00:06:26.777 --> 00:06:29.357
+The price is one extra reference
+
+175
+00:06:29.357 --> 00:06:32.547
+and one extra object, per item.
+
+176
+00:06:33.127 --> 00:06:34.817
+In the standard library
+
+177
+00:06:34.817 --> 00:06:37.617
+Java has an old class called Stack.
+
+178
+00:06:37.617 --> 00:06:38.877
+Avoid it.
+
+179
+00:06:38.877 --> 00:06:40.517
+It extends Vector
+
+180
+00:06:40.517 --> 00:06:42.557
+so every method is synchronized
+
+181
+00:06:42.557 --> 00:06:44.673
+which costs time you don't need
+
+182
+00:06:44.737 --> 00:06:47.379
+and it exposes index-based methods
+
+183
+00:06:47.457 --> 00:06:49.031
+that let you reach into the middle
+
+184
+00:06:49.077 --> 00:06:50.967
+and break the stack promise.
+
+185
+00:06:51.317 --> 00:06:53.863
+The Java documentation itself recommends
+
+186
+00:06:53.927 --> 00:06:56.267
+the Deque interface instead.
+
+187
+00:06:56.267 --> 00:06:58.767
+ArrayDeque has push, pop and peek
+
+188
+00:06:58.767 --> 00:07:01.077
+and it is the stack you should use.
+
+189
+00:07:01.657 --> 00:07:03.955
+So an array stack is fast
+
+190
+00:07:04.047 --> 00:07:05.746
+but sometimes copies
+
+191
+00:07:05.827 --> 00:07:08.744
+and a linked stack never copies but
+
+192
+00:07:08.827 --> 00:07:10.727
+carries an object per item.
+
+193
+00:07:10.727 --> 00:07:12.447
+Both give you push
+
+194
+00:07:12.447 --> 00:07:14.657
+pop and top in constant time.
+
+195
+00:07:15.007 --> 00:07:18.548
+Next up: queues, where the first item in
+
+196
+00:07:18.637 --> 00:07:20.607
+is the first one out.
+

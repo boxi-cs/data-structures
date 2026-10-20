@@ -1,0 +1,902 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:05.123
+Put the numbers one to a thousand
+
+2
+00:00:05.190 --> 00:00:07.530
+into a binary search tree
+
+3
+00:00:07.530 --> 00:00:10.140
+one after another, in order.
+
+4
+00:00:10.490 --> 00:00:12.117
+Every new number is bigger
+
+5
+00:00:12.180 --> 00:00:13.300
+than all the others
+
+6
+00:00:13.300 --> 00:00:14.760
+so it goes to the right
+
+7
+00:00:14.760 --> 00:00:16.277
+and to the right again.
+
+8
+00:00:16.340 --> 00:00:18.404
+The tree turns into a chain
+
+9
+00:00:18.480 --> 00:00:20.290
+of a thousand nodes.
+
+10
+00:00:20.640 --> 00:00:22.602
+Finding the last number takes
+
+11
+00:00:22.670 --> 00:00:24.310
+a thousand steps.
+
+12
+00:00:24.310 --> 00:00:27.250
+The same thousand keys, kept balanced
+
+13
+00:00:27.250 --> 00:00:28.160
+take ten.
+
+14
+00:00:28.510 --> 00:00:31.471
+How can a tree keep itself balanced when it
+
+15
+00:00:31.540 --> 00:00:34.120
+cannot know which keys will arrive next?
+
+16
+00:00:34.120 --> 00:00:37.390
+That is the job of the AVL tree.
+
+17
+00:00:37.970 --> 00:00:40.094
+This is the first of four videos
+
+18
+00:00:40.160 --> 00:00:42.450
+on balanced search trees.
+
+19
+00:00:42.800 --> 00:00:44.357
+We'll see the rotation
+
+20
+00:00:44.430 --> 00:00:46.802
+the one move that rearranges a tree
+
+21
+00:00:46.870 --> 00:00:48.670
+without breaking its order
+
+22
+00:00:48.670 --> 00:00:51.346
+the AVL rule and its four cases
+
+23
+00:00:51.430 --> 00:00:54.032
+and why an AVL tree can never
+
+24
+00:00:54.110 --> 00:00:56.640
+be much taller than log n.
+
+25
+00:00:57.220 --> 00:00:59.270
+The basic move is a rotation.
+
+26
+00:00:59.270 --> 00:01:01.850
+Take a node and its right child.
+
+27
+00:01:01.850 --> 00:01:03.218
+Lift the child up
+
+28
+00:01:03.290 --> 00:01:05.180
+and let the node become the
+
+29
+00:01:05.250 --> 00:01:07.260
+child's left child.
+
+30
+00:01:07.610 --> 00:01:10.112
+The child already had a left subtree.
+
+31
+00:01:10.180 --> 00:01:12.150
+Its keys sit between the two
+
+32
+00:01:12.220 --> 00:01:13.731
+nodes in sorted order
+
+33
+00:01:13.800 --> 00:01:15.883
+so that subtree becomes the
+
+34
+00:01:15.960 --> 00:01:17.890
+node's new right subtree.
+
+35
+00:01:18.240 --> 00:01:19.770
+Nothing else moves.
+
+36
+00:01:19.850 --> 00:01:21.703
+Read the keys from left to right before
+
+37
+00:01:21.750 --> 00:01:23.590
+the rotation and after it
+
+38
+00:01:23.590 --> 00:01:25.170
+and you get the same sequence.
+
+39
+00:01:25.170 --> 00:01:27.080
+Only the heights have changed.
+
+40
+00:01:27.660 --> 00:01:29.990
+Every node keeps its balance factor
+
+41
+00:01:29.990 --> 00:01:32.010
+the height of its right subtree
+
+42
+00:01:32.010 --> 00:01:34.460
+minus the height of its left subtree.
+
+43
+00:01:34.810 --> 00:01:37.307
+The AVL rule says that this number
+
+44
+00:01:37.380 --> 00:01:41.120
+is always minus one, zero, or plus one
+
+45
+00:01:41.120 --> 00:01:42.930
+for every node in the tree.
+
+46
+00:01:43.280 --> 00:01:45.830
+Insert a key the ordinary way.
+
+47
+00:01:45.830 --> 00:01:48.319
+Then walk back up toward the root.
+
+48
+00:01:48.390 --> 00:01:51.068
+The first node whose factor has become plus
+
+49
+00:01:51.130 --> 00:01:53.760
+two or minus two is the one to fix.
+
+50
+00:01:54.340 --> 00:01:56.750
+There are four shapes the trouble can take.
+
+51
+00:01:56.750 --> 00:01:59.130
+The new key went left of the left child
+
+52
+00:01:59.130 --> 00:02:00.730
+or right of the right child.
+
+53
+00:02:00.730 --> 00:02:02.250
+Both are straight lines
+
+54
+00:02:02.250 --> 00:02:04.300
+and one rotation fixes each.
+
+55
+00:02:04.650 --> 00:02:07.420
+Left then right, or right then left
+
+56
+00:02:07.420 --> 00:02:08.540
+are zig-zags.
+
+57
+00:02:08.620 --> 00:02:10.358
+A single rotation would only
+
+58
+00:02:10.420 --> 00:02:11.937
+move the zig-zag around
+
+59
+00:02:12.000 --> 00:02:13.892
+so we first rotate the child
+
+60
+00:02:13.960 --> 00:02:16.860
+to straighten it, and then rotate the node.
+
+61
+00:02:16.860 --> 00:02:18.930
+That is a double rotation.
+
+62
+00:02:19.280 --> 00:02:23.350
+Insert thirty, twenty, ten, or ten, twenty
+
+63
+00:02:23.350 --> 00:02:26.010
+thirty, and one rotation is enough.
+
+64
+00:02:26.010 --> 00:02:30.070
+Insert thirty, ten, twenty, or ten, thirty
+
+65
+00:02:30.070 --> 00:02:31.990
+twenty, and it takes two.
+
+66
+00:02:31.990 --> 00:02:34.450
+All four end up as the same tree
+
+67
+00:02:34.450 --> 00:02:37.200
+twenty at the top, ten and thirty below.
+
+68
+00:02:37.780 --> 00:02:39.390
+Let's watch it all run.
+
+69
+00:02:39.390 --> 00:02:43.450
+Insert one, two, three, in that order.
+
+70
+00:02:43.450 --> 00:02:46.630
+At three, the root leans two to the right
+
+71
+00:02:46.630 --> 00:02:48.980
+and one left rotation fixes it.
+
+72
+00:02:49.330 --> 00:02:53.880
+Insert four, and five.
+
+73
+00:02:53.880 --> 00:02:56.480
+Five makes the node three lean
+
+74
+00:02:56.480 --> 00:02:59.450
+so a second rotation, lower down.
+
+75
+00:02:59.800 --> 00:03:02.090
+Six makes the root lean again
+
+76
+00:03:02.090 --> 00:03:05.290
+and a third rotation brings back balance.
+
+77
+00:03:05.290 --> 00:03:07.400
+Seven needs a fourth.
+
+78
+00:03:07.750 --> 00:03:10.580
+Seven keys, four rotations
+
+79
+00:03:10.580 --> 00:03:13.300
+and the tree ends perfectly balanced
+
+80
+00:03:13.300 --> 00:03:15.750
+in three levels.
+
+81
+00:03:16.330 --> 00:03:18.380
+Pause and predict.
+
+82
+00:03:18.380 --> 00:03:21.628
+A tree holds a million keys
+
+83
+00:03:21.740 --> 00:03:23.714
+and one insertion makes
+
+84
+00:03:23.800 --> 00:03:26.010
+some node lean by two.
+
+85
+00:03:26.360 --> 00:03:28.135
+How many rotations might it take
+
+86
+00:03:28.190 --> 00:03:30.170
+to repair the whole tree?
+
+87
+00:03:30.170 --> 00:03:31.550
+A few thousand?
+
+88
+00:03:31.550 --> 00:03:32.880
+About twenty?
+
+89
+00:03:33.230 --> 00:03:34.620
+At most two.
+
+90
+00:03:34.620 --> 00:03:37.758
+One rotation, or one double rotation.
+
+91
+00:03:37.840 --> 00:03:40.674
+After an insertion the tree below the fixed
+
+92
+00:03:40.740 --> 00:03:43.540
+node is exactly as tall as before
+
+93
+00:03:43.540 --> 00:03:46.190
+so everything above it is balanced again.
+
+94
+00:03:46.770 --> 00:03:49.800
+How tall can an AVL tree get?
+
+95
+00:03:49.800 --> 00:03:51.302
+Turn the question around
+
+96
+00:03:51.360 --> 00:03:53.782
+what is the fewest nodes a tree
+
+97
+00:03:53.860 --> 00:03:55.770
+of height h can have?
+
+98
+00:03:56.120 --> 00:04:00.369
+A root, one subtree of height h minus one
+
+99
+00:04:00.470 --> 00:04:02.090
+and next to it the thinnest
+
+100
+00:04:02.150 --> 00:04:03.790
+subtree the rule allows
+
+101
+00:04:03.790 --> 00:04:05.760
+of height h minus two.
+
+102
+00:04:06.110 --> 00:04:10.460
+So the counts go one, two, four, seven
+
+103
+00:04:10.460 --> 00:04:14.780
+twelve, twenty, thirty-three, fifty-four
+
+104
+00:04:14.780 --> 00:04:16.691
+eighty-eight, one hundred forty-three.
+
+105
+00:04:16.740 --> 00:04:18.867
+Each is one more than the two
+
+106
+00:04:18.940 --> 00:04:20.830
+before it added together.
+
+107
+00:04:21.180 --> 00:04:22.870
+That is the Fibonacci pattern
+
+108
+00:04:22.870 --> 00:04:24.936
+and it grows exponentially.
+
+109
+00:04:25.010 --> 00:04:27.917
+So the height is at most about one point
+
+110
+00:04:27.990 --> 00:04:31.001
+four four times log base two of n.
+
+111
+00:04:31.090 --> 00:04:32.656
+One hundred forty-three nodes
+
+112
+00:04:32.710 --> 00:04:34.270
+fit in ten levels
+
+113
+00:04:34.270 --> 00:04:36.900
+where a perfect tree would need eight.
+
+114
+00:04:37.480 --> 00:04:39.670
+Deleting works the same way.
+
+115
+00:04:39.670 --> 00:04:42.515
+Remove the key as in any search tree
+
+116
+00:04:42.590 --> 00:04:44.571
+then rebalance every node
+
+117
+00:04:44.650 --> 00:04:45.960
+on the way back up.
+
+118
+00:04:46.310 --> 00:04:48.500
+Take a tree with twenty at the top
+
+119
+00:04:48.500 --> 00:04:50.100
+ten and thirty below
+
+120
+00:04:50.100 --> 00:04:52.820
+and twenty-five and forty under thirty.
+
+121
+00:04:52.820 --> 00:04:53.960
+Delete ten
+
+122
+00:04:53.960 --> 00:04:56.520
+and the root leans two to the right.
+
+123
+00:04:56.520 --> 00:04:59.030
+One left rotation repairs it.
+
+124
+00:04:59.610 --> 00:05:00.637
+To sum up.
+
+125
+00:05:00.740 --> 00:05:03.043
+A rotation changes heights but
+
+126
+00:05:03.120 --> 00:05:05.090
+never the order of the keys.
+
+127
+00:05:05.440 --> 00:05:08.297
+The AVL rule keeps every balance factor
+
+128
+00:05:08.370 --> 00:05:10.450
+between minus one and plus one
+
+129
+00:05:10.450 --> 00:05:13.869
+and four cases, repaired by one single or
+
+130
+00:05:13.950 --> 00:05:15.690
+one double rotation
+
+131
+00:05:15.690 --> 00:05:17.520
+restore it after an insertion.
+
+132
+00:05:17.870 --> 00:05:19.419
+The price is small.
+
+133
+00:05:19.500 --> 00:05:21.876
+Inserting all the numbers from one to
+
+134
+00:05:21.940 --> 00:05:24.282
+one thousand twenty-three in order costs
+
+135
+00:05:24.340 --> 00:05:26.900
+one thousand thirteen rotations
+
+136
+00:05:26.900 --> 00:05:29.510
+and leaves a tree of ten levels.
+
+137
+00:05:29.860 --> 00:05:31.130
+In the code cuts
+
+138
+00:05:31.130 --> 00:05:34.140
+you'll see all of this in a few dozen lines.
+
+139
+00:05:34.767 --> 00:05:37.297
+Here is the AVL tree in Java.
+
+140
+00:05:37.297 --> 00:05:39.797
+We'll read the node, the rotations
+
+141
+00:05:39.797 --> 00:05:42.447
+the rebalancing step, and then run it.
+
+142
+00:05:43.027 --> 00:05:44.389
+The tree is generic
+
+143
+00:05:44.457 --> 00:05:46.034
+keys of any type that can
+
+144
+00:05:46.097 --> 00:05:48.737
+compare themselves, values of any type.
+
+145
+00:05:48.737 --> 00:05:52.077
+A node stores a key, a value
+
+146
+00:05:52.077 --> 00:05:54.587
+two child links, and its height.
+
+147
+00:05:54.937 --> 00:05:58.067
+A leaf has height one, and a missing child
+
+148
+00:05:58.067 --> 00:05:59.617
+null, counts as zero.
+
+149
+00:05:59.687 --> 00:06:01.663
+The balance factor is the right
+
+150
+00:06:01.727 --> 00:06:03.660
+height minus the left height
+
+151
+00:06:03.727 --> 00:06:05.899
+and update recomputes a height
+
+152
+00:06:05.967 --> 00:06:07.057
+from the children.
+
+153
+00:06:07.637 --> 00:06:09.967
+rotateRight takes y
+
+154
+00:06:09.967 --> 00:06:12.587
+a node that is too tall on its left.
+
+155
+00:06:12.587 --> 00:06:14.477
+x is its left child.
+
+156
+00:06:14.827 --> 00:06:17.897
+y takes over x's right subtree
+
+157
+00:06:17.897 --> 00:06:20.627
+and x's right link points to y.
+
+158
+00:06:20.977 --> 00:06:23.627
+We update the heights, y first
+
+159
+00:06:23.627 --> 00:06:27.027
+and return x, the new top of this subtree.
+
+160
+00:06:27.027 --> 00:06:29.447
+Each rotation also bumps a counter
+
+161
+00:06:29.447 --> 00:06:31.137
+so we can count them later.
+
+162
+00:06:31.717 --> 00:06:33.780
+rebalance recomputes the height
+
+163
+00:06:33.847 --> 00:06:35.627
+and looks at the factor.
+
+164
+00:06:35.627 --> 00:06:38.627
+Below minus one, the left side is too tall.
+
+165
+00:06:38.627 --> 00:06:41.437
+Above plus one, the right.
+
+166
+00:06:41.787 --> 00:06:44.217
+If the tall child leans the other way
+
+167
+00:06:44.217 --> 00:06:45.957
+that is the zig-zag.
+
+168
+00:06:45.957 --> 00:06:49.177
+Rotate the child first, then the node.
+
+169
+00:06:49.177 --> 00:06:51.547
+Otherwise one rotation is enough.
+
+170
+00:06:52.127 --> 00:06:54.957
+Keys are compared with compareTo
+
+171
+00:06:54.957 --> 00:06:57.457
+which returns a negative number, zero
+
+172
+00:06:57.457 --> 00:06:58.917
+or a positive number.
+
+173
+00:06:58.917 --> 00:07:01.317
+Smaller goes left, bigger goes right
+
+174
+00:07:01.317 --> 00:07:03.647
+and equal replaces the value.
+
+175
+00:07:03.997 --> 00:07:05.884
+The recursive call returns the
+
+176
+00:07:05.947 --> 00:07:08.524
+new top of the subtree, we store it back
+
+177
+00:07:08.587 --> 00:07:10.634
+and on the way up every node
+
+178
+00:07:10.707 --> 00:07:12.357
+goes through rebalance.
+
+179
+00:07:12.937 --> 00:07:15.547
+Insert one to seven in order.
+
+180
+00:07:15.547 --> 00:07:18.267
+Three triggers the first rotation
+
+181
+00:07:18.267 --> 00:07:21.747
+five the second, six the third
+
+182
+00:07:21.747 --> 00:07:23.417
+seven the fourth.
+
+183
+00:07:23.767 --> 00:07:26.597
+The tree ends as four on top
+
+184
+00:07:26.597 --> 00:07:28.637
+with two and six below.
+
+185
+00:07:28.637 --> 00:07:31.437
+And a thousand twenty-three keys, in order
+
+186
+00:07:31.437 --> 00:07:34.037
+make a tree of ten levels
+
+187
+00:07:34.037 --> 00:07:36.967
+after one thousand thirteen rotations.
+
+188
+00:07:37.317 --> 00:07:39.567
+The output is identical
+
+189
+00:07:39.567 --> 00:07:41.087
+character for character
+
+190
+00:07:41.087 --> 00:07:42.307
+to the Python program.
+
+191
+00:07:42.307 --> 00:07:44.557
+Same algorithm, same tree.
+
+192
+00:07:45.137 --> 00:07:46.328
+Does it really work?
+
+193
+00:07:46.387 --> 00:07:48.679
+The JUnit test inserts and
+
+194
+00:07:48.767 --> 00:07:50.615
+deletes random keys
+
+195
+00:07:50.707 --> 00:07:52.790
+three hundred operations on
+
+196
+00:07:52.867 --> 00:07:54.607
+each of thirty trees
+
+197
+00:07:54.607 --> 00:07:57.897
+with the JDK's TreeMap as the reference.
+
+198
+00:07:58.247 --> 00:07:59.777
+After every operation
+
+199
+00:07:59.777 --> 00:08:01.477
+it calls checkInvariants
+
+200
+00:08:01.477 --> 00:08:03.887
+and compares the keys with the reference.
+
+201
+00:08:04.237 --> 00:08:07.667
+If a rotation ever breaks a link, a height
+
+202
+00:08:07.667 --> 00:08:09.287
+or the key order
+
+203
+00:08:09.287 --> 00:08:12.197
+the test fails at the first bad step.
+
+204
+00:08:12.777 --> 00:08:14.575
+Watch out for three bugs.
+
+205
+00:08:14.647 --> 00:08:16.155
+Forgetting to store the value
+
+206
+00:08:16.207 --> 00:08:17.747
+the recursive call returns
+
+207
+00:08:17.747 --> 00:08:20.977
+so the parent still points to the old node.
+
+208
+00:08:21.327 --> 00:08:23.289
+Updating heights in the wrong
+
+209
+00:08:23.357 --> 00:08:25.157
+order after a rotation.
+
+210
+00:08:25.157 --> 00:08:28.807
+And comparing keys with double equals.
+
+211
+00:08:29.157 --> 00:08:31.368
+For boxed integers above one
+
+212
+00:08:31.447 --> 00:08:32.807
+hundred twenty-seven
+
+213
+00:08:32.807 --> 00:08:34.907
+double equals compares references
+
+214
+00:08:34.907 --> 00:08:35.847
+not values.
+
+215
+00:08:35.847 --> 00:08:37.357
+Always use compareTo.
+
+216
+00:08:37.707 --> 00:08:40.216
+And test after every operation.
+
+217
+00:08:40.297 --> 00:08:43.426
+Our checkInvariants throws an AssertionError
+
+218
+00:08:43.497 --> 00:08:46.297
+the moment the key order, a stored height
+
+219
+00:08:46.297 --> 00:08:48.627
+or a balance factor is wrong.
+
+220
+00:08:49.207 --> 00:08:50.817
+In the standard library
+
+221
+00:08:50.817 --> 00:08:53.477
+Java's TreeMap is a balanced search tree
+
+222
+00:08:53.477 --> 00:08:55.797
+but a red-black tree, not an AVL tree.
+
+223
+00:08:55.797 --> 00:08:57.927
+We'll build that in video three.
+
+224
+00:08:58.277 --> 00:09:01.247
+Next time, a different way to stay balanced
+
+225
+00:09:01.247 --> 00:09:03.917
+nodes that hold more than one key.
+

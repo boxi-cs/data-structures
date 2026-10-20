@@ -1,0 +1,814 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:06.270
+Here is a puzzle about dynamic arrays.
+
+2
+00:00:06.270 --> 00:00:08.630
+You keep adding items to the end of a list
+
+3
+00:00:08.630 --> 00:00:09.580
+one at a time.
+
+4
+00:00:09.930 --> 00:00:12.220
+Most of the time, an append is cheap
+
+5
+00:00:12.220 --> 00:00:14.540
+put the new item in the next free slot.
+
+6
+00:00:14.540 --> 00:00:15.490
+One step.
+
+7
+00:00:15.840 --> 00:00:18.230
+But sometimes the array is full.
+
+8
+00:00:18.230 --> 00:00:21.130
+Then the append has to build a bigger array
+
+9
+00:00:21.130 --> 00:00:23.530
+and copy every item across.
+
+10
+00:00:23.530 --> 00:00:25.110
+With n items
+
+11
+00:00:25.110 --> 00:00:28.280
+that single append costs about n steps.
+
+12
+00:00:28.630 --> 00:00:32.440
+So the worst case for one append is order n.
+
+13
+00:00:32.440 --> 00:00:33.280
+And yet
+
+14
+00:00:33.280 --> 00:00:35.720
+everyone says that append is order one.
+
+15
+00:00:35.720 --> 00:00:37.510
+How can both be true?
+
+16
+00:00:38.090 --> 00:00:40.680
+The answer is amortized analysis.
+
+17
+00:00:40.680 --> 00:00:43.856
+It asks not what one operation costs
+
+18
+00:00:43.940 --> 00:00:45.618
+but what a long sequence of
+
+19
+00:00:45.680 --> 00:00:47.810
+operations costs in total.
+
+20
+00:00:48.160 --> 00:00:49.730
+In this video we'll count the
+
+21
+00:00:49.770 --> 00:00:51.853
+total cost of many appends
+
+22
+00:00:51.930 --> 00:00:53.910
+see how cheap appends can pay for
+
+23
+00:00:53.970 --> 00:00:55.393
+the slow ones in advance
+
+24
+00:00:55.450 --> 00:00:57.700
+and find out why doubling the capacity
+
+25
+00:00:57.750 --> 00:00:59.600
+is the right growth rule.
+
+26
+00:01:00.180 --> 00:01:02.310
+Here is the array we'll analyze.
+
+27
+00:01:02.310 --> 00:01:04.570
+It starts with room for one item.
+
+28
+00:01:04.570 --> 00:01:05.949
+When it is full
+
+29
+00:01:06.030 --> 00:01:07.615
+it allocates a new array with
+
+30
+00:01:07.670 --> 00:01:09.030
+twice the capacity
+
+31
+00:01:09.030 --> 00:01:11.270
+copies the old items across
+
+32
+00:01:11.270 --> 00:01:13.060
+and then stores the new one.
+
+33
+00:01:13.410 --> 00:01:15.740
+Let's count the cost of each append
+
+34
+00:01:15.740 --> 00:01:17.200
+one step for the store
+
+35
+00:01:17.200 --> 00:01:20.130
+plus one step for each item copied.
+
+36
+00:01:20.480 --> 00:01:22.990
+The first append costs one.
+
+37
+00:01:22.990 --> 00:01:25.870
+The second finds the array full
+
+38
+00:01:25.870 --> 00:01:29.970
+copies one item and stores one: cost two.
+
+39
+00:01:29.970 --> 00:01:33.770
+The third copies two: cost three.
+
+40
+00:01:33.770 --> 00:01:36.710
+The fourth fits: cost one.
+
+41
+00:01:36.710 --> 00:01:41.480
+Then the fifth copies four items: cost five.
+
+42
+00:01:42.080 --> 00:01:43.690
+Look at the pattern.
+
+43
+00:01:43.690 --> 00:01:45.490
+Expensive appends are rare
+
+44
+00:01:45.490 --> 00:01:48.330
+and they get further apart: after the fifth
+
+45
+00:01:48.330 --> 00:01:50.510
+the next expensive one is the ninth
+
+46
+00:01:50.510 --> 00:01:52.160
+then the seventeenth.
+
+47
+00:01:52.740 --> 00:01:55.490
+Let's add up the cost of n appends.
+
+48
+00:01:55.490 --> 00:01:57.740
+This is called the aggregate method.
+
+49
+00:01:58.090 --> 00:02:00.240
+Every append stores its item.
+
+50
+00:02:00.240 --> 00:02:02.330
+That's n steps in total.
+
+51
+00:02:02.680 --> 00:02:06.110
+Copying happens only when the array is full
+
+52
+00:02:06.110 --> 00:02:10.490
+and it is full only when it holds one, two
+
+53
+00:02:10.490 --> 00:02:13.170
+four, eight items, and so on
+
+54
+00:02:13.170 --> 00:02:14.550
+doubling each time.
+
+55
+00:02:14.550 --> 00:02:18.560
+All of those sizes are less than n.
+
+56
+00:02:19.160 --> 00:02:21.407
+That is a geometric series
+
+57
+00:02:21.490 --> 00:02:23.708
+and it adds up to less than
+
+58
+00:02:23.790 --> 00:02:25.230
+twice its biggest term.
+
+59
+00:02:25.230 --> 00:02:28.760
+So the copies add up to less than two n.
+
+60
+00:02:29.360 --> 00:02:32.930
+The total is less than n plus two n
+
+61
+00:02:32.930 --> 00:02:34.790
+which is three n.
+
+62
+00:02:34.790 --> 00:02:37.030
+Divide by the n appends
+
+63
+00:02:37.030 --> 00:02:41.070
+under three steps per append, on average.
+
+64
+00:02:41.070 --> 00:02:42.920
+That is order one.
+
+65
+00:02:43.500 --> 00:02:45.310
+There is another way to see this
+
+66
+00:02:45.310 --> 00:02:47.408
+and it works like a bank account.
+
+67
+00:02:47.470 --> 00:02:49.669
+Charge every append a fixed
+
+68
+00:02:49.750 --> 00:02:51.048
+price of three coins
+
+69
+00:02:51.110 --> 00:02:52.792
+even though some appends cost
+
+70
+00:02:52.850 --> 00:02:55.220
+more and some cost less.
+
+71
+00:02:55.570 --> 00:02:58.160
+One coin pays for storing the item.
+
+72
+00:02:58.160 --> 00:03:00.800
+The other two coins are saved
+
+73
+00:03:00.800 --> 00:03:02.290
+sitting on the new item.
+
+74
+00:03:02.640 --> 00:03:04.750
+Now the array fills up.
+
+75
+00:03:04.750 --> 00:03:07.330
+Suppose its capacity is c.
+
+76
+00:03:07.330 --> 00:03:09.370
+Since the last resize
+
+77
+00:03:09.370 --> 00:03:12.130
+c over two new items were added
+
+78
+00:03:12.130 --> 00:03:14.910
+and each carries two saved coins.
+
+79
+00:03:14.910 --> 00:03:17.520
+That's c coins in total.
+
+80
+00:03:18.120 --> 00:03:22.230
+Copying c items costs exactly c steps.
+
+81
+00:03:22.230 --> 00:03:25.230
+So the saved coins pay for the whole copy
+
+82
+00:03:25.230 --> 00:03:27.960
+and the bank balance never goes negative.
+
+83
+00:03:28.310 --> 00:03:30.560
+A fixed price of three coins
+
+84
+00:03:30.640 --> 00:03:32.053
+per append is enough.
+
+85
+00:03:32.120 --> 00:03:34.040
+So the amortized cost of
+
+86
+00:03:34.120 --> 00:03:36.070
+an append is order one.
+
+87
+00:03:36.650 --> 00:03:38.800
+Now compare with a different rule
+
+88
+00:03:38.800 --> 00:03:40.600
+when the array is full
+
+89
+00:03:40.600 --> 00:03:43.410
+make it just one slot bigger.
+
+90
+00:03:43.760 --> 00:03:46.002
+Then every append after the first
+
+91
+00:03:46.070 --> 00:03:49.219
+finds the array full, and copies everything.
+
+92
+00:03:49.290 --> 00:03:51.114
+The copies add up to one
+
+93
+00:03:51.190 --> 00:03:53.030
+plus two plus three
+
+94
+00:03:53.030 --> 00:03:55.120
+all the way to n minus one.
+
+95
+00:03:55.470 --> 00:03:58.751
+That is n times n minus one over two
+
+96
+00:03:58.840 --> 00:04:00.956
+the same sum we met when counting
+
+97
+00:04:01.020 --> 00:04:02.780
+pairs in the first video.
+
+98
+00:04:02.780 --> 00:04:05.380
+About n squared over two in total
+
+99
+00:04:05.380 --> 00:04:08.710
+so about n over two per append.
+
+100
+00:04:09.060 --> 00:04:10.690
+For a thousand items
+
+101
+00:04:10.690 --> 00:04:13.730
+that's nearly five hundred thousand copies.
+
+102
+00:04:13.730 --> 00:04:16.690
+The cost per append is not constant at all.
+
+103
+00:04:16.690 --> 00:04:17.980
+It grows with n.
+
+104
+00:04:18.330 --> 00:04:20.514
+What matters is that the capacity
+
+105
+00:04:20.580 --> 00:04:22.547
+grows by a constant factor.
+
+106
+00:04:22.620 --> 00:04:25.210
+Then every resize buys a lot of cheap
+
+107
+00:04:25.280 --> 00:04:27.060
+appends before the next one.
+
+108
+00:04:27.060 --> 00:04:29.850
+Adding a constant amount does not.
+
+109
+00:04:30.430 --> 00:04:32.236
+So what does amortized order
+
+110
+00:04:32.300 --> 00:04:34.030
+one actually mean?
+
+111
+00:04:34.380 --> 00:04:37.771
+It means: for any sequence of n operations
+
+112
+00:04:37.850 --> 00:04:39.408
+the total cost is at most
+
+113
+00:04:39.470 --> 00:04:41.130
+n times a constant.
+
+114
+00:04:41.130 --> 00:04:43.727
+Some single operations may be expensive
+
+115
+00:04:43.790 --> 00:04:45.774
+but the cost averaged over
+
+116
+00:04:45.850 --> 00:04:47.420
+the sequence is small.
+
+117
+00:04:47.770 --> 00:04:49.376
+This is a guarantee about
+
+118
+00:04:49.440 --> 00:04:50.940
+the worst sequence.
+
+119
+00:04:50.940 --> 00:04:52.460
+It is not about luck
+
+120
+00:04:52.460 --> 00:04:56.220
+and it is not an average over random inputs.
+
+121
+00:04:56.220 --> 00:04:59.730
+No input can make the total cost bigger.
+
+122
+00:05:00.330 --> 00:05:01.640
+Be careful, though.
+
+123
+00:05:01.640 --> 00:05:05.320
+It says nothing about any single operation.
+
+124
+00:05:05.320 --> 00:05:07.897
+One append can still take order n steps
+
+125
+00:05:07.960 --> 00:05:11.033
+so a program that needs every single operation
+
+126
+00:05:11.100 --> 00:05:13.650
+to be fast cannot rely on it.
+
+127
+00:05:14.230 --> 00:05:15.580
+To sum up.
+
+128
+00:05:15.580 --> 00:05:19.200
+One slow append does not make append slow
+
+129
+00:05:19.200 --> 00:05:21.540
+because slow appends are rare
+
+130
+00:05:21.540 --> 00:05:23.430
+and the cheap ones pay for them.
+
+131
+00:05:23.780 --> 00:05:26.510
+The aggregate method adds up all the costs.
+
+132
+00:05:26.510 --> 00:05:29.582
+The accounting method charges a fixed price.
+
+133
+00:05:29.650 --> 00:05:32.203
+Both give under three steps per append
+
+134
+00:05:32.270 --> 00:05:34.060
+when the capacity doubles.
+
+135
+00:05:34.410 --> 00:05:35.881
+And growing by a constant
+
+136
+00:05:35.940 --> 00:05:37.520
+factor is essential.
+
+137
+00:05:37.520 --> 00:05:41.170
+Growing by one gives order n per append.
+
+138
+00:05:41.520 --> 00:05:42.682
+In the next part
+
+139
+00:05:42.750 --> 00:05:44.312
+we build this array in code
+
+140
+00:05:44.370 --> 00:05:46.080
+and count every copy.
+
+141
+00:05:46.707 --> 00:05:49.197
+Now let's build this array in Java
+
+142
+00:05:49.197 --> 00:05:51.427
+and count every copy it makes.
+
+143
+00:05:52.007 --> 00:05:53.535
+Here is append.
+
+144
+00:05:53.637 --> 00:05:55.532
+If the size equals the length
+
+145
+00:05:55.597 --> 00:05:57.397
+of the data array, it is full
+
+146
+00:05:57.397 --> 00:06:00.606
+so we first resize, to whatever capacity the
+
+147
+00:06:00.677 --> 00:06:01.727
+growth rule gives us.
+
+148
+00:06:01.777 --> 00:06:03.568
+Then we store the item and
+
+149
+00:06:03.637 --> 00:06:05.207
+add one to the size.
+
+150
+00:06:05.557 --> 00:06:07.330
+The growth rule is an interface
+
+151
+00:06:07.387 --> 00:06:08.781
+with a single method
+
+152
+00:06:08.847 --> 00:06:10.776
+so a lambda is enough to try different
+
+153
+00:06:10.827 --> 00:06:12.317
+rules with the same class.
+
+154
+00:06:12.897 --> 00:06:15.626
+Resize calls Arrays copyOf
+
+155
+00:06:15.727 --> 00:06:18.723
+which allocates a new array of the new capacity
+
+156
+00:06:18.787 --> 00:06:21.017
+and copies the old items into it.
+
+157
+00:06:21.367 --> 00:06:24.314
+Resize only runs when the array is full
+
+158
+00:06:24.377 --> 00:06:25.846
+so the number of items copied
+
+159
+00:06:25.897 --> 00:06:27.757
+is exactly the size.
+
+160
+00:06:27.757 --> 00:06:29.767
+That is what we add to the counter.
+
+161
+00:06:30.347 --> 00:06:32.257
+We try two growth rules.
+
+162
+00:06:32.257 --> 00:06:35.107
+Double the capacity, or add one.
+
+163
+00:06:35.457 --> 00:06:37.588
+Total copies takes a growth
+
+164
+00:06:37.667 --> 00:06:39.407
+rule and a number n.
+
+165
+00:06:39.407 --> 00:06:41.467
+It appends n items
+
+166
+00:06:41.467 --> 00:06:43.857
+and returns how many copies were made.
+
+167
+00:06:44.437 --> 00:06:46.347
+Here are the real numbers
+
+168
+00:06:46.347 --> 00:06:47.747
+for four sizes of n.
+
+169
+00:06:47.747 --> 00:06:49.887
+The columns show the total copies
+
+170
+00:06:49.887 --> 00:06:51.707
+and the copies per append
+
+171
+00:06:51.707 --> 00:06:53.077
+for each growth rule.
+
+172
+00:06:53.427 --> 00:06:54.482
+With doubling
+
+173
+00:06:54.557 --> 00:06:56.034
+a hundred appends made one hundred
+
+174
+00:06:56.077 --> 00:06:57.377
+twenty-seven copies.
+
+175
+00:06:57.377 --> 00:06:59.157
+For a thousand appends
+
+176
+00:06:59.157 --> 00:07:00.597
+one thousand twenty-three
+
+177
+00:07:00.597 --> 00:07:03.147
+about one copy per append.
+
+178
+00:07:03.497 --> 00:07:05.763
+The worst row is a thousand
+
+179
+00:07:05.847 --> 00:07:07.407
+and twenty-five items
+
+180
+00:07:07.407 --> 00:07:09.307
+two thousand forty-seven copies
+
+181
+00:07:09.307 --> 00:07:11.367
+almost exactly two per append.
+
+182
+00:07:11.367 --> 00:07:13.487
+It never goes above two
+
+183
+00:07:13.487 --> 00:07:15.657
+just as the aggregate argument promised.
+
+184
+00:07:16.007 --> 00:07:17.910
+Now adding one.
+
+185
+00:07:18.037 --> 00:07:21.248
+A thousand appends made four hundred
+
+186
+00:07:21.337 --> 00:07:23.317
+ninety-nine thousand, five hundred copies
+
+187
+00:07:23.317 --> 00:07:25.597
+about five hundred per append.
+
+188
+00:07:25.597 --> 00:07:27.497
+At four thousand
+
+189
+00:07:27.497 --> 00:07:30.637
+almost eight million copies
+
+190
+00:07:30.637 --> 00:07:32.537
+nearly two thousand per append.
+
+191
+00:07:32.537 --> 00:07:35.807
+That is n over two, and it keeps growing.
+
+192
+00:07:36.387 --> 00:07:37.717
+So in Java
+
+193
+00:07:37.717 --> 00:07:39.637
+the numbers agree with the analysis.
+
+194
+00:07:39.637 --> 00:07:42.637
+Doubling stays under two copies per append
+
+195
+00:07:42.637 --> 00:07:45.907
+and growing by one costs about n over two.
+
+196
+00:07:46.257 --> 00:07:48.266
+The tests in the repository check
+
+197
+00:07:48.327 --> 00:07:49.887
+exactly these bounds
+
+198
+00:07:49.887 --> 00:07:51.948
+at most two n copies for doubling
+
+199
+00:07:52.007 --> 00:07:54.235
+and exactly n times n minus one
+
+200
+00:07:54.307 --> 00:07:56.097
+over two for adding one.
+
+201
+00:07:56.447 --> 00:07:57.797
+In the next video
+
+202
+00:07:57.797 --> 00:07:59.917
+we learn how to prove claims like these
+
+203
+00:07:59.917 --> 00:08:02.687
+using induction and loop invariants.
+

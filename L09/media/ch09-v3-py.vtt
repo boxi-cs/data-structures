@@ -1,0 +1,798 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:04.780
+Your phone shows three ways
+
+2
+00:00:04.850 --> 00:00:06.050
+to get across town.
+
+3
+00:00:06.050 --> 00:00:08.110
+One has the fewest turns.
+
+4
+00:00:08.110 --> 00:00:10.530
+Another is shortest in kilometres.
+
+5
+00:00:10.530 --> 00:00:12.790
+The third is fastest
+
+6
+00:00:12.790 --> 00:00:14.700
+with the traffic as it is now.
+
+7
+00:00:15.050 --> 00:00:17.100
+Each road has a number on it
+
+8
+00:00:17.100 --> 00:00:18.475
+the time to drive it.
+
+9
+00:00:18.540 --> 00:00:20.803
+The fastest route is the one where those
+
+10
+00:00:20.860 --> 00:00:22.850
+numbers add up to the least.
+
+11
+00:00:23.200 --> 00:00:24.450
+Last time
+
+12
+00:00:24.450 --> 00:00:26.630
+breadth-first search counted edges
+
+13
+00:00:26.630 --> 00:00:28.650
+and gave us the route with the fewest.
+
+14
+00:00:28.650 --> 00:00:30.230
+It ignored the numbers.
+
+15
+00:00:30.230 --> 00:00:32.200
+Today we use them.
+
+16
+00:00:32.780 --> 00:00:35.820
+This is Dijkstra's algorithm.
+
+17
+00:00:36.170 --> 00:00:38.780
+We'll see the idea of tentative distances
+
+18
+00:00:38.780 --> 00:00:41.240
+a step-by-step run on our example
+
+19
+00:00:41.240 --> 00:00:44.650
+and why it works, and when it breaks.
+
+20
+00:00:45.230 --> 00:00:47.919
+Start from A, with distance zero.
+
+21
+00:00:48.000 --> 00:00:50.450
+Every other vertex gets a tentative
+
+22
+00:00:50.520 --> 00:00:53.830
+distance of infinity: we know no route yet.
+
+23
+00:00:54.180 --> 00:00:55.730
+Repeat one step.
+
+24
+00:00:55.730 --> 00:00:57.948
+Among the vertices not yet settled
+
+25
+00:00:58.010 --> 00:00:59.675
+pick the one with the smallest
+
+26
+00:00:59.730 --> 00:01:01.210
+tentative distance.
+
+27
+00:01:01.210 --> 00:01:03.980
+Settle it: its distance is final.
+
+28
+00:01:04.330 --> 00:01:06.917
+Then look at each of its edges.
+
+29
+00:01:07.000 --> 00:01:09.408
+If going through this vertex gives a neighbour
+
+30
+00:01:09.460 --> 00:01:11.740
+a cheaper route than it has now
+
+31
+00:01:11.740 --> 00:01:13.140
+update the neighbour.
+
+32
+00:01:13.140 --> 00:01:16.530
+That update is called relaxing the edge.
+
+33
+00:01:16.880 --> 00:01:19.281
+To pick the closest vertex quickly
+
+34
+00:01:19.350 --> 00:01:20.876
+keep the tentative distances
+
+35
+00:01:20.930 --> 00:01:23.280
+in a priority queue, a heap.
+
+36
+00:01:23.860 --> 00:01:26.950
+Relaxing an edge is one comparison.
+
+37
+00:01:26.950 --> 00:01:29.830
+We have settled u, with distance d.
+
+38
+00:01:29.830 --> 00:01:33.020
+The edge from u to v has weight w.
+
+39
+00:01:33.370 --> 00:01:36.476
+If d plus w is less than the distance
+
+40
+00:01:36.560 --> 00:01:38.160
+we have recorded for v
+
+41
+00:01:38.160 --> 00:01:40.360
+we have found a better route.
+
+42
+00:01:40.360 --> 00:01:43.770
+Record it, and remember u as v's parent.
+
+43
+00:01:44.120 --> 00:01:46.469
+Watch for the word tentative.
+
+44
+00:01:46.550 --> 00:01:48.739
+A vertex can be relaxed several
+
+45
+00:01:48.810 --> 00:01:50.739
+times before it is settled.
+
+46
+00:01:50.810 --> 00:01:53.133
+Its first distance is only the
+
+47
+00:01:53.210 --> 00:01:55.080
+best route found so far.
+
+48
+00:01:55.660 --> 00:01:56.850
+Our example.
+
+49
+00:01:56.850 --> 00:01:58.950
+Settle A, at zero.
+
+50
+00:01:58.950 --> 00:02:03.180
+Relax its edges: B gets six, D gets three.
+
+51
+00:02:03.530 --> 00:02:07.540
+The closest unsettled vertex is D, at three.
+
+52
+00:02:07.540 --> 00:02:08.520
+Settle it.
+
+53
+00:02:08.520 --> 00:02:12.130
+Relax: E gets sixteen, F gets eight.
+
+54
+00:02:12.480 --> 00:02:15.650
+Next is B, at six.
+
+55
+00:02:15.650 --> 00:02:19.110
+Relax: C gets fourteen.
+
+56
+00:02:19.110 --> 00:02:21.990
+And E: six plus seven is thirteen
+
+57
+00:02:21.990 --> 00:02:23.570
+which beats sixteen.
+
+58
+00:02:23.570 --> 00:02:25.790
+E improves, to thirteen
+
+59
+00:02:25.790 --> 00:02:27.880
+with B as its new parent.
+
+60
+00:02:28.230 --> 00:02:31.060
+Next is F, at eight.
+
+61
+00:02:31.060 --> 00:02:32.350
+G gets twenty.
+
+62
+00:02:32.700 --> 00:02:36.350
+Then E, at thirteen, and C, at fourteen.
+
+63
+00:02:36.350 --> 00:02:38.670
+They have nothing left to improve.
+
+64
+00:02:38.670 --> 00:02:41.020
+Finally G, at twenty.
+
+65
+00:02:41.370 --> 00:02:47.180
+The final distances: A zero, D three, B six
+
+66
+00:02:47.180 --> 00:02:53.490
+F eight, E thirteen, C fourteen, G twenty.
+
+67
+00:02:54.070 --> 00:02:55.723
+There is a catch.
+
+68
+00:02:55.820 --> 00:02:58.155
+A heap cannot change the priority of
+
+69
+00:02:58.220 --> 00:03:00.790
+an entry that is already inside it.
+
+70
+00:03:01.140 --> 00:03:04.770
+So when E improved from sixteen to thirteen
+
+71
+00:03:04.770 --> 00:03:07.070
+we added a second entry for E
+
+72
+00:03:07.070 --> 00:03:09.500
+and left the old one in the heap.
+
+73
+00:03:09.850 --> 00:03:13.200
+Later the old entry, E at sixteen
+
+74
+00:03:13.200 --> 00:03:14.140
+comes to the front.
+
+75
+00:03:14.140 --> 00:03:15.780
+E is already settled
+
+76
+00:03:15.780 --> 00:03:18.240
+so we recognise it as stale and skip it.
+
+77
+00:03:18.240 --> 00:03:21.010
+This trick is called lazy deletion.
+
+78
+00:03:21.360 --> 00:03:24.470
+In our run, eight pushes, eight pops
+
+79
+00:03:24.470 --> 00:03:25.880
+one of them stale.
+
+80
+00:03:26.460 --> 00:03:28.530
+Every time we improved a vertex
+
+81
+00:03:28.530 --> 00:03:29.970
+we remembered its parent.
+
+82
+00:03:29.970 --> 00:03:31.690
+To get the route to G
+
+83
+00:03:31.690 --> 00:03:36.140
+follow the parents back: F, then D, then A.
+
+84
+00:03:36.490 --> 00:03:41.180
+The route is A, D, F, G, cost twenty.
+
+85
+00:03:41.180 --> 00:03:44.720
+Breadth-first search gave us A, B, E, G
+
+86
+00:03:44.720 --> 00:03:46.160
+cost twenty-three.
+
+87
+00:03:46.160 --> 00:03:48.690
+Same number of edges, different cost.
+
+88
+00:03:49.040 --> 00:03:52.430
+The parents of all the vertices form a tree
+
+89
+00:03:52.430 --> 00:03:54.150
+the shortest-path tree.
+
+90
+00:03:54.150 --> 00:03:57.040
+In our example its weight is forty-one.
+
+91
+00:03:57.620 --> 00:03:59.288
+Why is the settled distance
+
+92
+00:03:59.350 --> 00:04:01.150
+really the shortest?
+
+93
+00:04:01.150 --> 00:04:02.830
+Suppose we settle u
+
+94
+00:04:02.830 --> 00:04:06.340
+the closest unsettled vertex, at distance d.
+
+95
+00:04:06.690 --> 00:04:08.928
+Any other route to u must leave
+
+96
+00:04:09.000 --> 00:04:10.440
+the settled region somewhere
+
+97
+00:04:10.440 --> 00:04:12.820
+through a vertex that is not settled yet.
+
+98
+00:04:12.820 --> 00:04:15.720
+That vertex is at least as far as u
+
+99
+00:04:15.720 --> 00:04:17.570
+because u was the closest.
+
+100
+00:04:17.920 --> 00:04:19.496
+And the rest of the route can
+
+101
+00:04:19.550 --> 00:04:21.090
+only add to the total
+
+102
+00:04:21.090 --> 00:04:22.490
+because weights are not negative.
+
+103
+00:04:22.490 --> 00:04:25.000
+So no other route can beat d.
+
+104
+00:04:25.350 --> 00:04:27.125
+The argument uses one assumption
+
+105
+00:04:27.180 --> 00:04:30.870
+in an essential way: no negative weights.
+
+106
+00:04:31.450 --> 00:04:33.204
+Here is what goes wrong
+
+107
+00:04:33.280 --> 00:04:34.800
+with a negative edge.
+
+108
+00:04:34.800 --> 00:04:37.940
+From S, an edge to A of weight two
+
+109
+00:04:37.940 --> 00:04:39.960
+an edge to B of weight three
+
+110
+00:04:39.960 --> 00:04:42.340
+an edge from A to C of weight three
+
+111
+00:04:42.340 --> 00:04:46.530
+and an edge from B back to A of minus two.
+
+112
+00:04:46.880 --> 00:04:49.070
+Dijkstra settles A at two
+
+113
+00:04:49.070 --> 00:04:51.350
+and relaxes C to five.
+
+114
+00:04:51.350 --> 00:04:53.921
+Then it settles B, at three
+
+115
+00:04:54.010 --> 00:04:55.842
+and finds that A would cost
+
+116
+00:04:55.910 --> 00:04:57.790
+only one through B.
+
+117
+00:04:57.790 --> 00:05:00.030
+Too late: A is already settled
+
+118
+00:05:00.030 --> 00:05:02.840
+and C has already been priced through A.
+
+119
+00:05:03.190 --> 00:05:05.600
+It reports C at five.
+
+120
+00:05:05.600 --> 00:05:09.920
+But the route S, B, A, C costs three
+
+121
+00:05:09.920 --> 00:05:12.839
+minus two, plus three: four.
+
+122
+00:05:12.940 --> 00:05:14.534
+The settled vertex A was
+
+123
+00:05:14.600 --> 00:05:15.790
+never looked at again.
+
+124
+00:05:16.140 --> 00:05:18.250
+A different algorithm, Bellman–Ford
+
+125
+00:05:18.250 --> 00:05:21.430
+handles negative edges, at a higher cost.
+
+126
+00:05:21.430 --> 00:05:23.330
+For non-negative weights
+
+127
+00:05:23.330 --> 00:05:24.540
+Dijkstra is the tool.
+
+128
+00:05:25.120 --> 00:05:27.010
+What does it cost?
+
+129
+00:05:27.010 --> 00:05:29.930
+Each edge is relaxed at most once
+
+130
+00:05:29.930 --> 00:05:31.548
+when its tail is settled.
+
+131
+00:05:31.610 --> 00:05:33.393
+Each relaxation can add
+
+132
+00:05:33.470 --> 00:05:35.360
+one entry to the heap.
+
+133
+00:05:35.710 --> 00:05:37.646
+A heap operation costs the
+
+134
+00:05:37.720 --> 00:05:39.380
+logarithm of its size.
+
+135
+00:05:39.380 --> 00:05:42.680
+So the total is on the order of V plus E
+
+136
+00:05:42.680 --> 00:05:44.550
+times log V.
+
+137
+00:05:44.900 --> 00:05:45.912
+Real numbers
+
+138
+00:05:45.990 --> 00:05:48.302
+for a graph of a thousand vertices
+
+139
+00:05:48.370 --> 00:05:50.620
+and three thousand edges
+
+140
+00:05:50.710 --> 00:05:52.073
+one thousand six hundred
+
+141
+00:05:52.130 --> 00:05:53.390
+three pushes and pops
+
+142
+00:05:53.390 --> 00:05:55.230
+of which six hundred three were stale.
+
+143
+00:05:55.230 --> 00:05:57.430
+A few thousand heap operations
+
+144
+00:05:57.430 --> 00:05:58.620
+not millions.
+
+145
+00:05:59.200 --> 00:06:00.370
+To sum up.
+
+146
+00:06:00.370 --> 00:06:03.510
+Keep a tentative distance for every vertex.
+
+147
+00:06:03.510 --> 00:06:05.250
+Repeatedly settle the closest one
+
+148
+00:06:05.250 --> 00:06:06.840
+and relax its edges.
+
+149
+00:06:07.190 --> 00:06:09.220
+A heap makes the choice fast
+
+150
+00:06:09.220 --> 00:06:11.960
+lazy deletion handles improved entries.
+
+151
+00:06:11.960 --> 00:06:13.400
+Parents give the route.
+
+152
+00:06:13.400 --> 00:06:16.550
+All of this needs non-negative weights.
+
+153
+00:06:16.900 --> 00:06:19.349
+Next: connecting everything as
+
+154
+00:06:19.430 --> 00:06:20.810
+cheaply as possible
+
+155
+00:06:20.810 --> 00:06:22.820
+with minimum spanning trees.
+
+156
+00:06:23.447 --> 00:06:26.247
+Let's write Dijkstra's algorithm in Python.
+
+157
+00:06:26.827 --> 00:06:30.494
+First a check: negative weights are refused
+
+158
+00:06:30.577 --> 00:06:31.561
+because the algorithm would
+
+159
+00:06:31.597 --> 00:06:32.827
+give wrong answers.
+
+160
+00:06:33.177 --> 00:06:35.727
+Every distance starts at infinity
+
+161
+00:06:35.727 --> 00:06:38.847
+float of inf, except the source, at zero.
+
+162
+00:06:38.847 --> 00:06:43.107
+The heap holds pairs: distance, then vertex.
+
+163
+00:06:43.107 --> 00:06:45.427
+Python compares tuples element by element
+
+164
+00:06:45.427 --> 00:06:47.817
+so the smallest distance comes first.
+
+165
+00:06:48.397 --> 00:06:50.967
+Heap pop gives the closest entry.
+
+166
+00:06:50.967 --> 00:06:53.167
+If the vertex is already done
+
+167
+00:06:53.167 --> 00:06:54.367
+this entry is stale
+
+168
+00:06:54.367 --> 00:06:56.587
+so we count it and skip it.
+
+169
+00:06:56.587 --> 00:06:58.797
+Otherwise we mark the vertex done.
+
+170
+00:06:59.147 --> 00:07:00.620
+For each neighbour
+
+171
+00:07:00.697 --> 00:07:02.630
+if distance plus weight beats
+
+172
+00:07:02.697 --> 00:07:04.037
+the recorded distance
+
+173
+00:07:04.037 --> 00:07:06.857
+we update the distance, record the parent
+
+174
+00:07:06.857 --> 00:07:08.587
+and push a new entry.
+
+175
+00:07:08.937 --> 00:07:12.387
+The module heap Q has no decrease-key
+
+176
+00:07:12.387 --> 00:07:15.257
+so lazy deletion is the standard answer.
+
+177
+00:07:15.837 --> 00:07:18.668
+The function path to follows parents
+
+178
+00:07:18.747 --> 00:07:21.707
+back from the target, and reverses the list.
+
+179
+00:07:21.707 --> 00:07:25.197
+For G: A, D, F, G, cost twenty.
+
+180
+00:07:25.777 --> 00:07:27.647
+Here is the real trace.
+
+181
+00:07:27.647 --> 00:07:30.167
+Pop A, relax B and D.
+
+182
+00:07:30.167 --> 00:07:34.647
+Pop D, relax E to sixteen and F to eight.
+
+183
+00:07:34.647 --> 00:07:39.527
+Pop B, relax C, and E improves to thirteen.
+
+184
+00:07:39.527 --> 00:07:39.927
+Later
+
+185
+00:07:39.927 --> 00:07:42.737
+the stale entry for E at sixteen is skipped.
+
+186
+00:07:43.087 --> 00:07:47.047
+Eight pushes, eight pops, one stale.
+
+187
+00:07:47.627 --> 00:07:49.157
+With the check turned off
+
+188
+00:07:49.157 --> 00:07:52.377
+a negative edge gives C equal to five.
+
+189
+00:07:52.377 --> 00:07:54.917
+Bellman–Ford, in the same file, gives four.
+
+190
+00:07:54.917 --> 00:07:57.187
+The check is there for a reason.
+
+191
+00:07:57.767 --> 00:07:59.617
+In the standard library
+
+192
+00:07:59.617 --> 00:08:01.817
+heap Q is the priority queue.
+
+193
+00:08:01.817 --> 00:08:04.717
+It is a min-heap on a plain list
+
+194
+00:08:04.717 --> 00:08:06.937
+and tuples are compared in order
+
+195
+00:08:06.937 --> 00:08:10.367
+so distance first, vertex second.
+
+196
+00:08:10.947 --> 00:08:15.017
+So in Python: heap Q with lazy deletion
+
+197
+00:08:15.017 --> 00:08:16.557
+parents for the route
+
+198
+00:08:16.557 --> 00:08:18.587
+and no negative weights.
+
+199
+00:08:18.937 --> 00:08:22.017
+Next: minimum spanning trees.
+

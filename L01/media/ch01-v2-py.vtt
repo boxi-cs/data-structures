@@ -1,0 +1,890 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:04.821
+Last time we said that Big-O
+
+2
+00:00:04.890 --> 00:00:06.750
+drops constant factors.
+
+3
+00:00:06.750 --> 00:00:08.540
+Is that always honest?
+
+4
+00:00:08.890 --> 00:00:10.580
+Take two programs.
+
+5
+00:00:10.580 --> 00:00:14.200
+Program P takes one hundred n steps.
+
+6
+00:00:14.200 --> 00:00:17.650
+Program Q takes n squared steps.
+
+7
+00:00:18.000 --> 00:00:21.366
+With ten items, P needs a thousand steps
+
+8
+00:00:21.450 --> 00:00:23.830
+and Q only a hundred.
+
+9
+00:00:23.830 --> 00:00:25.070
+Q wins.
+
+10
+00:00:25.070 --> 00:00:28.170
+At a hundred items they tie
+
+11
+00:00:28.170 --> 00:00:30.250
+ten thousand steps each.
+
+12
+00:00:30.250 --> 00:00:32.726
+At a thousand items
+
+13
+00:00:32.850 --> 00:00:34.867
+P needs a hundred thousand steps
+
+14
+00:00:34.930 --> 00:00:37.630
+and Q needs a million.
+
+15
+00:00:37.630 --> 00:00:39.120
+P wins.
+
+16
+00:00:39.720 --> 00:00:43.990
+P is big-O of n, Q is big-O of n squared
+
+17
+00:00:43.990 --> 00:00:46.290
+and Big-O says P is better.
+
+18
+00:00:46.290 --> 00:00:49.390
+Yet for small inputs, Q was faster.
+
+19
+00:00:49.390 --> 00:00:51.480
+So who is right?
+
+20
+00:00:51.830 --> 00:00:52.980
+Both.
+
+21
+00:00:52.980 --> 00:00:54.000
+To see why
+
+22
+00:00:54.000 --> 00:00:57.020
+we have to say exactly what Big-O claims.
+
+23
+00:00:57.020 --> 00:00:59.310
+And then we can prove it.
+
+24
+00:00:59.890 --> 00:01:01.433
+In this video we'll see
+
+25
+00:01:01.500 --> 00:01:02.980
+the formal definition
+
+26
+00:01:02.980 --> 00:01:04.475
+and what a witness is
+
+27
+00:01:04.540 --> 00:01:06.498
+how to prove a bound and
+
+28
+00:01:06.580 --> 00:01:09.420
+how to disprove one, and the full family
+
+29
+00:01:09.420 --> 00:01:11.930
+big-O, omega and theta.
+
+30
+00:01:12.510 --> 00:01:14.206
+Here is the definition.
+
+31
+00:01:14.280 --> 00:01:18.623
+We write f of n is big-O of g of n if
+
+32
+00:01:18.740 --> 00:01:21.680
+there are constants c and n zero
+
+33
+00:01:21.680 --> 00:01:25.440
+such that f of n is at most c times g of n
+
+34
+00:01:25.440 --> 00:01:27.870
+for every n from n zero onward.
+
+35
+00:01:28.220 --> 00:01:30.550
+Two constants, and a promise
+
+36
+00:01:30.550 --> 00:01:32.490
+from n zero on
+
+37
+00:01:32.490 --> 00:01:35.310
+f never rises above c times g.
+
+38
+00:01:35.310 --> 00:01:38.870
+We call the pair c and n zero a witness.
+
+39
+00:01:38.870 --> 00:01:41.670
+To prove f is big-O of g
+
+40
+00:01:41.670 --> 00:01:42.690
+you show a witness.
+
+41
+00:01:42.690 --> 00:01:44.500
+That is the whole proof.
+
+42
+00:01:44.850 --> 00:01:46.266
+Notice what the definition
+
+43
+00:01:46.320 --> 00:01:48.420
+says about small n.
+
+44
+00:01:48.420 --> 00:01:49.482
+Nothing.
+
+45
+00:01:49.600 --> 00:01:51.162
+Everything before n zero is
+
+46
+00:01:51.220 --> 00:01:52.400
+allowed to break the rule.
+
+47
+00:01:52.400 --> 00:01:53.600
+Keep that in mind
+
+48
+00:01:53.600 --> 00:01:56.010
+it is half of the answer to our question.
+
+49
+00:01:56.590 --> 00:01:58.917
+Let's prove that three n squared plus
+
+50
+00:01:58.980 --> 00:02:01.280
+five n is big-O of n squared.
+
+51
+00:02:01.280 --> 00:02:04.310
+We need to find c and n zero.
+
+52
+00:02:04.660 --> 00:02:07.350
+The five n term is the problem.
+
+53
+00:02:07.350 --> 00:02:11.190
+But for any n that is at least five
+
+54
+00:02:11.190 --> 00:02:13.590
+five n is at most n squared
+
+55
+00:02:13.590 --> 00:02:16.530
+because n squared is n times n
+
+56
+00:02:16.530 --> 00:02:18.740
+and n is at least five.
+
+57
+00:02:19.090 --> 00:02:21.860
+So for n at least five
+
+58
+00:02:21.980 --> 00:02:24.513
+three n squared plus five n is at most
+
+59
+00:02:24.580 --> 00:02:26.500
+three n squared plus n squared
+
+60
+00:02:26.500 --> 00:02:28.130
+which is four n squared.
+
+61
+00:02:28.480 --> 00:02:32.030
+There is our witness: c equals four
+
+62
+00:02:32.030 --> 00:02:35.050
+and n zero equals five.
+
+63
+00:02:35.050 --> 00:02:36.901
+Check it at n equals five.
+
+64
+00:02:36.970 --> 00:02:39.338
+Three times twenty-five plus five
+
+65
+00:02:39.410 --> 00:02:41.834
+times five is exactly a hundred
+
+66
+00:02:41.910 --> 00:02:43.354
+and four times twenty-five
+
+67
+00:02:43.410 --> 00:02:45.010
+is also a hundred.
+
+68
+00:02:45.010 --> 00:02:46.530
+Right on the edge.
+
+69
+00:02:46.530 --> 00:02:49.090
+At n equals four it breaks
+
+70
+00:02:49.090 --> 00:02:51.930
+sixty-eight is more than sixty-four.
+
+71
+00:02:51.930 --> 00:02:54.490
+So with c equal to four
+
+72
+00:02:54.490 --> 00:02:57.640
+five is the smallest n zero that works.
+
+73
+00:02:58.240 --> 00:03:00.690
+And with c equal to three?
+
+74
+00:03:00.690 --> 00:03:03.930
+It can never work, because of the five n.
+
+75
+00:03:03.930 --> 00:03:05.390
+Witnesses are not unique
+
+76
+00:03:05.390 --> 00:03:07.680
+but c has to be large enough.
+
+77
+00:03:08.260 --> 00:03:11.430
+How do you show that something is not big-O?
+
+78
+00:03:11.430 --> 00:03:13.670
+You assume a witness exists
+
+79
+00:03:13.670 --> 00:03:15.538
+and find a contradiction.
+
+80
+00:03:15.610 --> 00:03:17.613
+Let's show that n cubed is
+
+81
+00:03:17.690 --> 00:03:20.020
+not big-O of n squared.
+
+82
+00:03:20.370 --> 00:03:23.220
+Suppose some c and n zero work.
+
+83
+00:03:23.220 --> 00:03:26.880
+Then n cubed is at most c times n squared
+
+84
+00:03:26.880 --> 00:03:29.570
+for all n from n zero on.
+
+85
+00:03:29.920 --> 00:03:32.688
+Now pick n to be the larger
+
+86
+00:03:32.790 --> 00:03:35.610
+of n zero and c plus one.
+
+87
+00:03:35.610 --> 00:03:39.230
+Then n cubed is n times n squared
+
+88
+00:03:39.230 --> 00:03:41.230
+and n is bigger than c.
+
+89
+00:03:41.230 --> 00:03:45.890
+So n cubed is bigger than c times n squared.
+
+90
+00:03:45.890 --> 00:03:47.880
+That contradicts the witness.
+
+91
+00:03:48.480 --> 00:03:51.490
+No constant can rescue n cubed.
+
+92
+00:03:51.490 --> 00:03:53.509
+However large c is
+
+93
+00:03:53.610 --> 00:03:56.138
+n cubed overtakes c times n squared
+
+94
+00:03:56.210 --> 00:03:58.280
+as soon as n passes c.
+
+95
+00:03:58.860 --> 00:04:00.810
+Big-O is an upper bound.
+
+96
+00:04:00.810 --> 00:04:02.700
+It has two companions.
+
+97
+00:04:03.050 --> 00:04:05.500
+Omega is the lower bound
+
+98
+00:04:05.500 --> 00:04:09.060
+f is at least c times g from some point on.
+
+99
+00:04:09.060 --> 00:04:11.180
+And theta is both at once
+
+100
+00:04:11.180 --> 00:04:14.620
+f is squeezed between two multiples of g.
+
+101
+00:04:14.620 --> 00:04:17.250
+Theta says g is the exact shape.
+
+102
+00:04:17.600 --> 00:04:19.172
+For our example
+
+103
+00:04:19.270 --> 00:04:20.973
+three n squared is below three
+
+104
+00:04:21.030 --> 00:04:22.430
+n squared plus five n
+
+105
+00:04:22.430 --> 00:04:24.870
+which is below four n squared
+
+106
+00:04:24.870 --> 00:04:26.450
+from n equals five on.
+
+107
+00:04:26.450 --> 00:04:29.430
+So the function is theta of n squared
+
+108
+00:04:29.430 --> 00:04:30.440
+not just big-O.
+
+109
+00:04:30.790 --> 00:04:32.244
+One habit to watch.
+
+110
+00:04:32.320 --> 00:04:34.910
+People say this algorithm is big-O of
+
+111
+00:04:34.980 --> 00:04:37.576
+n squared when they mean theta.
+
+112
+00:04:37.660 --> 00:04:39.690
+But big-O alone only promises
+
+113
+00:04:39.760 --> 00:04:41.091
+an upper limit.
+
+114
+00:04:41.180 --> 00:04:43.079
+An algorithm that takes n steps
+
+115
+00:04:43.140 --> 00:04:45.400
+is also big-O of n squared.
+
+116
+00:04:45.400 --> 00:04:47.510
+True, but not useful.
+
+117
+00:04:48.090 --> 00:04:49.782
+Here are the shapes that come
+
+118
+00:04:49.840 --> 00:04:51.160
+up again and again
+
+119
+00:04:51.160 --> 00:04:54.090
+from slowest growing to fastest growing.
+
+120
+00:04:54.440 --> 00:04:55.490
+One.
+
+121
+00:04:55.490 --> 00:04:56.950
+Log n.
+
+122
+00:04:56.950 --> 00:04:57.950
+n.
+
+123
+00:04:57.950 --> 00:04:59.390
+n log n.
+
+124
+00:04:59.390 --> 00:05:00.990
+n squared.
+
+125
+00:05:00.990 --> 00:05:02.400
+And two to the n.
+
+126
+00:05:02.750 --> 00:05:04.900
+To see how far apart they are
+
+127
+00:05:04.900 --> 00:05:07.660
+take n equal to twenty.
+
+128
+00:05:07.660 --> 00:05:08.360
+One.
+
+129
+00:05:08.360 --> 00:05:10.400
+About four.
+
+130
+00:05:10.400 --> 00:05:11.100
+Twenty.
+
+131
+00:05:11.100 --> 00:05:13.580
+About eighty-six.
+
+132
+00:05:13.580 --> 00:05:14.800
+Four hundred.
+
+133
+00:05:14.800 --> 00:05:18.150
+And two to the twenty is over a million.
+
+134
+00:05:18.750 --> 00:05:20.465
+Each class beats the one before
+
+135
+00:05:20.520 --> 00:05:22.850
+it once n is large enough.
+
+136
+00:05:22.940 --> 00:05:25.024
+That is why we can compare algorithms
+
+137
+00:05:25.080 --> 00:05:26.310
+by their shape.
+
+138
+00:05:26.890 --> 00:05:28.500
+Now back to the question.
+
+139
+00:05:28.500 --> 00:05:31.170
+Is it honest to drop constants?
+
+140
+00:05:31.520 --> 00:05:34.870
+As a statement about large n, yes.
+
+141
+00:05:34.870 --> 00:05:39.030
+Program P, a hundred n, beats Q, n squared
+
+142
+00:05:39.030 --> 00:05:40.760
+once n passes a hundred.
+
+143
+00:05:41.110 --> 00:05:43.820
+But if P had been a million n
+
+144
+00:05:43.820 --> 00:05:47.180
+the crossover would be at a million items.
+
+145
+00:05:47.180 --> 00:05:49.020
+For smaller inputs
+
+146
+00:05:49.020 --> 00:05:51.470
+the n squared program would be faster.
+
+147
+00:05:51.820 --> 00:05:55.127
+So dropping constants becomes a lie only
+
+148
+00:05:55.210 --> 00:05:57.470
+if you forget what Big-O promises
+
+149
+00:05:57.470 --> 00:06:00.810
+behavior from n zero onward.
+
+150
+00:06:00.810 --> 00:06:03.450
+Where n zero is can be huge
+
+151
+00:06:03.450 --> 00:06:05.450
+and the definition does not tell you.
+
+152
+00:06:05.450 --> 00:06:07.213
+When inputs are small
+
+153
+00:06:07.290 --> 00:06:08.754
+or the constants differ by
+
+154
+00:06:08.810 --> 00:06:11.580
+orders of magnitude, measure.
+
+155
+00:06:12.160 --> 00:06:13.510
+To sum up.
+
+156
+00:06:13.510 --> 00:06:15.990
+Big-O has a precise definition
+
+157
+00:06:15.990 --> 00:06:18.150
+constants c and n zero
+
+158
+00:06:18.150 --> 00:06:22.080
+and f below c times g from n zero on.
+
+159
+00:06:22.430 --> 00:06:24.960
+To prove a bound, find a witness.
+
+160
+00:06:24.960 --> 00:06:26.380
+To disprove one
+
+161
+00:06:26.380 --> 00:06:28.950
+assume a witness and find a contradiction.
+
+162
+00:06:29.300 --> 00:06:32.670
+Omega is the lower bound, theta is both
+
+163
+00:06:32.670 --> 00:06:35.540
+and Big-O promises nothing about small n.
+
+164
+00:06:35.890 --> 00:06:38.420
+Next, we'll look at another kind of cost
+
+165
+00:06:38.420 --> 00:06:41.020
+what one operation costs on average
+
+166
+00:06:41.020 --> 00:06:43.640
+when most are cheap and a few are expensive.
+
+167
+00:06:43.640 --> 00:06:46.050
+That is amortized analysis.
+
+168
+00:06:46.677 --> 00:06:49.387
+Now let's turn the definition into code
+
+169
+00:06:49.387 --> 00:06:51.757
+in Python, and test our own proofs.
+
+170
+00:06:52.337 --> 00:06:54.085
+The function first_violation
+
+171
+00:06:54.147 --> 00:06:56.467
+takes two functions, f and g
+
+172
+00:06:56.467 --> 00:06:59.747
+the constants c and n zero, and a limit.
+
+173
+00:06:59.747 --> 00:07:03.307
+It walks n from n zero up to the limit.
+
+174
+00:07:03.307 --> 00:07:06.567
+If f of n is above c times g of n
+
+175
+00:07:06.567 --> 00:07:09.687
+that n breaks the witness, so we return it.
+
+176
+00:07:09.687 --> 00:07:12.177
+If nothing breaks, it returns None.
+
+177
+00:07:12.527 --> 00:07:14.526
+is_witness just asks whether
+
+178
+00:07:14.597 --> 00:07:16.157
+there is no violation.
+
+179
+00:07:16.157 --> 00:07:20.007
+And ratio gives f of n divided by g of n.
+
+180
+00:07:20.587 --> 00:07:22.070
+Now our examples.
+
+181
+00:07:22.157 --> 00:07:24.269
+With c equal to four and
+
+182
+00:07:24.357 --> 00:07:27.917
+n zero equal to five, is_witness says True
+
+183
+00:07:27.917 --> 00:07:30.307
+all the way up to ten thousand.
+
+184
+00:07:30.657 --> 00:07:32.907
+With n zero equal to four
+
+185
+00:07:32.907 --> 00:07:35.887
+the first violation is n equal to four
+
+186
+00:07:35.887 --> 00:07:37.807
+exactly as we found by hand.
+
+187
+00:07:37.807 --> 00:07:39.687
+With c equal to three
+
+188
+00:07:39.687 --> 00:07:42.627
+the first violation is n equal to one.
+
+189
+00:07:42.627 --> 00:07:44.337
+It never works.
+
+190
+00:07:44.687 --> 00:07:47.982
+And for n cubed against a hundred n squared
+
+191
+00:07:48.057 --> 00:07:50.205
+the first violation is n equal
+
+192
+00:07:50.277 --> 00:07:51.817
+to one hundred and one.
+
+193
+00:07:51.817 --> 00:07:54.727
+Just after c, as the proof predicted.
+
+194
+00:07:55.307 --> 00:07:57.291
+This table shows f of n
+
+195
+00:07:57.377 --> 00:07:59.037
+divided by n squared.
+
+196
+00:07:59.037 --> 00:08:01.357
+It starts at three and a half
+
+197
+00:08:01.357 --> 00:08:02.977
+and settles toward three
+
+198
+00:08:02.977 --> 00:08:05.697
+three point oh five, three point oh oh five
+
+199
+00:08:05.697 --> 00:08:07.626
+three point oh oh oh five.
+
+200
+00:08:07.697 --> 00:08:09.731
+That is what theta of n squared
+
+201
+00:08:09.797 --> 00:08:11.477
+looks like in numbers.
+
+202
+00:08:11.477 --> 00:08:14.267
+The ratio stays between two constants.
+
+203
+00:08:14.617 --> 00:08:18.487
+The last column is n cubed over n squared.
+
+204
+00:08:18.487 --> 00:08:21.907
+It is just n, and it keeps growing.
+
+205
+00:08:21.907 --> 00:08:23.457
+No constant bounds it.
+
+206
+00:08:24.037 --> 00:08:25.207
+One warning.
+
+207
+00:08:25.207 --> 00:08:27.947
+This code checks only up to the limit.
+
+208
+00:08:27.947 --> 00:08:30.907
+If is_witness returns True
+
+209
+00:08:30.907 --> 00:08:34.037
+that is evidence, not a proof.
+
+210
+00:08:34.387 --> 00:08:36.917
+With c equal to a hundred
+
+211
+00:08:36.917 --> 00:08:39.537
+n cubed passes the check up to a hundred.
+
+212
+00:08:39.537 --> 00:08:41.942
+And fails at a hundred and one.
+
+213
+00:08:42.017 --> 00:08:43.997
+The proof is the algebra from the
+
+214
+00:08:44.057 --> 00:08:45.257
+first half of this video.
+
+215
+00:08:45.257 --> 00:08:47.537
+The code helps you find a witness
+
+216
+00:08:47.537 --> 00:08:50.427
+or find the n where your guess breaks.
+
+217
+00:08:51.007 --> 00:08:53.377
+So you now have the definition
+
+218
+00:08:53.377 --> 00:08:54.937
+a proof by witness
+
+219
+00:08:54.937 --> 00:08:56.131
+a proof by contradiction
+
+220
+00:08:56.177 --> 00:08:58.177
+and a small tool to check
+
+221
+00:08:58.257 --> 00:08:59.687
+your guesses in Python.
+
+222
+00:09:00.037 --> 00:09:03.037
+Next time, amortized analysis.
+

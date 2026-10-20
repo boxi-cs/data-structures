@@ -1,0 +1,894 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:04.830
+Suppose you keep a phone book
+
+2
+00:00:04.830 --> 00:00:08.030
+and you need two operations: look a name up
+
+3
+00:00:08.030 --> 00:00:09.940
+and add a new name.
+
+4
+00:00:10.290 --> 00:00:13.260
+If you keep the names in a sorted array
+
+5
+00:00:13.260 --> 00:00:14.200
+lookup is fast.
+
+6
+00:00:14.200 --> 00:00:16.071
+You can use binary search
+
+7
+00:00:16.140 --> 00:00:18.104
+and find any name in about
+
+8
+00:00:18.180 --> 00:00:20.714
+log base two of n steps.
+
+9
+00:00:20.820 --> 00:00:23.264
+But adding a name means shifting
+
+10
+00:00:23.340 --> 00:00:25.040
+everyone after it
+
+11
+00:00:25.040 --> 00:00:27.210
+which takes up to n steps.
+
+12
+00:00:27.560 --> 00:00:29.490
+If you keep them in a linked list
+
+13
+00:00:29.490 --> 00:00:30.850
+adding is fast
+
+14
+00:00:30.850 --> 00:00:34.030
+but finding a name means walking the list
+
+15
+00:00:34.030 --> 00:00:35.880
+which takes up to n steps.
+
+16
+00:00:36.230 --> 00:00:39.310
+Can we get both operations fast at once?
+
+17
+00:00:39.890 --> 00:00:42.770
+The answer is the binary search tree.
+
+18
+00:00:43.120 --> 00:00:44.975
+In this video we'll see the
+
+19
+00:00:45.010 --> 00:00:46.290
+rule that defines it
+
+20
+00:00:46.290 --> 00:00:47.850
+how to search for a key
+
+21
+00:00:47.850 --> 00:00:49.600
+and how to insert one.
+
+22
+00:00:50.180 --> 00:00:52.187
+A binary search tree is a binary
+
+23
+00:00:52.250 --> 00:00:54.230
+tree with one extra rule.
+
+24
+00:00:54.230 --> 00:00:55.397
+For every node
+
+25
+00:00:55.470 --> 00:00:58.272
+all the keys in its left subtree are
+
+26
+00:00:58.350 --> 00:01:00.011
+smaller than the node's key
+
+27
+00:01:00.070 --> 00:01:01.694
+and all the keys in its right
+
+28
+00:01:01.750 --> 00:01:03.380
+subtree are larger.
+
+29
+00:01:03.730 --> 00:01:06.340
+Here is an example with seven keys.
+
+30
+00:01:06.340 --> 00:01:08.960
+Look at fifty at the root.
+
+31
+00:01:08.960 --> 00:01:12.320
+Everything on its left is smaller, thirty
+
+32
+00:01:12.320 --> 00:01:13.540
+twenty and forty.
+
+33
+00:01:13.540 --> 00:01:17.040
+Everything on its right is larger, seventy
+
+34
+00:01:17.040 --> 00:01:18.420
+sixty and eighty.
+
+35
+00:01:18.420 --> 00:01:20.880
+And the same rule holds again at thirty
+
+36
+00:01:20.880 --> 00:01:22.610
+and at seventy.
+
+37
+00:01:22.960 --> 00:01:24.794
+Notice the words all the
+
+38
+00:01:24.870 --> 00:01:26.184
+keys in the subtree.
+
+39
+00:01:26.250 --> 00:01:27.971
+It is not enough to compare a
+
+40
+00:01:28.030 --> 00:01:29.440
+node with its two children.
+
+41
+00:01:29.790 --> 00:01:31.180
+Look at this tree.
+
+42
+00:01:31.180 --> 00:01:33.920
+Thirty is smaller than fifty, fine.
+
+43
+00:01:33.920 --> 00:01:37.100
+Sixty is larger than thirty, also fine.
+
+44
+00:01:37.100 --> 00:01:40.680
+But sixty sits in the left subtree of fifty
+
+45
+00:01:40.680 --> 00:01:43.260
+and sixty is larger than fifty.
+
+46
+00:01:43.260 --> 00:01:45.900
+Every parent and child pair looks correct
+
+47
+00:01:45.900 --> 00:01:47.990
+and the tree is still broken.
+
+48
+00:01:48.340 --> 00:01:49.850
+Remember the inorder walk
+
+49
+00:01:49.910 --> 00:01:51.129
+from the last video.
+
+50
+00:01:51.190 --> 00:01:53.502
+In a correct search tree it visits
+
+51
+00:01:53.570 --> 00:01:56.450
+the keys in sorted order: twenty, thirty
+
+52
+00:01:56.450 --> 00:01:59.178
+forty, fifty, sixty, seventy, eighty.
+
+53
+00:01:59.250 --> 00:02:01.577
+The rule and the sorted walk are
+
+54
+00:02:01.650 --> 00:02:03.580
+two views of the same property.
+
+55
+00:02:04.160 --> 00:02:05.630
+Now we can search.
+
+56
+00:02:05.630 --> 00:02:08.550
+To look for sixty, start at the root.
+
+57
+00:02:08.550 --> 00:02:10.490
+Sixty is larger than fifty
+
+58
+00:02:10.490 --> 00:02:13.305
+so sixty can only be in the right subtree
+
+59
+00:02:13.370 --> 00:02:15.276
+and the whole left half of the tree
+
+60
+00:02:15.330 --> 00:02:18.360
+is ruled out in one comparison.
+
+61
+00:02:18.710 --> 00:02:20.160
+Move to seventy.
+
+62
+00:02:20.160 --> 00:02:22.780
+Sixty is smaller, so go left.
+
+63
+00:02:22.780 --> 00:02:24.660
+We arrive at sixty.
+
+64
+00:02:24.660 --> 00:02:27.350
+Found, after three comparisons.
+
+65
+00:02:27.700 --> 00:02:29.690
+Now look for forty-five
+
+66
+00:02:29.690 --> 00:02:31.390
+which is not in the tree.
+
+67
+00:02:31.390 --> 00:02:33.750
+Fifty: go left.
+
+68
+00:02:33.750 --> 00:02:37.510
+Thirty: forty-five is larger, so go right.
+
+69
+00:02:37.510 --> 00:02:40.370
+Forty: larger again, go right.
+
+70
+00:02:40.370 --> 00:02:43.380
+And the right child of forty is empty.
+
+71
+00:02:43.730 --> 00:02:45.400
+Reaching an empty spot means
+
+72
+00:02:45.460 --> 00:02:46.980
+the key is not here.
+
+73
+00:02:46.980 --> 00:02:48.699
+And notice something useful
+
+74
+00:02:48.760 --> 00:02:50.891
+the empty spot is exactly where
+
+75
+00:02:50.960 --> 00:02:53.010
+forty-five would have to be.
+
+76
+00:02:53.590 --> 00:02:55.900
+Insertion is the same walk.
+
+77
+00:02:55.900 --> 00:02:58.460
+To insert forty-five, search for it.
+
+78
+00:02:58.460 --> 00:03:01.430
+We fall off the tree at the right of forty.
+
+79
+00:03:01.780 --> 00:03:04.570
+So that is where the new node goes
+
+80
+00:03:04.570 --> 00:03:07.690
+a new leaf, the right child of forty.
+
+81
+00:03:07.690 --> 00:03:08.970
+Nothing else moves
+
+82
+00:03:08.970 --> 00:03:11.420
+and no other node has to be touched.
+
+83
+00:03:11.770 --> 00:03:13.540
+The rule still holds.
+
+84
+00:03:13.540 --> 00:03:15.580
+Forty-five is larger than thirty
+
+85
+00:03:15.580 --> 00:03:17.900
+smaller than fifty, larger than forty.
+
+86
+00:03:17.900 --> 00:03:20.780
+And the inorder walk still comes out sorted
+
+87
+00:03:20.780 --> 00:03:23.810
+with forty-five between forty and fifty.
+
+88
+00:03:24.160 --> 00:03:25.550
+One more detail.
+
+89
+00:03:25.550 --> 00:03:27.690
+If the key is already in the tree
+
+90
+00:03:27.690 --> 00:03:29.190
+we stop and do nothing
+
+91
+00:03:29.190 --> 00:03:32.480
+because a search tree stores each key once.
+
+92
+00:03:33.060 --> 00:03:35.070
+How long does this take?
+
+93
+00:03:35.070 --> 00:03:37.374
+Every step goes one level down the tree
+
+94
+00:03:37.430 --> 00:03:39.031
+and we do a constant amount
+
+95
+00:03:39.090 --> 00:03:40.580
+of work per level.
+
+96
+00:03:40.930 --> 00:03:42.703
+So the cost is proportional
+
+97
+00:03:42.740 --> 00:03:44.220
+to the height of the tree.
+
+98
+00:03:44.220 --> 00:03:46.028
+If we call the height h
+
+99
+00:03:46.100 --> 00:03:47.726
+search and insert both take at
+
+100
+00:03:47.780 --> 00:03:51.970
+most h plus one comparisons: time O of h.
+
+101
+00:03:52.320 --> 00:03:54.790
+For this tree, h is two
+
+102
+00:03:54.790 --> 00:03:56.890
+then three after the insertion.
+
+103
+00:03:56.890 --> 00:04:00.510
+If a tree with n keys is nicely balanced
+
+104
+00:04:00.510 --> 00:04:03.090
+its height is about log base two of n
+
+105
+00:04:03.090 --> 00:04:06.680
+and then we are as fast as binary search.
+
+106
+00:04:07.030 --> 00:04:09.851
+But height is not guaranteed to be small
+
+107
+00:04:09.920 --> 00:04:11.627
+and that is the question for the
+
+108
+00:04:11.680 --> 00:04:13.230
+last video of this chapter.
+
+109
+00:04:13.810 --> 00:04:15.123
+Back to the phone book.
+
+110
+00:04:15.180 --> 00:04:17.186
+A sorted array finds in log
+
+111
+00:04:17.260 --> 00:04:19.654
+n but inserts in n.
+
+112
+00:04:19.780 --> 00:04:21.954
+A linked list inserts in constant
+
+113
+00:04:22.020 --> 00:04:24.330
+time but finds in n.
+
+114
+00:04:24.680 --> 00:04:27.278
+The search tree finds and inserts in
+
+115
+00:04:27.350 --> 00:04:29.570
+time proportional to its height
+
+116
+00:04:29.570 --> 00:04:31.850
+and removing a key, which is next
+
+117
+00:04:31.850 --> 00:04:32.970
+costs the same.
+
+118
+00:04:32.970 --> 00:04:34.790
+When the tree is balanced
+
+119
+00:04:34.790 --> 00:04:37.160
+that is log n for all of them.
+
+120
+00:04:37.740 --> 00:04:38.750
+To sum up.
+
+121
+00:04:38.750 --> 00:04:40.308
+In a binary search tree
+
+122
+00:04:40.370 --> 00:04:43.851
+every key in the left subtree is smaller and
+
+123
+00:04:43.930 --> 00:04:46.312
+every key in the right subtree is larger
+
+124
+00:04:46.370 --> 00:04:48.704
+and the inorder walk visits
+
+125
+00:04:48.790 --> 00:04:50.940
+the keys in sorted order.
+
+126
+00:04:51.290 --> 00:04:53.000
+Search, and insert
+
+127
+00:04:53.000 --> 00:04:54.920
+follow one path from the root
+
+128
+00:04:54.920 --> 00:04:57.580
+and cost time proportional to the height.
+
+129
+00:04:57.580 --> 00:05:00.570
+A new key is always attached as a leaf.
+
+130
+00:05:00.920 --> 00:05:04.400
+Next: what happens when we delete a key.
+
+131
+00:05:05.027 --> 00:05:07.827
+Now let's write a search tree in Python.
+
+132
+00:05:08.407 --> 00:05:11.117
+The tree object holds the root
+
+133
+00:05:11.117 --> 00:05:12.477
+the number of keys
+
+134
+00:05:12.477 --> 00:05:13.877
+and a counter of comparisons
+
+135
+00:05:13.877 --> 00:05:15.757
+which we will use to measure costs.
+
+136
+00:05:15.757 --> 00:05:18.407
+An empty tree has a root of None.
+
+137
+00:05:18.987 --> 00:05:21.717
+Search is a loop, not a recursion.
+
+138
+00:05:21.717 --> 00:05:22.777
+Start at the root.
+
+139
+00:05:22.777 --> 00:05:25.397
+If the key matches, we are done.
+
+140
+00:05:25.397 --> 00:05:27.597
+Otherwise go left when the key is smaller
+
+141
+00:05:27.597 --> 00:05:29.747
+and right when it is larger.
+
+142
+00:05:30.097 --> 00:05:32.967
+If we run off the tree, node is None
+
+143
+00:05:32.967 --> 00:05:35.617
+the loop ends, and we return False.
+
+144
+00:05:35.967 --> 00:05:37.737
+A loop is a good fit here.
+
+145
+00:05:37.737 --> 00:05:39.808
+The path goes only downwards
+
+146
+00:05:39.877 --> 00:05:41.074
+so we never need to remember
+
+147
+00:05:41.117 --> 00:05:42.367
+where we came from.
+
+148
+00:05:42.947 --> 00:05:44.331
+To see the path
+
+149
+00:05:44.417 --> 00:05:46.321
+a second version of search records
+
+150
+00:05:46.377 --> 00:05:48.147
+every key it visits.
+
+151
+00:05:48.497 --> 00:05:52.927
+Looking for sixty visits fifty, seventy
+
+152
+00:05:52.927 --> 00:05:54.747
+sixty, and finds it.
+
+153
+00:05:54.747 --> 00:05:59.427
+Looking for forty-five visits fifty, thirty
+
+154
+00:05:59.427 --> 00:06:01.897
+forty, and falls off the tree.
+
+155
+00:06:02.477 --> 00:06:04.227
+Insert walks the same path.
+
+156
+00:06:04.227 --> 00:06:06.027
+If the key is already there
+
+157
+00:06:06.027 --> 00:06:07.237
+we return False.
+
+158
+00:06:07.587 --> 00:06:09.358
+Otherwise we look at the child
+
+159
+00:06:09.417 --> 00:06:10.677
+on the correct side
+
+160
+00:06:10.677 --> 00:06:12.597
+and if that child is None
+
+161
+00:06:12.597 --> 00:06:14.057
+this is the empty spot
+
+162
+00:06:14.057 --> 00:06:16.477
+we attach a new node there.
+
+163
+00:06:16.477 --> 00:06:18.877
+Get attribute reads the child by name
+
+164
+00:06:18.877 --> 00:06:21.817
+and set attribute attaches the new node
+
+165
+00:06:21.817 --> 00:06:25.067
+so one piece of code handles both sides.
+
+166
+00:06:25.647 --> 00:06:28.797
+Running it: after inserting the seven keys
+
+167
+00:06:28.797 --> 00:06:30.997
+the inorder list is sorted
+
+168
+00:06:30.997 --> 00:06:33.247
+and the tree passes the ordering check.
+
+169
+00:06:33.597 --> 00:06:35.658
+Inserting forty-five grows the
+
+170
+00:06:35.727 --> 00:06:37.047
+height from two to three.
+
+171
+00:06:37.047 --> 00:06:40.547
+The minimum is twenty, the maximum eighty
+
+172
+00:06:40.547 --> 00:06:42.967
+follow the left children to the end
+
+173
+00:06:42.967 --> 00:06:44.237
+or the right children.
+
+174
+00:06:44.817 --> 00:06:47.305
+Let's follow the insertion of forty-five
+
+175
+00:06:47.367 --> 00:06:49.367
+with the comparison counter.
+
+176
+00:06:49.367 --> 00:06:52.607
+Compare with fifty: smaller, so go left.
+
+177
+00:06:52.607 --> 00:06:55.647
+Compare with thirty: larger, so go right.
+
+178
+00:06:55.647 --> 00:06:58.347
+Compare with forty: larger, so go right
+
+179
+00:06:58.347 --> 00:07:00.667
+and the right child is None
+
+180
+00:07:00.667 --> 00:07:02.457
+so the new node goes there.
+
+181
+00:07:02.807 --> 00:07:06.259
+Three comparisons, for a tree of height two.
+
+182
+00:07:06.337 --> 00:07:09.550
+In general an insertion makes at most
+
+183
+00:07:09.637 --> 00:07:11.414
+height plus one comparisons
+
+184
+00:07:11.477 --> 00:07:12.788
+and the counter in the demo
+
+185
+00:07:12.837 --> 00:07:14.887
+prints exactly that: three.
+
+186
+00:07:15.237 --> 00:07:17.681
+The counter is the cost we will watch
+
+187
+00:07:17.747 --> 00:07:19.517
+in the last video of this chapter.
+
+188
+00:07:20.097 --> 00:07:22.767
+Remember the broken tree from the last part.
+
+189
+00:07:22.767 --> 00:07:25.027
+To test the search tree property
+
+190
+00:07:25.027 --> 00:07:26.803
+we pass down bounds
+
+191
+00:07:26.887 --> 00:07:28.449
+every key must lie strictly
+
+192
+00:07:28.507 --> 00:07:30.257
+between the keys above it.
+
+193
+00:07:30.607 --> 00:07:33.285
+Sixty under thirty under
+
+194
+00:07:33.397 --> 00:07:35.337
+fifty fails the check
+
+195
+00:07:35.337 --> 00:07:38.280
+because sixty is not less than fifty.
+
+196
+00:07:38.357 --> 00:07:41.618
+The tests use this function to verify the
+
+197
+00:07:41.697 --> 00:07:44.247
+tree after every insert and delete.
+
+198
+00:07:44.827 --> 00:07:46.257
+Common mistakes.
+
+199
+00:07:46.257 --> 00:07:47.057
+First
+
+200
+00:07:47.057 --> 00:07:49.537
+comparing a node only with its parent
+
+201
+00:07:49.537 --> 00:07:51.747
+which is the broken tree again.
+
+202
+00:07:52.097 --> 00:07:53.207
+Second
+
+203
+00:07:53.207 --> 00:07:55.467
+forgetting what to do with duplicates.
+
+204
+00:07:55.467 --> 00:07:57.223
+Here we ignore them.
+
+205
+00:07:57.307 --> 00:07:59.425
+A dictionary built on a tree would
+
+206
+00:07:59.487 --> 00:08:01.457
+replace the stored value instead.
+
+207
+00:08:01.807 --> 00:08:02.741
+Third
+
+208
+00:08:02.897 --> 00:08:05.263
+writing insert with recursion and forgetting
+
+209
+00:08:05.317 --> 00:08:06.937
+to return the new child
+
+210
+00:08:06.937 --> 00:08:08.737
+so the new node is lost.
+
+211
+00:08:08.737 --> 00:08:11.047
+The loop version avoids both.
+
+212
+00:08:11.627 --> 00:08:13.694
+Python has no search tree
+
+213
+00:08:13.777 --> 00:08:15.121
+in the standard library.
+
+214
+00:08:15.177 --> 00:08:18.022
+For sorted lookups people use a sorted
+
+215
+00:08:18.097 --> 00:08:20.125
+list with the bisect module
+
+216
+00:08:20.197 --> 00:08:22.266
+or a third-party package such
+
+217
+00:08:22.337 --> 00:08:23.787
+as sortedcontainers.
+
+218
+00:08:24.137 --> 00:08:26.847
+Trees themselves come back in Chapter six
+
+219
+00:08:26.847 --> 00:08:28.217
+where we keep them balanced.
+
+220
+00:08:28.797 --> 00:08:31.887
+In Python: a loop for search and insert
+
+221
+00:08:31.887 --> 00:08:34.367
+a path recorder to see the walk
+
+222
+00:08:34.367 --> 00:08:37.397
+and an ordering check for the invariant.
+
+223
+00:08:37.747 --> 00:08:39.947
+Next: deleting keys.
+

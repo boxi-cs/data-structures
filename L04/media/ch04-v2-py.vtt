@@ -1,0 +1,654 @@
+WEBVTT
+
+1
+00:00:02.900 --> 00:00:05.290
+A phone book holds a million names
+
+2
+00:00:05.290 --> 00:00:06.890
+in alphabetical order.
+
+3
+00:00:06.890 --> 00:00:08.860
+You want to find one of them.
+
+4
+00:00:09.210 --> 00:00:10.928
+Reading from the first page could
+
+5
+00:00:10.980 --> 00:00:12.380
+take a million looks.
+
+6
+00:00:12.380 --> 00:00:13.900
+But nobody does that.
+
+7
+00:00:13.900 --> 00:00:15.560
+You open the book in the middle
+
+8
+00:00:15.560 --> 00:00:18.540
+see whether your name comes before or after
+
+9
+00:00:18.540 --> 00:00:20.410
+and throw half the book away.
+
+10
+00:00:20.760 --> 00:00:22.450
+How many looks does that take?
+
+11
+00:00:22.450 --> 00:00:24.480
+At most twenty.
+
+12
+00:00:24.830 --> 00:00:26.420
+Not twenty thousand.
+
+13
+00:00:26.420 --> 00:00:27.720
+Twenty.
+
+14
+00:00:27.720 --> 00:00:28.789
+Let's see why
+
+15
+00:00:28.860 --> 00:00:30.176
+and learn a tool for answering
+
+16
+00:00:30.220 --> 00:00:32.790
+this kind of question: the recurrence.
+
+17
+00:00:33.370 --> 00:00:34.900
+This is binary search
+
+18
+00:00:34.900 --> 00:00:37.450
+and the first recurrence of the course.
+
+19
+00:00:37.800 --> 00:00:40.101
+We'll see how binary search works
+
+20
+00:00:40.170 --> 00:00:42.071
+how to turn it into a recurrence
+
+21
+00:00:42.130 --> 00:00:43.750
+and solve it by unrolling
+
+22
+00:00:43.750 --> 00:00:46.680
+and how to read recurrences as trees.
+
+23
+00:00:47.260 --> 00:00:49.870
+Binary search looks at the middle item.
+
+24
+00:00:49.870 --> 00:00:52.300
+If it is the target, we are done.
+
+25
+00:00:52.650 --> 00:00:54.900
+If the target is smaller
+
+26
+00:00:54.900 --> 00:00:56.160
+we search the left half.
+
+27
+00:00:56.160 --> 00:00:58.490
+If it is larger, we search the right half.
+
+28
+00:00:58.840 --> 00:01:00.866
+The list must be sorted.
+
+29
+00:01:00.950 --> 00:01:03.023
+That is what lets a single look
+
+30
+00:01:03.090 --> 00:01:05.200
+rule out half of the items.
+
+31
+00:01:05.550 --> 00:01:08.120
+And notice that searching a half
+
+32
+00:01:08.200 --> 00:01:11.140
+is the same problem again, only smaller.
+
+33
+00:01:11.140 --> 00:01:13.310
+That is a recursive structure.
+
+34
+00:01:13.890 --> 00:01:15.300
+Pause and predict.
+
+35
+00:01:15.300 --> 00:01:18.020
+A list has a thousand items
+
+36
+00:01:18.020 --> 00:01:21.650
+and binary search needs at most ten looks.
+
+37
+00:01:22.000 --> 00:01:25.890
+Now the list doubles, to two thousand items.
+
+38
+00:01:25.890 --> 00:01:28.360
+How many looks, at most?
+
+39
+00:01:28.710 --> 00:01:29.800
+Ten more?
+
+40
+00:01:29.800 --> 00:01:31.220
+Five more?
+
+41
+00:01:31.220 --> 00:01:32.590
+Twice as many?
+
+42
+00:01:32.940 --> 00:01:34.070
+Just one more.
+
+43
+00:01:34.070 --> 00:01:35.137
+Eleven.
+
+44
+00:01:35.270 --> 00:01:37.789
+One extra look cuts the doubled
+
+45
+00:01:37.870 --> 00:01:40.020
+list back to the old size.
+
+46
+00:01:40.600 --> 00:01:43.450
+Let T of n be the number of looks
+
+47
+00:01:43.450 --> 00:01:46.320
+in the worst case, for a list of n items.
+
+48
+00:01:46.670 --> 00:01:47.945
+One look at the middle
+
+49
+00:01:48.000 --> 00:01:49.796
+and then the same problem on
+
+50
+00:01:49.860 --> 00:01:51.660
+at most half of the list.
+
+51
+00:01:51.660 --> 00:01:56.710
+So T of n equals T of n over two, plus one.
+
+52
+00:01:57.060 --> 00:02:00.730
+When one item is left, one look settles it.
+
+53
+00:02:00.730 --> 00:02:02.420
+T of one is one.
+
+54
+00:02:03.000 --> 00:02:05.766
+To solve a recurrence, unroll it.
+
+55
+00:02:05.850 --> 00:02:07.633
+Replace T of n over two
+
+56
+00:02:07.710 --> 00:02:09.520
+by its own definition.
+
+57
+00:02:09.870 --> 00:02:14.060
+T of n is T of n over four, plus one
+
+58
+00:02:14.060 --> 00:02:14.960
+plus one.
+
+59
+00:02:14.960 --> 00:02:18.590
+Again: T of n over eight, plus three.
+
+60
+00:02:18.940 --> 00:02:20.270
+After k steps
+
+61
+00:02:20.270 --> 00:02:22.910
+the problem has size n over two to the k
+
+62
+00:02:22.910 --> 00:02:25.340
+and we have paid k looks.
+
+63
+00:02:25.690 --> 00:02:27.496
+The list is down to one item
+
+64
+00:02:27.560 --> 00:02:29.480
+when two to the k equals n.
+
+65
+00:02:29.480 --> 00:02:33.050
+That is k equals log base two of n.
+
+66
+00:02:33.400 --> 00:02:38.400
+So T of n is log base two of n, plus one.
+
+67
+00:02:38.980 --> 00:02:41.310
+Let's check it against real runs.
+
+68
+00:02:41.310 --> 00:02:45.450
+Lists of size one, two, four, eight
+
+69
+00:02:45.450 --> 00:02:48.730
+sixteen need one, two, three, four
+
+70
+00:02:48.730 --> 00:02:49.900
+five looks.
+
+71
+00:02:50.250 --> 00:02:52.320
+Every time the list doubles
+
+72
+00:02:52.320 --> 00:02:54.250
+we pay one more look.
+
+73
+00:02:54.600 --> 00:02:56.950
+A thousand items: ten looks.
+
+74
+00:02:56.950 --> 00:02:59.050
+A million: twenty.
+
+75
+00:02:59.050 --> 00:03:01.440
+A billion: just thirty.
+
+76
+00:03:02.020 --> 00:03:05.810
+Many recursive algorithms fit one shape
+
+77
+00:03:05.810 --> 00:03:09.025
+a subproblems, each of size n over b
+
+78
+00:03:09.110 --> 00:03:11.191
+plus some work to split the problem
+
+79
+00:03:11.250 --> 00:03:12.860
+and combine the answers.
+
+80
+00:03:13.210 --> 00:03:15.240
+Draw the recursion as a tree.
+
+81
+00:03:15.240 --> 00:03:18.341
+At depth k there are a to the k nodes
+
+82
+00:03:18.420 --> 00:03:19.986
+and each one has a problem of
+
+83
+00:03:20.040 --> 00:03:22.290
+size n over b to the k.
+
+84
+00:03:22.640 --> 00:03:25.770
+The cost is the sum, level by level.
+
+85
+00:03:25.770 --> 00:03:28.290
+So everything depends on one question
+
+86
+00:03:28.290 --> 00:03:30.070
+as we go down
+
+87
+00:03:30.070 --> 00:03:32.170
+does the work per level shrink
+
+88
+00:03:32.170 --> 00:03:34.360
+stay the same, or grow?
+
+89
+00:03:34.710 --> 00:03:36.160
+If it stays the same
+
+90
+00:03:36.160 --> 00:03:37.589
+every level costs the same
+
+91
+00:03:37.640 --> 00:03:39.773
+and the total is that cost times
+
+92
+00:03:39.840 --> 00:03:41.460
+the number of levels.
+
+93
+00:03:41.460 --> 00:03:43.240
+Binary search is like that
+
+94
+00:03:43.240 --> 00:03:46.110
+one look per level, log n levels.
+
+95
+00:03:46.460 --> 00:03:48.850
+If the work shrinks as we go down
+
+96
+00:03:48.850 --> 00:03:50.570
+the top level dominates.
+
+97
+00:03:50.570 --> 00:03:53.450
+If it grows, the bottom level, the leaves
+
+98
+00:03:53.450 --> 00:03:54.580
+dominates.
+
+99
+00:03:54.930 --> 00:03:57.460
+This is the idea behind the master theorem.
+
+100
+00:03:57.460 --> 00:03:59.440
+We will use the intuition
+
+101
+00:03:59.440 --> 00:04:01.570
+rather than memorize its cases.
+
+102
+00:04:02.150 --> 00:04:04.737
+The same search can be written as a loop.
+
+103
+00:04:04.800 --> 00:04:07.023
+For a million items both need
+
+104
+00:04:07.100 --> 00:04:09.030
+the same twenty looks.
+
+105
+00:04:09.380 --> 00:04:11.514
+The difference is the stack
+
+106
+00:04:11.590 --> 00:04:13.347
+the recursive version has up
+
+107
+00:04:13.410 --> 00:04:16.570
+to twenty frames waiting, the loop has none.
+
+108
+00:04:16.570 --> 00:04:18.820
+Here that cost is tiny.
+
+109
+00:04:19.170 --> 00:04:21.980
+To sum up: write the cost as a recurrence
+
+110
+00:04:21.980 --> 00:04:24.900
+unroll it, and read it as a tree.
+
+111
+00:04:24.900 --> 00:04:27.240
+Halving the problem gives a logarithm.
+
+112
+00:04:27.240 --> 00:04:28.813
+Next: merge sort
+
+113
+00:04:28.900 --> 00:04:31.216
+where we split in half but also have
+
+114
+00:04:31.280 --> 00:04:33.170
+to put the halves back together.
+
+115
+00:04:33.797 --> 00:04:36.127
+Let's write binary search in Python
+
+116
+00:04:36.127 --> 00:04:37.717
+and measure the looks.
+
+117
+00:04:38.297 --> 00:04:41.347
+The function takes the list, the target
+
+118
+00:04:41.347 --> 00:04:43.983
+and two bounds, lo and hi
+
+119
+00:04:44.107 --> 00:04:45.126
+that mark the part of the
+
+120
+00:04:45.167 --> 00:04:46.527
+list still in play.
+
+121
+00:04:46.527 --> 00:04:49.657
+By default they cover the whole list.
+
+122
+00:04:50.007 --> 00:04:53.377
+If lo is greater than hi, nothing is left
+
+123
+00:04:53.377 --> 00:04:55.497
+so we return minus one.
+
+124
+00:04:55.497 --> 00:04:57.177
+Otherwise we look at the middle
+
+125
+00:04:57.177 --> 00:04:59.137
+using floor division.
+
+126
+00:04:59.137 --> 00:05:01.477
+Found: return the index.
+
+127
+00:05:01.477 --> 00:05:02.837
+Smaller or larger
+
+128
+00:05:02.837 --> 00:05:04.817
+search the right or the left half
+
+129
+00:05:04.817 --> 00:05:06.367
+by moving a bound.
+
+130
+00:05:06.717 --> 00:05:09.447
+Python integers never overflow
+
+131
+00:05:09.447 --> 00:05:12.757
+so lo plus hi, divided by two, is safe here.
+
+132
+00:05:13.337 --> 00:05:15.769
+The counter probes goes up once
+
+133
+00:05:15.847 --> 00:05:17.657
+per look at a middle item.
+
+134
+00:05:17.727 --> 00:05:19.046
+That's the number our recurrence
+
+135
+00:05:19.087 --> 00:05:20.257
+called T of n.
+
+136
+00:05:20.837 --> 00:05:22.462
+Here are the real counts.
+
+137
+00:05:22.527 --> 00:05:25.735
+A list of size two to the k needs k
+
+138
+00:05:25.827 --> 00:05:28.387
+plus one looks in the worst case.
+
+139
+00:05:28.387 --> 00:05:30.027
+A thousand items: ten.
+
+140
+00:05:30.027 --> 00:05:31.927
+A million: twenty.
+
+141
+00:05:31.927 --> 00:05:34.397
+Exactly what the unrolled recurrence said.
+
+142
+00:05:34.977 --> 00:05:37.187
+The loop version does the same thing.
+
+143
+00:05:37.187 --> 00:05:38.767
+Instead of calling itself
+
+144
+00:05:38.767 --> 00:05:40.427
+it moves lo and hi.
+
+145
+00:05:40.427 --> 00:05:41.707
+Same twenty looks
+
+146
+00:05:41.707 --> 00:05:43.497
+but no frames on the stack.
+
+147
+00:05:44.077 --> 00:05:46.776
+A tempting shortcut is to pass a slice
+
+148
+00:05:46.847 --> 00:05:49.047
+of the list to the recursive call.
+
+149
+00:05:49.047 --> 00:05:52.597
+It reads nicely, but a slice copies.
+
+150
+00:05:52.947 --> 00:05:54.982
+The first call alone copies
+
+151
+00:05:55.057 --> 00:05:56.134
+half of the list.
+
+152
+00:05:56.197 --> 00:05:58.280
+Over the whole search about
+
+153
+00:05:58.357 --> 00:06:00.257
+n items are copied
+
+154
+00:06:00.257 --> 00:06:03.057
+which is far more work than twenty looks.
+
+155
+00:06:03.057 --> 00:06:05.867
+The search is no longer logarithmic.
+
+156
+00:06:06.217 --> 00:06:09.417
+Pass indexes, not slices.
+
+157
+00:06:09.997 --> 00:06:13.468
+In practice you would use the bisect module.
+
+158
+00:06:13.547 --> 00:06:16.029
+bisect left returns the position
+
+159
+00:06:16.107 --> 00:06:19.067
+where the target is, or would be inserted
+
+160
+00:06:19.067 --> 00:06:20.557
+to keep the list sorted.
+
+161
+00:06:21.137 --> 00:06:25.227
+So in Python: pass bounds, not slices
+
+162
+00:06:25.227 --> 00:06:28.177
+the counter confirms k plus one looks.
+
+163
+00:06:28.527 --> 00:06:32.807
+Next: merge sort, our first n log n sort.
+
